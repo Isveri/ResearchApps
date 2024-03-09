@@ -15,33 +15,11 @@ service CustomersService {
   rpc AddCustomer(Customer) returns (Customer) {}
 }
 
-service AccountsService {
-  rpc FindByNumber(google.protobuf.StringValue) returns (Account) {}
-  rpc FindByCustomer(google.protobuf.Int32Value) returns (Accounts) {}
-  rpc FindAll(google.protobuf.Empty) returns (Accounts) {}
-  rpc AddAccount(Account) returns (Account) {}
-}
-
-message Accounts {
-  repeated Account account = 1;
-}
-
-message Account {
-  int32 id = 1;
-  string number = 2;
-  int32 customer_id = 3;
-}
 
 message Customer {
   int32 id = 1;
   string pesel = 2;
   string name = 3;
-  CustomerType type = 4;
-  repeated Account accounts = 5;
-  enum CustomerType {
-    INDIVIDUAL = 0;
-    COMPANY = 1;
-  }
 }
 
 message Customers {

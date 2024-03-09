@@ -10,7 +10,7 @@ import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 
 public class RestSimulation extends Simulation {
-    HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8081")
+    HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8082")
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
@@ -22,12 +22,12 @@ public class RestSimulation extends Simulation {
 //            .pause(1)
 //            .exec(http("customerById").get("/customerById/1"));
             .forever().on(
-                    http("customerAll").get("/customerAll"),
-                    pause(1),
-                    http("updateCustomer").post("/updateCustomer/1")
-                        .body(StringBody("{\"name\": \"test\",\"pesel\": \"test\"}")),
-                    pause(1),
-                    http("customerById").get("/customerById/1")
+                    http("customerAll").get("/customerAll")
+//                    pause(1),
+//                    http("updateCustomer").post("/updateCustomer/1")
+//                        .body(StringBody("{\"name\": \"test\",\"pesel\": \"test\"}")),
+//                    pause(1),
+//                    http("customerById").get("/customerById/1")
             );
     {
 
@@ -39,7 +39,7 @@ public class RestSimulation extends Simulation {
                         //constantUsersPerSec(200).during(Duration.ofMinutes(2))
                         atOnceUsers(5)
                         )
-        ).protocols(httpProtocol).maxDuration(Duration.ofMinutes(2));
+        ).protocols(httpProtocol).maxDuration(Duration.ofMinutes(1));
     }
 
 }

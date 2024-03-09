@@ -13,7 +13,7 @@ management:
         include: "*"
 
 
-server.port: 8081
+server.port: 8083
 grpc.server.port: 9094
 
 
