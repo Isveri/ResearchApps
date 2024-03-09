@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class CustomerApplication {
+public class CustomerRestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CustomerApplication.class, args);
+        SpringApplication.run(CustomerRestApplication.class, args);
     }
 
     @Bean

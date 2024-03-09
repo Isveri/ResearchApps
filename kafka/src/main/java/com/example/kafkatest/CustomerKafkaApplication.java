@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class KafkaTestApplication {
+public class CustomerKafkaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KafkaTestApplication.class, args);
+		SpringApplication.run(CustomerKafkaApplication.class, args);
 	}
 	@Bean
 	CustomerRepository repository() {

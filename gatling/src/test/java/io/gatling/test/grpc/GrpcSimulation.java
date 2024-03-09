@@ -1,4 +1,4 @@
-package io.gatling.grpc.demo;
+package io.gatling.test.grpc;
 
 import com.google.protobuf.Empty;
 import com.google.protobuf.Int32Value;
@@ -12,9 +12,9 @@ import java.time.Duration;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.grpc.GrpcDsl.*;
-public class CustomerSimulation extends Simulation {
+public class GrpcSimulation extends Simulation {
 
-    GrpcProtocolBuilder baseGrpcProtocol = Configuration.baseGrpcProtocol("localhost", 9092);
+    GrpcProtocolBuilder baseGrpcProtocol = grpc.forAddress("localhost", 9092).useInsecureTrustManager();
 
     ScenarioBuilder unaryFindAll = scenario("Consumer unary")
             .forever().on(exec(grpc("findAll")

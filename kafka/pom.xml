@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>kafka-test</artifactId>
+	<artifactId>customer-kafka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kafka</name>
-	<description>kafka</description>
+	<name>customer-kafka</name>
+	<description>customer-kafka</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -54,7 +54,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.example.kafkatest.KafkaTestApplication</mainClass>
+					<mainClass>com.example.kafkatest.CustomerKafkaApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

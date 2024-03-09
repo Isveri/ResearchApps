@@ -1,4 +1,4 @@
-package io.gatling.kafka.demo.model;
+package io.gatling.model;
 
 
 import lombok.AllArgsConstructor;

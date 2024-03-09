@@ -1,4 +1,4 @@
-package io.gatling.rest.demo;
+package io.gatling.test.rest;
 
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
@@ -9,7 +9,7 @@ import java.time.Duration;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 
-public class CustomerSimulation extends Simulation {
+public class RestSimulation extends Simulation {
     HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8081")
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
