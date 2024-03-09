@@ -3,9 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ResearchApps.iml" filepath="$PROJECT_DIR$/.idea/ResearchApps.iml" />
-      <module fileurl="file://$PROJECT_DIR$/grpc/account-service-grpc/account-service-grpc.iml" filepath="$PROJECT_DIR$/grpc/account-service-grpc/account-service-grpc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/grpc/customer-service-grpc/customer-service-grpc.iml" filepath="$PROJECT_DIR$/grpc/customer-service-grpc/customer-service-grpc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/grpc/discovery-service/discovery-service.iml" filepath="$PROJECT_DIR$/grpc/discovery-service/discovery-service.iml" />
     </modules>
   </component>
 </project>

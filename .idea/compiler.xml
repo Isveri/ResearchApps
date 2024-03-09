@@ -6,16 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="customer-grpc" />
         <module name="customer-rest" />
         <module name="gatling-load-tester" />
-        <module name="customer-service-grpc" />
-        <module name="discovery-service" />
         <module name="customer-kafka" />
-        <module name="account-service-grpc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="account-service-grpc" target="19" />
       <module name="customer-service" target="19" />
+      <module name="customer-service-grpc" target="17" />
+      <module name="discovery-service" target="19" />
       <module name="gatling-grpc-demo-maven-java" target="17" />
       <module name="kafka-test" target="17" />
     </bytecodeTargetLevel>
@@ -23,6 +24,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="account-service-grpc" options="-parameters" />
+      <module name="customer-grpc" options="-parameters" />
       <module name="customer-kafka" options="-parameters" />
       <module name="customer-rest" options="-parameters" />
       <module name="customer-service" options="-parameters" />

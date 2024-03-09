@@ -6,7 +6,6 @@ import com.google.protobuf.StringValue;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.piomin.services.grpc.customer.client.AccountClient;
 import pl.piomin.services.grpc.customer.model.CustomerProto;
 import pl.piomin.services.grpc.customer.model.CustomersServiceGrpc;
 import pl.piomin.services.grpc.customer.repository.CustomerRepository;
@@ -18,15 +17,12 @@ public class CustomersService extends CustomersServiceGrpc.CustomersServiceImplB
 
     @Autowired
     CustomerRepository repository;
-    @Autowired
-    AccountClient accountClient;
+
 
     @Override
     public void findById(Int32Value request, StreamObserver<CustomerProto.Customer> responseObserver) {
         CustomerProto.Customer c = repository.findById(request.getValue());
-        CustomerProto.Accounts a = accountClient.getAccountsByCustomerId(c.getId());
-        List<CustomerProto.Account> l = a.getAccountList();
-        c = CustomerProto.Customer.newBuilder(c).addAllAccounts(l).build();
+        c = CustomerProto.Customer.newBuilder(c).build();
         responseObserver.onNext(c);
         responseObserver.onCompleted();
     }

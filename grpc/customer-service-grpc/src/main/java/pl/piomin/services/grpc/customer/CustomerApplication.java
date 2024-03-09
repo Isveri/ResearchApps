@@ -51,13 +51,13 @@ public class CustomerApplication {
     CustomerRepository repository() {
         List<CustomerProto.Customer> customers = new ArrayList<>();
         customers.add(CustomerProto.Customer.newBuilder().setId(1).setPesel("12345").setName("Adam Kowalski")
-                .setType(CustomerProto.Customer.CustomerType.INDIVIDUAL).build());
+                .build());
         customers.add(CustomerProto.Customer.newBuilder().setId(2).setPesel("12346").setName("Anna Malinowska")
-                .setType(CustomerProto.Customer.CustomerType.INDIVIDUAL).build());
+                .build());
         customers.add(CustomerProto.Customer.newBuilder().setId(3).setPesel("12347").setName("Paweł Michalski")
-                .setType(CustomerProto.Customer.CustomerType.INDIVIDUAL).build());
+                .build());
         customers.add(CustomerProto.Customer.newBuilder().setId(4).setPesel("12348").setName("Karolina Lewandowska")
-                .setType(CustomerProto.Customer.CustomerType.INDIVIDUAL).build());
+                .build());
         return new CustomerRepository(customers);
     }
 }

@@ -27,12 +27,7 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ["host.docker.internal:9090"]
-      
-  - job_name: "account_grpc"
-    scrape_interval: 5s
-    metrics_path: /actuator/prometheus
-    static_configs:
-      - targets: ["host.docker.internal:8080"]
+
   - job_name: "customer_grpc"
     scrape_interval: 5s
     metrics_path: /actuator/prometheus

@@ -15,6 +15,12 @@
         <option value="$PROJECT_DIR$/gatling/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/grpc/account-service-grpc/pom.xml" />
+        <option value="$PROJECT_DIR$/grpc/discovery-service/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_20" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
