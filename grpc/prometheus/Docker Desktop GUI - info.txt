@@ -1,0 +1,1 @@
+mount folder z yaml do /etc/prometheus/
