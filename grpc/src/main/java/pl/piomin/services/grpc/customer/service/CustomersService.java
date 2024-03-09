@@ -44,7 +44,7 @@ public class CustomersService extends CustomersServiceGrpc.CustomersServiceImplB
 
     @Override
     public void addCustomer(CustomerProto.Customer request, StreamObserver<CustomerProto.Customer> responseObserver) {
-        CustomerProto.Customer c = repository.add(request.getType(), request.getName(), request.getPesel());
+        CustomerProto.Customer c = repository.add(request.getName(), request.getPesel());
         responseObserver.onNext(c);
         responseObserver.onCompleted();
     }

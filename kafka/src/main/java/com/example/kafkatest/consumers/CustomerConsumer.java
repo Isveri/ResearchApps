@@ -19,7 +19,7 @@ public class CustomerConsumer {
     CustomerProducer customerProducer;
 
     @KafkaListener(topics = "allCustomersRequestTopic", groupId = "customer_group", containerFactory = "kafkaListenerContainerCustomerFactory")
-    @SendTo("allCustomersReplyTopic")
+//    @SendTo("allCustomersReplyTopic")
     public List<Customer> handleAllCustomersRequest() {
         List<Customer> reply = repository.findAll();
         //customerProducer.sendAllCustomers(reply);

@@ -15,8 +15,6 @@ service CustomersService {
   rpc AddCustomer(Customer) returns (Customer) {}
 }
 
-
-
 message Customer {
   int32 id = 1;
   string pesel = 2;

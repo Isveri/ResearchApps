@@ -1,0 +1,19 @@
+spring.application.name: customer-service-grpc
+spring.output.ansi.enabled: always
+
+management.endpoint.metrics.enabled: true
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+server.port: 8081
+grpc.server.port: 9094
+
+

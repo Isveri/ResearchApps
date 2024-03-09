@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.DependsOn;
 import pl.piomin.services.grpc.customer.model.CustomerProto;
 import pl.piomin.services.grpc.customer.repository.CustomerRepository;
 import pl.piomin.services.grpc.customer.service.CustomersService;
@@ -22,13 +21,13 @@ import java.util.List;
 @EnableDiscoveryClient
 public class CustomerApplication {
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) {
         SpringApplication.run(CustomerApplication.class, args);
 
     }
 
     @Bean
-    public Server grpcServer(CustomersService customersService) throws InterruptedException, IOException, CertificateException {
+    public Server grpcServer(CustomersService customersService) throws IOException, CertificateException {
         SelfSignedCertificate ssc = new SelfSignedCertificate("localhost");
         Server server = ServerBuilder.forPort(9092)
                 .addService(customersService)

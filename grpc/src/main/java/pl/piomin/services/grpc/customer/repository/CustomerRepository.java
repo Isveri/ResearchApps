@@ -29,10 +29,9 @@ public class CustomerRepository {
         return customers;
     }
 
-    public CustomerProto.Customer add(CustomerProto.Customer.CustomerType type, String name, String pesel) {
+    public CustomerProto.Customer add(String name, String pesel) {
         CustomerProto.Customer c = CustomerProto.Customer.newBuilder()
                 .setId(id.incrementAndGet())
-                .setType(type)
                 .setName(name)
                 .setPesel(pesel)
                 .build();
