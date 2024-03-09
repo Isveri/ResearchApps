@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
@@ -41,10 +43,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public ConsumerFactory<String, Customer> consumerCustomerFactory() {
-//        ObjectMapper om = new ObjectMapper();
-//        JavaType type = om.getTypeFactory().constructParametricType(List.class, Customer.class);
 
-//        JsonDeserializer<List<Customer>> deserializer = new JsonDeserializer<List<Customer>>(type,om,false);
         JsonDeserializer<Customer> deserializer = new JsonDeserializer<>(Customer.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
@@ -58,11 +57,12 @@ public class KafkaConsumerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Customer>
-    kafkaListenerContainerCustomerFactory() {
+    kafkaListenerContainerCustomerFactory(KafkaTemplate<String, Object> kafkaTemplate) {
 
         ConcurrentKafkaListenerContainerFactory<String, Customer> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerCustomerFactory());
+        factory.setReplyTemplate(kafkaTemplate);
         return factory;
     }
 
@@ -82,11 +82,12 @@ public class KafkaConsumerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Long>
-    kafkaListenerContainerLongFactory() {
+    kafkaListenerContainerLongFactory(KafkaTemplate<String, Object> kafkaTemplate) {
 
         ConcurrentKafkaListenerContainerFactory<String, Long> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerLongFactory());
+        factory.setReplyTemplate(kafkaTemplate);
         return factory;
     }
 }

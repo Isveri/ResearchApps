@@ -1,7 +1,6 @@
 package com.example.kafkatest.consumers;
 
 import com.example.kafkatest.model.Customer;
-import com.example.kafkatest.producers.CustomerProducer;
 import com.example.kafkatest.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,14 +14,11 @@ public class CustomerConsumer {
     @Autowired
     CustomerRepository repository;
 
-    @Autowired
-    CustomerProducer customerProducer;
 
     @KafkaListener(topics = "allCustomersRequestTopic", groupId = "customer_group", containerFactory = "kafkaListenerContainerCustomerFactory")
-//    @SendTo("allCustomersReplyTopic")
+    @SendTo("allCustomersReplyTopic")
     public List<Customer> handleAllCustomersRequest() {
         List<Customer> reply = repository.findAll();
-        //customerProducer.sendAllCustomers(reply);
         System.out.println("all customers listener");
         return reply;
     }
@@ -33,8 +29,9 @@ public class CustomerConsumer {
     }
 
     @KafkaListener(topics = "customerRequestTopic", groupId = "customer_group", containerFactory = "kafkaListenerContainerLongFactory")
-    public void handleCustomerRequest(Long customerId) {
-        Customer reply = repository.findById(customerId);
-        customerProducer.sendCustomer(reply);
+    @SendTo("customerReplyTopic")
+
+    public Customer handleCustomerRequest(Long customerId) {
+        return repository.findById(customerId);
     }
 }
