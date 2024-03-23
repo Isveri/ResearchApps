@@ -25,17 +25,17 @@ public class KafkaConfig {
     //topic:topic gatlinga do listenera microserwisu po liste customerow
     @Bean
     public NewTopic allCustomersRequestTopic() {
-        return new NewTopic("allCustomersRequestTopic", 1, (short) 1);
+        return new NewTopic("allCustomersRequestTopic", 10, (short) 10);
     }
     //topic:topic microserwisu do gatlinga ktory ma w message liste customerow
     @Bean
     public NewTopic allCustomersReplyTopic() {
-        return new NewTopic("allCustomersReplyTopic", 1, (short) 1);
+        return new NewTopic("allCustomersReplyTopic", 10, (short) 10);
     }
     //topic:topic gatlinga do listenera microserwisu z messagem z danymi do updatu customera
     @Bean
     public NewTopic updateCustomerTopic() {
-        return new NewTopic("updateCustomerTopic", 1, (short) 1);
+        return new NewTopic("updateCustomerTopic", 10, (short) 10);
     }
     //topic:topic gatlinga do listenera microserwisu po konkretnego customera
     @Bean

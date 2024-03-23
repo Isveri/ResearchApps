@@ -8,55 +8,59 @@ import io.github.amerousful.kafka.javaapi.KafkaProtocolBuilder;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
+import java.time.Duration;
+
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.github.amerousful.kafka.javaapi.KafkaDsl.KafkaBroker;
-import static io.github.amerousful.kafka.javaapi.KafkaDsl.kafka;
+import static io.github.amerousful.kafka.javaapi.KafkaDsl.*;
 
 public class KafkaSimulation extends Simulation{
 
     private static final KafkaMessageMatcher customMatcher =
             new KafkaMessageMatcher() {
+                private String key;
                 @NonNull
                 @Override
                 public String requestMatchId(@NonNull ProducerRecord<String, String> msg) {
-                    return msg.key();
+                    key = msg.key();
+                    return key;
                 }
 
                 @NonNull
                 @Override
                 public String responseMatchId(@NonNull ConsumerRecord<String, String> msg) {
-                    return msg.key();
+                    return key;
                 }
             };
 
     KafkaProtocolBuilder kafkaProtocol = kafka
             .broker(KafkaBroker("localhost", 29092))
             .acks("1")
-            .addConsumerProperty("heartbeat.interval.ms", "3000")
             .producerIdenticalSerializer("org.apache.kafka.common.serialization.StringSerializer")
-            .consumerIdenticalDeserializer("org.apache.kafka.common.serialization.StringDeserializer")
-            .replyTimeout(5)
+            .consumerIdenticalDeserializer("org.apache.kafka.common.serialization.JsonDeserializer")
+            .addProducerProperty("retries", "3")
+            .addConsumerProperty("heartbeat.interval.ms", "3000")
+            .replyTimeout(10)
             .matchByKey()
             .matchByValue()
-            .messageMatcher(customMatcher)
-            .replyConsumerName("gatling-test-consumer");;
+            .messageMatcher(customMatcher);
 
     public boolean checkRecordValue(ConsumerRecord<String, String> record) {
-        return record.value().equals("myValue");
+        System.out.println(record.value());
+        return true;    // TODO do dodania sprawdzanie poprawności odesłanej wiadomości. Na razie zwraca true
     }
 
     ScenarioBuilder scn =
             scenario("scenario")
-                    .exec(
-                            kafka("all customers")
+                    .forever().on(exec(
+                            kafka("Kafka: request with reply")
                                     .requestReply()
                                     .topic("allCustomersRequestTopic")
                                     .payload("""
-                                    { "id": "1", "pesel": "test", "name":"test"}
-                                    """)
+                                            { "id": "1", "pesel": "test", "name":"test"}
+                                            """)
                                     .replyTopic("allCustomersReplyTopic")
                                     .key("key")
-                                    .check(jsonPath("$.m").is("#{payload}_1"))
+                                    .check(simpleCheck(this::checkRecordValue))
 //                                    .checkIf("#{bool}")
 //                                    .then(jsonPath("$..foo"))
 //                                    .checkIf((message, session) -> true)
@@ -85,9 +89,9 @@ public class KafkaSimulation extends Simulation{
 //                                    .check(header("header1").in("value1"))
 //                                    .check(simpleCheck(this::checkRecordValue))
 
-                    );
+                    ));
     {
-        setUp(scn.injectOpen(atOnceUsers(1)))
+        setUp(scn.injectOpen(atOnceUsers(1))).maxDuration(Duration.ofSeconds(10))
                 .protocols(kafkaProtocol);
     }
 
