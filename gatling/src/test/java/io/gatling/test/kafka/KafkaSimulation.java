@@ -45,7 +45,7 @@ public class KafkaSimulation extends Simulation{
             .messageMatcher(customMatcher);
 
     public boolean checkRecordValue(ConsumerRecord<String, String> record) {
-        System.out.println(record.value());
+//        System.out.println(record.value());
         return true;    // TODO do dodania sprawdzanie poprawności odesłanej wiadomości. Na razie zwraca true
     }
 
@@ -91,7 +91,7 @@ public class KafkaSimulation extends Simulation{
 
                     ));
     {
-        setUp(scn.injectOpen(atOnceUsers(1))).maxDuration(Duration.ofSeconds(10))
+        setUp(scn.injectOpen(atOnceUsers(10))).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);
     }
 
