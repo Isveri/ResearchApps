@@ -1,19 +1,20 @@
 package pl.piomin.services.rest.customer.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-
+import javax.persistence.*;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
-public
-class Customer {
+@NoArgsConstructor
+@Entity
+@Table(name = "customers")
+public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     private String pesel;
     private String name;
