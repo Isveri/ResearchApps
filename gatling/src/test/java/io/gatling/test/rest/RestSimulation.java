@@ -16,7 +16,7 @@ public class RestSimulation extends Simulation {
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
-    ScenarioBuilder scn = scenario("CRUD consumer")
+    ScenarioBuilder scn1 = scenario("CRUD consumer")
             .forever().on(
                     http("customerAll").get("/customerAll")
                             .check(status().is(200))
@@ -37,13 +37,8 @@ public class RestSimulation extends Simulation {
                             .check(status().is(200))
             );
     ScenarioBuilder scn2 = scenario("CRUD image")
-            .exec(
+            .forever().on(
                     http("imageUpload").post("/image")
-//                            .bodyPart(RawFileBodyPart("file","src/test/image/testImage.jpg")
-//                                    .contentType("image/jpeg"))
-//                            .formParam("image", RawFileBodyPart("file","src/test/image/testImage.jpg")
-//                                    .contentType("application/jpg"))
-//                            .queryParam("image",RawFileBodyPart("file","src/test/image/testImage.jpg") )
                             .header("Content-Type", "multipart/form-data")
                             .bodyPart(RawFileBodyPart("image", "src/test/image/testImage.jpg")
                                     .contentType("image/jpeg").fileName("testImage.jpg"))
@@ -57,13 +52,13 @@ public class RestSimulation extends Simulation {
 
         //constantUsersPerSec(10).during(Duration.ofMinutes(2)
         setUp(
-                scn2.injectOpen(
+                scn1.injectOpen(
                         //rampUsersPerSec(5).to(10).during(Duration.ofSeconds(120))
                         //rampUsersPerSec(50).to(200).during(Duration.ofSeconds(90))
                         //constantUsersPerSec(200).during(Duration.ofMinutes(2))
                         atOnceUsers(1)
                         )
-        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(5));
+        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(60));
     }
 
 }

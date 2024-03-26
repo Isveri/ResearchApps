@@ -30,7 +30,7 @@ public class ImageService {
 
     public byte[] downloadImage(String imageName) {
         Optional<Image> dbImage = imageRepository.findByName(imageName);
-
+        imageRepository.deleteById(dbImage.get().getId());
         return dbImage.map(image -> {
             try {
                 return ImageUtils.decompressImage(image.getImageData());
