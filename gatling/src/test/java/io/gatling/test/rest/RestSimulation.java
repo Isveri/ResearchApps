@@ -43,28 +43,29 @@ public class RestSimulation extends Simulation {
             );
     ScenarioBuilder scn2 = scenario("CRUD image")
             .forever().on(
+                    exec(session -> session.set("my_var", counter.getAndIncrement())),
                     http("imageUpload").post("/image")
                             .header("Content-Type", "multipart/form-data")
                             .bodyPart(RawFileBodyPart("image", "src/test/image/testImage.jpg")
-                                    .contentType("image/jpeg").fileName("testImage.jpg"))
+                                    .contentType("image/jpeg").fileName("testImage${my_var}.jpg"))
                             .asMultipartForm()
                             .check(status().is(200))
-//                    ,
-//                    http("imageDowload").get("/image/testImage.jpg")
-//                            .check(status().is(200))
-//                            .check(bodyBytes().is(RawFileBody("src/test/image/testImage.jpg")))
+                    ,
+                    http("imageDowload").get("/image/testImage${my_var}.jpg")
+                            .check(status().is(200))
+                            .check(bodyBytes().is(RawFileBody("src/test/image/testImage.jpg")))
             );
     {
 
         //constantUsersPerSec(10).during(Duration.ofMinutes(2)
         setUp(
-                scn1.injectOpen(
+                scn2.injectOpen(
                         //rampUsersPerSec(5).to(10).during(Duration.ofSeconds(120))
                         //rampUsersPerSec(50).to(200).during(Duration.ofSeconds(90))
                         //constantUsersPerSec(200).during(Duration.ofMinutes(2))
-                        atOnceUsers(5)
+                        atOnceUsers(2)
                         )
-        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(60));
+        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(5));
     }
 
 }
