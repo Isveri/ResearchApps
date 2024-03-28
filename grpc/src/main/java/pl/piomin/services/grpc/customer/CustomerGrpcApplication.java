@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.piomin.services.grpc.customer.model.CustomerProto;
-import pl.piomin.services.grpc.customer.repository.CustomerRepository;
+import pl.piomin.services.grpc.customer.repository.CustomerRepositoryLocal;
 import pl.piomin.services.grpc.customer.service.CustomersService;
 
 import java.io.FileInputStream;
@@ -45,7 +45,7 @@ public class CustomerGrpcApplication {
 
 
     @Bean
-    CustomerRepository repository() {
+    CustomerRepositoryLocal repository() {
         List<CustomerProto.Customer> customers = new ArrayList<>();
         customers.add(CustomerProto.Customer.newBuilder().setId(1).setPesel("12345").setName("Adam Kowalski")
                 .build());
@@ -55,6 +55,6 @@ public class CustomerGrpcApplication {
                 .build());
         customers.add(CustomerProto.Customer.newBuilder().setId(4).setPesel("12348").setName("Karolina Lewandowska")
                 .build());
-        return new CustomerRepository(customers);
+        return new CustomerRepositoryLocal(customers);
     }
 }

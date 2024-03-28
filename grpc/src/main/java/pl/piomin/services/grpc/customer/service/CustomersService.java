@@ -8,7 +8,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.piomin.services.grpc.customer.model.CustomerProto;
 import pl.piomin.services.grpc.customer.model.CustomersServiceGrpc;
-import pl.piomin.services.grpc.customer.repository.CustomerRepository;
+import pl.piomin.services.grpc.customer.repository.CustomerRepositoryLocal;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class CustomersService extends CustomersServiceGrpc.CustomersServiceImplBase {
 
     @Autowired
-    CustomerRepository repository;
+    CustomerRepositoryLocal repository;
 
 
     @Override
