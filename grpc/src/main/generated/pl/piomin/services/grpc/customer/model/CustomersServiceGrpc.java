@@ -15,68 +15,6 @@ public final class CustomersServiceGrpc {
   public static final java.lang.String SERVICE_NAME = "model.CustomersService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.google.protobuf.StringValue,
-      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getFindByPeselMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "FindByPesel",
-      requestType = com.google.protobuf.StringValue.class,
-      responseType = pl.piomin.services.grpc.customer.model.CustomerProto.Customer.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.protobuf.StringValue,
-      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getFindByPeselMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.StringValue, pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getFindByPeselMethod;
-    if ((getFindByPeselMethod = CustomersServiceGrpc.getFindByPeselMethod) == null) {
-      synchronized (CustomersServiceGrpc.class) {
-        if ((getFindByPeselMethod = CustomersServiceGrpc.getFindByPeselMethod) == null) {
-          CustomersServiceGrpc.getFindByPeselMethod = getFindByPeselMethod =
-              io.grpc.MethodDescriptor.<com.google.protobuf.StringValue, pl.piomin.services.grpc.customer.model.CustomerProto.Customer>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "FindByPesel"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.StringValue.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  pl.piomin.services.grpc.customer.model.CustomerProto.Customer.getDefaultInstance()))
-              .setSchemaDescriptor(new CustomersServiceMethodDescriptorSupplier("FindByPesel"))
-              .build();
-        }
-      }
-    }
-    return getFindByPeselMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Int32Value,
-      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getFindByIdMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "FindById",
-      requestType = com.google.protobuf.Int32Value.class,
-      responseType = pl.piomin.services.grpc.customer.model.CustomerProto.Customer.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.protobuf.Int32Value,
-      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getFindByIdMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Int32Value, pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getFindByIdMethod;
-    if ((getFindByIdMethod = CustomersServiceGrpc.getFindByIdMethod) == null) {
-      synchronized (CustomersServiceGrpc.class) {
-        if ((getFindByIdMethod = CustomersServiceGrpc.getFindByIdMethod) == null) {
-          CustomersServiceGrpc.getFindByIdMethod = getFindByIdMethod =
-              io.grpc.MethodDescriptor.<com.google.protobuf.Int32Value, pl.piomin.services.grpc.customer.model.CustomerProto.Customer>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "FindById"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.Int32Value.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  pl.piomin.services.grpc.customer.model.CustomerProto.Customer.getDefaultInstance()))
-              .setSchemaDescriptor(new CustomersServiceMethodDescriptorSupplier("FindById"))
-              .build();
-        }
-      }
-    }
-    return getFindByIdMethod;
-  }
-
   private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Empty,
       pl.piomin.services.grpc.customer.model.CustomerProto.Customers> getFindAllMethod;
 
@@ -139,6 +77,68 @@ public final class CustomersServiceGrpc {
     return getAddCustomerMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<pl.piomin.services.grpc.customer.model.CustomerProto.Customer,
+      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getUpdateCustomerMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "UpdateCustomer",
+      requestType = pl.piomin.services.grpc.customer.model.CustomerProto.Customer.class,
+      responseType = pl.piomin.services.grpc.customer.model.CustomerProto.Customer.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<pl.piomin.services.grpc.customer.model.CustomerProto.Customer,
+      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getUpdateCustomerMethod() {
+    io.grpc.MethodDescriptor<pl.piomin.services.grpc.customer.model.CustomerProto.Customer, pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getUpdateCustomerMethod;
+    if ((getUpdateCustomerMethod = CustomersServiceGrpc.getUpdateCustomerMethod) == null) {
+      synchronized (CustomersServiceGrpc.class) {
+        if ((getUpdateCustomerMethod = CustomersServiceGrpc.getUpdateCustomerMethod) == null) {
+          CustomersServiceGrpc.getUpdateCustomerMethod = getUpdateCustomerMethod =
+              io.grpc.MethodDescriptor.<pl.piomin.services.grpc.customer.model.CustomerProto.Customer, pl.piomin.services.grpc.customer.model.CustomerProto.Customer>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "UpdateCustomer"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  pl.piomin.services.grpc.customer.model.CustomerProto.Customer.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  pl.piomin.services.grpc.customer.model.CustomerProto.Customer.getDefaultInstance()))
+              .setSchemaDescriptor(new CustomersServiceMethodDescriptorSupplier("UpdateCustomer"))
+              .build();
+        }
+      }
+    }
+    return getUpdateCustomerMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.google.protobuf.StringValue,
+      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getDeleteCustomerMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "DeleteCustomer",
+      requestType = com.google.protobuf.StringValue.class,
+      responseType = pl.piomin.services.grpc.customer.model.CustomerProto.Customer.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.google.protobuf.StringValue,
+      pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getDeleteCustomerMethod() {
+    io.grpc.MethodDescriptor<com.google.protobuf.StringValue, pl.piomin.services.grpc.customer.model.CustomerProto.Customer> getDeleteCustomerMethod;
+    if ((getDeleteCustomerMethod = CustomersServiceGrpc.getDeleteCustomerMethod) == null) {
+      synchronized (CustomersServiceGrpc.class) {
+        if ((getDeleteCustomerMethod = CustomersServiceGrpc.getDeleteCustomerMethod) == null) {
+          CustomersServiceGrpc.getDeleteCustomerMethod = getDeleteCustomerMethod =
+              io.grpc.MethodDescriptor.<com.google.protobuf.StringValue, pl.piomin.services.grpc.customer.model.CustomerProto.Customer>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "DeleteCustomer"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.protobuf.StringValue.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  pl.piomin.services.grpc.customer.model.CustomerProto.Customer.getDefaultInstance()))
+              .setSchemaDescriptor(new CustomersServiceMethodDescriptorSupplier("DeleteCustomer"))
+              .build();
+        }
+      }
+    }
+    return getDeleteCustomerMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -189,20 +189,6 @@ public final class CustomersServiceGrpc {
 
     /**
      */
-    default void findByPesel(com.google.protobuf.StringValue request,
-        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getFindByPeselMethod(), responseObserver);
-    }
-
-    /**
-     */
-    default void findById(com.google.protobuf.Int32Value request,
-        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getFindByIdMethod(), responseObserver);
-    }
-
-    /**
-     */
     default void findAll(com.google.protobuf.Empty request,
         io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customers> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getFindAllMethod(), responseObserver);
@@ -213,6 +199,20 @@ public final class CustomersServiceGrpc {
     default void addCustomer(pl.piomin.services.grpc.customer.model.CustomerProto.Customer request,
         io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAddCustomerMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void updateCustomer(pl.piomin.services.grpc.customer.model.CustomerProto.Customer request,
+        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdateCustomerMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void deleteCustomer(com.google.protobuf.StringValue request,
+        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteCustomerMethod(), responseObserver);
     }
   }
 
@@ -245,22 +245,6 @@ public final class CustomersServiceGrpc {
 
     /**
      */
-    public void findByPesel(com.google.protobuf.StringValue request,
-        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getFindByPeselMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void findById(com.google.protobuf.Int32Value request,
-        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getFindByIdMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
     public void findAll(com.google.protobuf.Empty request,
         io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customers> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -273,6 +257,22 @@ public final class CustomersServiceGrpc {
         io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getAddCustomerMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void updateCustomer(pl.piomin.services.grpc.customer.model.CustomerProto.Customer request,
+        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getUpdateCustomerMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void deleteCustomer(com.google.protobuf.StringValue request,
+        io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getDeleteCustomerMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -294,20 +294,6 @@ public final class CustomersServiceGrpc {
 
     /**
      */
-    public pl.piomin.services.grpc.customer.model.CustomerProto.Customer findByPesel(com.google.protobuf.StringValue request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getFindByPeselMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public pl.piomin.services.grpc.customer.model.CustomerProto.Customer findById(com.google.protobuf.Int32Value request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getFindByIdMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
     public pl.piomin.services.grpc.customer.model.CustomerProto.Customers findAll(com.google.protobuf.Empty request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getFindAllMethod(), getCallOptions(), request);
@@ -318,6 +304,20 @@ public final class CustomersServiceGrpc {
     public pl.piomin.services.grpc.customer.model.CustomerProto.Customer addCustomer(pl.piomin.services.grpc.customer.model.CustomerProto.Customer request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getAddCustomerMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public pl.piomin.services.grpc.customer.model.CustomerProto.Customer updateCustomer(pl.piomin.services.grpc.customer.model.CustomerProto.Customer request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getUpdateCustomerMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public pl.piomin.services.grpc.customer.model.CustomerProto.Customer deleteCustomer(com.google.protobuf.StringValue request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeleteCustomerMethod(), getCallOptions(), request);
     }
   }
 
@@ -339,22 +339,6 @@ public final class CustomersServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> findByPesel(
-        com.google.protobuf.StringValue request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getFindByPeselMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> findById(
-        com.google.protobuf.Int32Value request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getFindByIdMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
     public com.google.common.util.concurrent.ListenableFuture<pl.piomin.services.grpc.customer.model.CustomerProto.Customers> findAll(
         com.google.protobuf.Empty request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
@@ -368,12 +352,28 @@ public final class CustomersServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getAddCustomerMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> updateCustomer(
+        pl.piomin.services.grpc.customer.model.CustomerProto.Customer request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getUpdateCustomerMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<pl.piomin.services.grpc.customer.model.CustomerProto.Customer> deleteCustomer(
+        com.google.protobuf.StringValue request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getDeleteCustomerMethod(), getCallOptions()), request);
+    }
   }
 
-  private static final int METHODID_FIND_BY_PESEL = 0;
-  private static final int METHODID_FIND_BY_ID = 1;
-  private static final int METHODID_FIND_ALL = 2;
-  private static final int METHODID_ADD_CUSTOMER = 3;
+  private static final int METHODID_FIND_ALL = 0;
+  private static final int METHODID_ADD_CUSTOMER = 1;
+  private static final int METHODID_UPDATE_CUSTOMER = 2;
+  private static final int METHODID_DELETE_CUSTOMER = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -392,20 +392,20 @@ public final class CustomersServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_FIND_BY_PESEL:
-          serviceImpl.findByPesel((com.google.protobuf.StringValue) request,
-              (io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer>) responseObserver);
-          break;
-        case METHODID_FIND_BY_ID:
-          serviceImpl.findById((com.google.protobuf.Int32Value) request,
-              (io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer>) responseObserver);
-          break;
         case METHODID_FIND_ALL:
           serviceImpl.findAll((com.google.protobuf.Empty) request,
               (io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customers>) responseObserver);
           break;
         case METHODID_ADD_CUSTOMER:
           serviceImpl.addCustomer((pl.piomin.services.grpc.customer.model.CustomerProto.Customer) request,
+              (io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer>) responseObserver);
+          break;
+        case METHODID_UPDATE_CUSTOMER:
+          serviceImpl.updateCustomer((pl.piomin.services.grpc.customer.model.CustomerProto.Customer) request,
+              (io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer>) responseObserver);
+          break;
+        case METHODID_DELETE_CUSTOMER:
+          serviceImpl.deleteCustomer((com.google.protobuf.StringValue) request,
               (io.grpc.stub.StreamObserver<pl.piomin.services.grpc.customer.model.CustomerProto.Customer>) responseObserver);
           break;
         default:
@@ -427,20 +427,6 @@ public final class CustomersServiceGrpc {
   public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
     return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
         .addMethod(
-          getFindByPeselMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.google.protobuf.StringValue,
-              pl.piomin.services.grpc.customer.model.CustomerProto.Customer>(
-                service, METHODID_FIND_BY_PESEL)))
-        .addMethod(
-          getFindByIdMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.google.protobuf.Int32Value,
-              pl.piomin.services.grpc.customer.model.CustomerProto.Customer>(
-                service, METHODID_FIND_BY_ID)))
-        .addMethod(
           getFindAllMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
@@ -454,6 +440,20 @@ public final class CustomersServiceGrpc {
               pl.piomin.services.grpc.customer.model.CustomerProto.Customer,
               pl.piomin.services.grpc.customer.model.CustomerProto.Customer>(
                 service, METHODID_ADD_CUSTOMER)))
+        .addMethod(
+          getUpdateCustomerMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              pl.piomin.services.grpc.customer.model.CustomerProto.Customer,
+              pl.piomin.services.grpc.customer.model.CustomerProto.Customer>(
+                service, METHODID_UPDATE_CUSTOMER)))
+        .addMethod(
+          getDeleteCustomerMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.protobuf.StringValue,
+              pl.piomin.services.grpc.customer.model.CustomerProto.Customer>(
+                service, METHODID_DELETE_CUSTOMER)))
         .build();
   }
 
@@ -502,10 +502,10 @@ public final class CustomersServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new CustomersServiceFileDescriptorSupplier())
-              .addMethod(getFindByPeselMethod())
-              .addMethod(getFindByIdMethod())
               .addMethod(getFindAllMethod())
               .addMethod(getAddCustomerMethod())
+              .addMethod(getUpdateCustomerMethod())
+              .addMethod(getDeleteCustomerMethod())
               .build();
         }
       }

@@ -1607,15 +1607,15 @@ public final class CustomerProto {
       "/empty.proto\032\036google/protobuf/wrappers.p" +
       "roto\"3\n\010Customer\022\n\n\002id\030\001 \001(\005\022\r\n\005pesel\030\002 " +
       "\001(\t\022\014\n\004name\030\003 \001(\t\"/\n\tCustomers\022\"\n\tcustom" +
-      "ers\030\001 \003(\0132\017.model.Customer2\370\001\n\020Customers" +
-      "Service\022>\n\013FindByPesel\022\034.google.protobuf" +
-      ".StringValue\032\017.model.Customer\"\000\022:\n\010FindB" +
-      "yId\022\033.google.protobuf.Int32Value\032\017.model" +
-      ".Customer\"\000\0225\n\007FindAll\022\026.google.protobuf" +
-      ".Empty\032\020.model.Customers\"\000\0221\n\013AddCustome" +
-      "r\022\017.model.Customer\032\017.model.Customer\"\000B7\n" +
-      "&pl.piomin.services.grpc.customer.modelB" +
-      "\rCustomerProtob\006proto3"
+      "ers\030\001 \003(\0132\017.model.Customer2\365\001\n\020Customers" +
+      "Service\0225\n\007FindAll\022\026.google.protobuf.Emp" +
+      "ty\032\020.model.Customers\"\000\0221\n\013AddCustomer\022\017." +
+      "model.Customer\032\017.model.Customer\"\000\0224\n\016Upd" +
+      "ateCustomer\022\017.model.Customer\032\017.model.Cus" +
+      "tomer\"\000\022A\n\016DeleteCustomer\022\034.google.proto" +
+      "buf.StringValue\032\017.model.Customer\"\000B7\n&pl" +
+      ".piomin.services.grpc.customer.modelB\rCu" +
+      "stomerProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

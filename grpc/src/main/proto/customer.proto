@@ -9,10 +9,10 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 
 service CustomersService {
-  rpc FindByPesel(google.protobuf.StringValue) returns (Customer) {}
-  rpc FindById(google.protobuf.Int32Value) returns (Customer) {}
   rpc FindAll(google.protobuf.Empty) returns (Customers) {}
   rpc AddCustomer(Customer) returns (Customer) {}
+  rpc UpdateCustomer(Customer) returns (Customer) {}
+  rpc DeleteCustomer(google.protobuf.StringValue) returns (Customer) {}
 }
 
 message Customer {
