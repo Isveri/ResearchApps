@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import pl.piomin.services.grpc.customer.model.CustomerProto;
 import pl.piomin.services.grpc.customer.repository.CustomerRepositoryLocal;
 import pl.piomin.services.grpc.customer.service.CustomersService;
+import pl.piomin.services.grpc.customer.service.ImageService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,10 +26,11 @@ public class CustomerGrpcApplication {
     }
 
     @Bean
-    public Server grpcServer(CustomersService customersService) throws IOException, CertificateException {
+    public Server grpcServer(CustomersService customersService, ImageService imageService) throws IOException, CertificateException {
         SelfSignedCertificate ssc = new SelfSignedCertificate("localhost");
         Server server = ServerBuilder.forPort(9092)
                 .addService(customersService)
+                .addService(imageService)
                 .useTransportSecurity(
                         new FileInputStream(ssc.certificate()),
                         new FileInputStream(ssc.privateKey())

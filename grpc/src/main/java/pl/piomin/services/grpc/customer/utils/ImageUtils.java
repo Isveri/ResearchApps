@@ -10,7 +10,7 @@ public class ImageUtils {
 
     public static final int BITE_SIZE = 4 * 1024;
 
-    public static byte[] compressImage(byte[] data) throws IOException {
+    public static byte[] compressImage(byte[] data){
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
         deflater.setInput(data);
@@ -23,23 +23,36 @@ public class ImageUtils {
             outputStream.write(tmp,0, size);
         }
 
-        outputStream.close();
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return outputStream.toByteArray();
     }
 
-    public static byte[] decompressImage(byte[] data) throws DataFormatException, IOException {
+    public static byte[] decompressImage(byte[] data){
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
         byte[] tmp = new byte[BITE_SIZE];
 
         while (!inflater.finished()) {
-            int count = inflater.inflate(tmp);
+            int count = 0;
+            try {
+                count = inflater.inflate(tmp);
+            } catch (DataFormatException e) {
+                throw new RuntimeException(e);
+            }
             outputStream.write(tmp, 0, count);
         }
 
-        outputStream.close();
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return outputStream.toByteArray();
     }
