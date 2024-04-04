@@ -3,14 +3,18 @@ package com.example.kafkatest.model;
 
 import lombok.*;
 
+import javax.persistence.*;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public
-class Customer {
+@Entity
+@Table(name = "customers")
+public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     private String pesel;
     private String name;

@@ -1,6 +1,6 @@
 package com.example.kafkatest.repository;
 
-import com.example.kafkatest.model.Customer;
+import com.example.kafkatest.model.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,12 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+public interface ImageRepository extends JpaRepository<Image, Long> {
+    Optional<Image> findByName(String name);
 
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void deleteByPesel(String pesel);
-    @Transactional
-    boolean existsCustomerByPesel(String pesel);
-
-    Optional<Customer> findByPesel(String pesel);
+    void deleteAllByName(String name);
 }

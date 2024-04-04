@@ -27,24 +27,66 @@ public class KafkaConfig {
     public NewTopic allCustomersRequestTopic() {
         return new NewTopic("allCustomersRequestTopic", 1, (short) 10);
     }
+
     //topic:topic microserwisu do gatlinga ktory ma w message liste customerow
     @Bean
     public NewTopic allCustomersReplyTopic() {
         return new NewTopic("allCustomersReplyTopic", 1, (short) 10);
     }
+
+    //topic: topic gatlinga do listenera microserwisu z danymi customera do dodania
+    @Bean
+    public NewTopic addCustomerRequestTopic(){return new NewTopic("addCustomerRequestTopic",1,(short) 1);}
+
+    //topic: topic microserwisu do gatlinga ktory w message ma dodanego customera
+    @Bean
+    public NewTopic addCustomerReplyTopic(){return new NewTopic("addCustomerReplyTopic",1,(short) 1);}
+
     //topic:topic gatlinga do listenera microserwisu z messagem z danymi do updatu customera
     @Bean
-    public NewTopic updateCustomerTopic() {
-        return new NewTopic("updateCustomerTopic", 1, (short) 10);
+    public NewTopic updateCustomerRequestTopic() {
+        return new NewTopic("updateCustomerRequestTopic", 1, (short) 1);
     }
-    //topic:topic gatlinga do listenera microserwisu po konkretnego customera
+
+    //topic: topic microserwisu do gatlinga ktory w message ma zaktualizowanego customera
     @Bean
-    public NewTopic customerRequestTopic() {
-        return new NewTopic("customerRequestTopic", 1, (short) 1);
+    public NewTopic updateCustomerReplyTopic() {
+        return new NewTopic("updateCustomerReplyTopic", 1, (short) 1);
     }
-    //topic:topic microserwisu do gatlinga ktory ma w message dane konkretnego customera
+
+    //topic: topic gatlinga do listenera microserwisu z messagem z danymi do usuniecia customera
     @Bean
-    public NewTopic customerReplyTopic() {
-        return new NewTopic("customerReplyTopic", 1, (short) 1);
+    public NewTopic deleteCustomerRequestTopic() {
+        return new NewTopic("deleteCustomerRequestTopic", 1, (short) 1);
+    }
+
+    //topic: topic microserwisu do gatlinga ktory w message ma usunietego customera
+    @Bean
+    public NewTopic deleteCustomerReplyTopic() {
+        return new NewTopic("deleteCustomerReplyTopic", 1, (short) 1);
+    }
+
+    //topic: topic gatlinga do listenera microserwisu ze zdjeciem do dodania
+    @Bean
+    public NewTopic uploadImageRequestTopic() {
+        return new NewTopic("uploadImageRequestTopic", 1, (short) 1);
+    }
+
+    //topic: topic microserwisu do gatlinga ktory z potwierdzeniem dodania zdjecia
+    @Bean
+    public NewTopic uploadImageReplyTopic() {
+        return new NewTopic("uploadImageReplyTopic", 1, (short) 1);
+    }
+
+    //topic: topic gatlinga do listenera microserwisu z nazwą zdjęcia do pobrania
+    @Bean
+    public NewTopic dowloadImageRequestTopic() {
+        return new NewTopic("dowloadImageRequestTopic", 1, (short) 1);
+    }
+
+    //topic: topic microserwisu do gatlinga ktory z pobieranym zdjeciem
+    @Bean
+    public NewTopic dowloadImageReplyTopic() {
+        return new NewTopic("dowloadImageReplyTopic", 1, (short) 1);
     }
 }
