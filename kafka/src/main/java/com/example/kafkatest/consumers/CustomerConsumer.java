@@ -2,6 +2,7 @@ package com.example.kafkatest.consumers;
 
 import com.example.kafkatest.config.KafkaProducerConfig;
 import com.example.kafkatest.model.Customer;
+import com.example.kafkatest.producers.CustomerProducer;
 import com.example.kafkatest.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,13 +18,15 @@ import java.util.List;
 public class CustomerConsumer {
     @Autowired
     CustomerRepository repository;
-
+    @Autowired
+    CustomerProducer producer;
 
     @KafkaListener(topics = "allCustomersRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
-    @SendTo("allCustomersReplyTopic")
+    //@SendTo("allCustomersReplyTopic")
     public List<Customer> handleAllCustomersRequest() {
         List<Customer> reply = repository.findAll();
         System.out.println("all customers listener");
+        producer.allCustomersReply(reply);
         return reply;
     }
 

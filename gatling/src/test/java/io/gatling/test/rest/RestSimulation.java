@@ -20,7 +20,7 @@ public class RestSimulation extends Simulation {
             .contentTypeHeader("application/json");
 
     ScenarioBuilder scn1 = scenario("CRUD consumer")
-            .exec(
+            .forever().on(
                     exec(session -> session.set("my_var", counter.getAndIncrement())),
                     http("customerAll").get("/customerAll")
                             .check(status().is(200))
@@ -65,7 +65,7 @@ public class RestSimulation extends Simulation {
                         //constantUsersPerSec(200).during(Duration.ofMinutes(2))
                         atOnceUsers(5)
                         )
-        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(10));
+        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(120));
     }
 
 }

@@ -3,17 +3,24 @@ package io.gatling.test.kafka;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
+import io.gatling.model.Customer;
+import io.gatling.utils.JsonParser;
 import io.github.amerousful.kafka.javaapi.KafkaMessageMatcher;
 import io.github.amerousful.kafka.javaapi.KafkaProtocolBuilder;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.List;
+
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.github.amerousful.kafka.javaapi.KafkaDsl.*;
 
 public class KafkaSimulation extends Simulation{
+
 
     private static final KafkaMessageMatcher customMatcher =
             new KafkaMessageMatcher() {
@@ -45,13 +52,16 @@ public class KafkaSimulation extends Simulation{
             .messageMatcher(customMatcher);
 
     public boolean checkRecordValue(ConsumerRecord<String, String> record) {
-//        System.out.println(record.value());
-        return true;    // TODO do dodania sprawdzanie poprawności odesłanej wiadomości. Na razie zwraca true
+        boolean correct=true;
+        List<Customer> customerList = JsonParser.parseJsonToList(record.value());
+        if(customerList.isEmpty()){correct=false;}
+        System.out.println(customerList);
+        return correct;
     }
 
     ScenarioBuilder scn =
             scenario("scenario")
-                    .forever().on(exec(
+                    .exec(
                             kafka("Kafka: request with reply")
                                     .requestReply()
                                     .topic("allCustomersRequestTopic")
@@ -89,9 +99,9 @@ public class KafkaSimulation extends Simulation{
 //                                    .check(header("header1").in("value1"))
 //                                    .check(simpleCheck(this::checkRecordValue))
 
-                    ));
+                    );
     {
-        setUp(scn.injectOpen(atOnceUsers(10))).maxDuration(Duration.ofSeconds(60))
+        setUp(scn.injectOpen(atOnceUsers(1))).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);
     }
 
