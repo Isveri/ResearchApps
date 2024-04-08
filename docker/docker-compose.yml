@@ -21,3 +21,13 @@ services:
 #volumes:
 #  kafka_data:
 #    driver: local
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password

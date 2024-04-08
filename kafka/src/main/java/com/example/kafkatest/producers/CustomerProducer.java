@@ -13,11 +13,11 @@ public class CustomerProducer {
     private KafkaTemplate<String, Object> kafkaTemplate;
 
     public void allCustomersReply(List<Customer> customerList) {
-        kafkaTemplate.send("allCustomersReplyTopic", customerList);
+        kafkaTemplate.send("allCustomersReplyTopic", "key1", customerList);
     }
     public void addCustomersReply(Customer addedCustomer) {
         System.out.println("add customer producer");
-        kafkaTemplate.send("addCustomerReplyTopic", addedCustomer);
+        kafkaTemplate.send("allCustomersReplyTopic","key2", addedCustomer);
     }
     public void updateCustomersReply(Customer updatedCustomer) {
         kafkaTemplate.send("updateCustomerReplyTopic", updatedCustomer);
