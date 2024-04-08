@@ -2,9 +2,11 @@ package com.example.kafkatest.config;
 
 
 import com.example.kafkatest.model.Customer;
+import com.example.kafkatest.model.Image;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,9 +69,9 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, Long> consumerLongFactory() {
+    public ConsumerFactory<String, String> consumerStringFactory() {
 
-        JsonDeserializer<Long> deserializer = new JsonDeserializer<>(Long.class);
+        JsonDeserializer<String> deserializer = new JsonDeserializer<>(String.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
         deserializer.setUseTypeMapperForKey(true);
@@ -81,13 +83,57 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Long>
-    kafkaListenerContainerLongFactory(KafkaTemplate<String, Object> kafkaTemplate) {
+    public ConcurrentKafkaListenerContainerFactory<String, String>
+    kafkaListenerContainerStringFactory(KafkaTemplate<String, Object> kafkaTemplate) {
 
-        ConcurrentKafkaListenerContainerFactory<String, Long> factory =
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerLongFactory());
+        factory.setConsumerFactory(consumerStringFactory());
         factory.setReplyTemplate(kafkaTemplate);
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, Image> consumerImageFactory() {
+
+        JsonDeserializer<Image> deserializer = new JsonDeserializer<>(Image.class);
+        deserializer.setRemoveTypeHeaders(false);
+        deserializer.addTrustedPackages("*");
+        deserializer.setUseTypeMapperForKey(true);
+
+        return new DefaultKafkaConsumerFactory<>(
+                consumerConfigs(),
+                new StringDeserializer(),
+                deserializer);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Image>
+    kafkaListenerContainerImageFactory(KafkaTemplate<String, Object> kafkaTemplate) {
+
+        ConcurrentKafkaListenerContainerFactory<String, Image> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerImageFactory());
+        factory.setReplyTemplate(kafkaTemplate);
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, String> consumerMessageFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapAddress);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG,groupId);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class);
+        return new DefaultKafkaConsumerFactory<>(props);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String>
+    kafkaListenerContainerMessageFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerMessageFactory());
         return factory;
     }
 }

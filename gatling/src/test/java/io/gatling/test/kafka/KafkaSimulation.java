@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 import static io.gatling.javaapi.core.CoreDsl.*;
@@ -21,7 +22,7 @@ import static io.github.amerousful.kafka.javaapi.KafkaDsl.*;
 
 public class KafkaSimulation extends Simulation{
 
-
+    AtomicInteger counter = new AtomicInteger(0);
     private static final KafkaMessageMatcher customMatcher =
             new KafkaMessageMatcher() {
                 private String key;
@@ -49,57 +50,50 @@ public class KafkaSimulation extends Simulation{
             .replyTimeout(10)
             .matchByKey()
             .matchByValue()
-            .messageMatcher(customMatcher);
+            .messageMatcher(customMatcher)
+            .replyConsumerName("gatling-test-consumer");
 
-    public boolean checkRecordValue(ConsumerRecord<String, String> record) {
+    public boolean checkAllCustomers(ConsumerRecord<String, String> record) {
         boolean correct=true;
         List<Customer> customerList = JsonParser.parseJsonToList(record.value());
         if(customerList.isEmpty()){correct=false;}
-        System.out.println(customerList);
+        System.out.println("allCustomers: "+customerList);
         return correct;
+    }
+    public boolean checkAddCustomer(ConsumerRecord<String, String> record) {
+        boolean correct=true;
+        Customer customer = JsonParser.parseJsonToCustomer(record.value());
+        if(customer==null){correct=false;}
+        System.out.println("addCustomer: "+customer);
+        return true;
     }
 
     ScenarioBuilder scn =
-            scenario("scenario")
+            scenario("Customer CRUD")
+                    .exec(session -> session.set("my_var", counter.getAndIncrement()))
                     .exec(
-                            kafka("Kafka: request with reply")
+                            kafka("getAllCustomers")
                                     .requestReply()
                                     .topic("allCustomersRequestTopic")
                                     .payload("""
-                                            { "id": "1", "pesel": "test", "name":"test"}
+                                            { }
                                             """)
                                     .replyTopic("allCustomersReplyTopic")
-                                    .key("key")
-                                    .check(simpleCheck(this::checkRecordValue))
-//                                    .checkIf("#{bool}")
-//                                    .then(jsonPath("$..foo"))
-//                                    .checkIf((message, session) -> true)
-//                                    .then(jsonPath("$").is("hello"))
-//                                    .check(header("header1").in("value1"))
-//                                    .check(simpleCheck(this::checkRecordValue))
-//                            ,
-//                            kafka("update customer")
-//                                    .send()
-//                                    .topic("updateCustomerTopic")
-//                                    .payload("""
-//                                                  { "id": "1", "pesel": "testgatlin", "name":"testgatlin"}
-//                                                  """)
-//                                    .key("key"),
-//                            kafka("get customer")
-//                                    .requestReply()
-//                                    .topic("customerRequestTopic")
-//                                    .payload("1")
-//                                    .replyTopic("customerReplyTopic")
-//                                    .key("key")
-//                                    .check(jsonPath("$.m").is("#{payload}_1"))
-//                                    .checkIf("#{bool}")
-//                                    .then(jsonPath("$..foo"))
-//                                    .checkIf((message, session) -> true)
-//                                    .then(jsonPath("$").is("hello"))
-//                                    .check(header("header1").in("value1"))
-//                                    .check(simpleCheck(this::checkRecordValue))
-
+                                    .key("key1")
+                                    .check(simpleCheck(this::checkAllCustomers))
+                    )
+                    .exec(
+                            kafka("addCustomer")
+                                    .requestReply()
+                                    .topic("addCustomerRequestTopic")
+                                    .payload("""
+                                            {"name": "newUser","pesel": "newUser${my_var}"}
+                                            """)
+                                    .replyTopic("addCustomerReplyTopic")
+                                    .key("key2")
+                                    .check(simpleCheck(this::checkAddCustomer))
                     );
+
     {
         setUp(scn.injectOpen(atOnceUsers(1))).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);

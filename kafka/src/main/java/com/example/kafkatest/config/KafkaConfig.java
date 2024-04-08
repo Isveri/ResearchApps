@@ -36,11 +36,11 @@ public class KafkaConfig {
 
     //topic: topic gatlinga do listenera microserwisu z danymi customera do dodania
     @Bean
-    public NewTopic addCustomerRequestTopic(){return new NewTopic("addCustomerRequestTopic",1,(short) 1);}
+    public NewTopic addCustomerRequestTopic(){return new NewTopic("addCustomerRequestTopic",1,(short) 10);}
 
     //topic: topic microserwisu do gatlinga ktory w message ma dodanego customera
     @Bean
-    public NewTopic addCustomerReplyTopic(){return new NewTopic("addCustomerReplyTopic",1,(short) 1);}
+    public NewTopic addCustomerReplyTopic(){return new NewTopic("addCustomerReplyTopic",1,(short) 10);}
 
     //topic:topic gatlinga do listenera microserwisu z messagem z danymi do updatu customera
     @Bean

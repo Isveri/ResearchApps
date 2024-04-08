@@ -17,4 +17,9 @@ public class JsonParser {
         List<Customer> peopleList = Arrays.asList(peopleArray);
         return peopleList;
     }
+    public static Customer parseJsonToCustomer(String jsonString){
+        Gson gson = new Gson();
+        Customer customer = gson.fromJson(jsonString, Customer.class);
+        return customer;
+    }
 }

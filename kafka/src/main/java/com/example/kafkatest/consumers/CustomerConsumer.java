@@ -29,7 +29,27 @@ public class CustomerConsumer {
     }
 
     @KafkaListener(topics = "addCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
-    public void handleAddCustomerRequest(String message){
+    public void handleAddCustomerRequest(Customer customer){
+        Customer temp = customerRepository.save(customer);
+        System.out.println("add customer listener: "+customer );
+        producer.addCustomersReply(temp);
+
+    }
+    @KafkaListener(topics = "updateCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
+    public void handleUpdateCustomerRequest(Customer customer){
+        Customer customerToUpdate = customerRepository.findByPesel(customer.getPesel()).get();
+        customerToUpdate.setName(customer.getName());
+        customerRepository.save(customerToUpdate);
+        producer.updateCustomersReply(customerToUpdate);
+
+    }
+    @KafkaListener(topics = "deleteCustomerRequestTopic",containerFactory = "kafkaListenerContainerStringFactory")
+    public void handleDeleteCustomerRequest(String pesel){
+        if(customerRepository.existsCustomerByPesel(pesel)){
+            Customer deletedCustomer = customerRepository.findByPesel(pesel).get();
+            customerRepository.deleteByPesel(pesel);
+            producer.deleteCustomersReply(deletedCustomer);
+        }
 
     }
 }
