@@ -34,9 +34,8 @@ public class ImageConsumer {
         imageRepository.save(imageToSave);
         producer.uploadImageReply(image.getName());
     }
-    @KafkaListener(topics = "dowloadImageRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")
+    @KafkaListener(topics = "downloadImageRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")
     public void handleDowloadImageRequest(String imageName) {
-
         Optional<Image> dbImage = imageRepository.findByName(imageName);
         imageRepository.deleteById(dbImage.get().getId());
         var imageReturn= dbImage.map(image -> {

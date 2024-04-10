@@ -109,37 +109,43 @@ public class KafkaSimulation extends Simulation {
 
                             ));
     ScenarioBuilder scn2 =
-            scenario("Image upload/dowload")
-                    .exec(
-                            exec(session -> session.set("my_var", counter.getAndIncrement()))
-                                    .exec(
-                                            kafka("image upload")
-                                                    .requestReply()
-                                                    .topic("uploadImageRequestTopic")
-                                                    .payload(session -> {
-                                                        ByteString byteString;
-                                                        byte[] imageBytes;
-                                                        try {
-                                                            imageBytes = Files.readAllBytes(Paths.get("src/test/image/testImage.jpg"));
-                                                        } catch (IOException e) {
-                                                            throw new RuntimeException(e);
-                                                        }
-                                                        JsonObject json = new JsonObject();
-                                                        json.addProperty("name", "testImage" + session.get("my_var") + ".jpg");
-                                                        json.addProperty("type", "image/jpeg");
-                                                        json.addProperty("imageData", Base64.getEncoder().encodeToString(imageBytes));
-                                                        String payload = new Gson().toJson(json);
-                                                        System.out.println(payload);
-                                                        return payload;
-                                                    })
-                                                    .replyTopic("uploadImageReplyTopic")
-                                                    .key("key1")
-                                                    .check()
+            scenario("Image upload/dowload").forever().on(
+                    exec(session -> session.set("my_var", counter.getAndIncrement()))
+                            .exec(
+                                    kafka("image upload")
+                                            .requestReply()
+                                            .topic("uploadImageRequestTopic")
+                                            .payload(session -> {
+                                                ByteString byteString;
+                                                byte[] imageBytes;
+                                                try {
+                                                    imageBytes = Files.readAllBytes(Paths.get("src/test/image/testImage.jpg"));
+                                                } catch (IOException e) {
+                                                    throw new RuntimeException(e);
+                                                }
+                                                JsonObject json = new JsonObject();
+                                                json.addProperty("name", "testImage" + session.get("my_var") + ".jpg");
+                                                json.addProperty("type", "image/jpeg");
+                                                json.addProperty("imageData", Base64.getEncoder().encodeToString(imageBytes));
+                                                String payload = new Gson().toJson(json);
+                                                System.out.println(payload);
+                                                return payload;
+                                            })
+                                            .replyTopic("uploadImageReplyTopic")
+                                            .key("key1")
+                                            .check(),
+                                    kafka("image download")
+                                            .requestReply()
+                                            .topic("downloadImageRequestTopic")
+                                            .payload("testImage${my_var}.jpg")
+                                            .replyTopic("uploadImageReplyTopic")
+                                            .key("key2")
+                                            .check()
                                     )
                     );
 
     {
-        setUp(scn2.injectOpen(atOnceUsers(1))).maxDuration(Duration.ofSeconds(60))
+        setUp(scn2.injectOpen(atOnceUsers(10))).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);
     }
 

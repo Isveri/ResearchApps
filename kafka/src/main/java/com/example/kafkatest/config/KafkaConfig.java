@@ -81,12 +81,12 @@ public class KafkaConfig {
     //topic: topic gatlinga do listenera microserwisu z nazwą zdjęcia do pobrania
     @Bean
     public NewTopic dowloadImageRequestTopic() {
-        return new NewTopic("dowloadImageRequestTopic", 1, (short) 1);
+        return new NewTopic("downloadImageRequestTopic", 1, (short) 1);
     }
 
     //topic: topic microserwisu do gatlinga ktory z pobieranym zdjeciem
     @Bean
     public NewTopic dowloadImageReplyTopic() {
-        return new NewTopic("dowloadImageReplyTopic", 1, (short) 1);
+        return new NewTopic("downloadImageReplyTopic", 1, (short) 1);
     }
 }
