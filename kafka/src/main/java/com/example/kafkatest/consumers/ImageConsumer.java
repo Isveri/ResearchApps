@@ -6,12 +6,15 @@ import com.example.kafkatest.producers.CustomerProducer;
 import com.example.kafkatest.producers.ImageProducer;
 import com.example.kafkatest.repository.CustomerRepository;
 import com.example.kafkatest.repository.ImageRepository;
+
+import com.example.kafkatest.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +26,22 @@ public class ImageConsumer {
 
     @KafkaListener(topics = "uploadImageRequestTopic",containerFactory = "kafkaListenerContainerImageFactory")
     public void handleUploadImageRequest(Image image) {
-        imageRepository.save(image);
+        var imageToSave = Image.builder()
+                .name(image.getName())
+                .type(image.getType())
+                .imageData(ImageUtils.compressImage(image.getImageData()))
+                .build();
+        imageRepository.save(imageToSave);
         producer.uploadImageReply(image.getName());
     }
-    @KafkaListener(topics = "uploadImageRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")
+    @KafkaListener(topics = "dowloadImageRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")
     public void handleDowloadImageRequest(String imageName) {
-        Image image= imageRepository.findByName(imageName).get();
-        producer.dowloadImageReply(image.getImageData());
+
+        Optional<Image> dbImage = imageRepository.findByName(imageName);
+        imageRepository.deleteById(dbImage.get().getId());
+        var imageReturn= dbImage.map(image -> {
+            return ImageUtils.decompressImage(image.getImageData());
+        }).orElse(null);
+        producer.dowloadImageReply(imageReturn);
     }
 }

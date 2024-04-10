@@ -68,30 +68,7 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    @Bean
-    public ConsumerFactory<String, String> consumerStringFactory() {
 
-        JsonDeserializer<String> deserializer = new JsonDeserializer<>(String.class);
-        deserializer.setRemoveTypeHeaders(false);
-        deserializer.addTrustedPackages("*");
-        deserializer.setUseTypeMapperForKey(true);
-
-        return new DefaultKafkaConsumerFactory<>(
-                consumerConfigs(),
-                new StringDeserializer(),
-                deserializer);
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String>
-    kafkaListenerContainerStringFactory(KafkaTemplate<String, Object> kafkaTemplate) {
-
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerStringFactory());
-        factory.setReplyTemplate(kafkaTemplate);
-        return factory;
-    }
 
     @Bean
     public ConsumerFactory<String, Image> consumerImageFactory() {

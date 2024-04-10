@@ -16,9 +16,9 @@ public class ImageProducer {
     private KafkaTemplate<String, byte[]> kafkaImageTemplate;
 
     public void uploadImageReply(String imageName) {
-        kafkaMessageTemplate.send("uploadImageReplyTopic","Saved image: "+imageName);
+        kafkaMessageTemplate.send("uploadImageReplyTopic","key1","Saved image: "+imageName);
     }
     public void dowloadImageReply(byte[] image){
-        kafkaImageTemplate.send("dowloadImageReplyTopic", image);
+        kafkaImageTemplate.send("uploadImageReplyTopic","key2", image);
     }
 }

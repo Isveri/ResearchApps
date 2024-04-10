@@ -43,7 +43,7 @@ public class CustomerConsumer {
         producer.updateCustomersReply(customerToUpdate);
 
     }
-    @KafkaListener(topics = "deleteCustomerRequestTopic",containerFactory = "kafkaListenerContainerStringFactory")
+    @KafkaListener(topics = "deleteCustomerRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")
     public void handleDeleteCustomerRequest(String pesel){
         if(customerRepository.existsCustomerByPesel(pesel)){
             Customer deletedCustomer = customerRepository.findByPesel(pesel).get();

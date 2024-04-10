@@ -20,9 +20,9 @@ public class CustomerProducer {
         kafkaTemplate.send("allCustomersReplyTopic","key2", addedCustomer);
     }
     public void updateCustomersReply(Customer updatedCustomer) {
-        kafkaTemplate.send("updateCustomerReplyTopic", updatedCustomer);
+        kafkaTemplate.send("allCustomersReplyTopic","key3", updatedCustomer);
     }
     public void deleteCustomersReply(Customer deletedCustomer) {
-        kafkaTemplate.send("deleteCustomerReplyTopic", deletedCustomer);
+        kafkaTemplate.send("allCustomersReplyTopic","key4", deletedCustomer);
     }
 }

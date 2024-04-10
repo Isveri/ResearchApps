@@ -1,5 +1,8 @@
 package io.gatling.test.kafka;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.protobuf.ByteString;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
@@ -13,11 +16,17 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.piomin.services.grpc.image.model.ImageProto;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -59,10 +68,19 @@ public class KafkaSimulation extends Simulation {
         return correct;
     }
 
-    ScenarioBuilder scn =
+    ScenarioBuilder scn1 =
             scenario("Customer CRUD").forever().on(
                     exec(session -> session.set("my_var", counter.getAndIncrement()))
                             .exec(
+                                    kafka("getAllCustomers")
+                                            .requestReply()
+                                            .topic("allCustomersRequestTopic")
+                                            .payload("""
+                                                    { }
+                                                    """)
+                                            .replyTopic("allCustomersReplyTopic")
+                                            .key("key1")
+                                            .check(simpleCheck(this::checkAllCustomers)),
                                     kafka("addCustomer")
                                             .requestReply()
                                             .topic("addCustomerRequestTopic")
@@ -72,20 +90,56 @@ public class KafkaSimulation extends Simulation {
                                             .replyTopic("allCustomersReplyTopic")
                                             .key("key2")
                                             .check(simpleCheck(this::checkAddCustomer)),
-                                    kafka("getAllCustomers")
+                                    kafka("updateCustomer")
                                             .requestReply()
-                                            .topic("allCustomersRequestTopic")
+                                            .topic("updateCustomerRequestTopic")
                                             .payload("""
-                                                    { }
+                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
                                                     """)
                                             .replyTopic("allCustomersReplyTopic")
-                                            .key("key1")
-                                            .check(simpleCheck(this::checkAllCustomers))
+                                            .key("key3")
+                                            .check(simpleCheck(this::checkAddCustomer)),
+                                    kafka("deleteCustomer")
+                                            .requestReply()
+                                            .topic("deleteCustomerRequestTopic")
+                                            .payload("newUser${my_var}")
+                                            .replyTopic("allCustomersReplyTopic")
+                                            .key("key4")
+                                            .check(simpleCheck(this::checkAddCustomer))
 
                             ));
+    ScenarioBuilder scn2 =
+            scenario("Image upload/dowload")
+                    .exec(
+                            exec(session -> session.set("my_var", counter.getAndIncrement()))
+                                    .exec(
+                                            kafka("image upload")
+                                                    .requestReply()
+                                                    .topic("uploadImageRequestTopic")
+                                                    .payload(session -> {
+                                                        ByteString byteString;
+                                                        byte[] imageBytes;
+                                                        try {
+                                                            imageBytes = Files.readAllBytes(Paths.get("src/test/image/testImage.jpg"));
+                                                        } catch (IOException e) {
+                                                            throw new RuntimeException(e);
+                                                        }
+                                                        JsonObject json = new JsonObject();
+                                                        json.addProperty("name", "testImage" + session.get("my_var") + ".jpg");
+                                                        json.addProperty("type", "image/jpeg");
+                                                        json.addProperty("imageData", Base64.getEncoder().encodeToString(imageBytes));
+                                                        String payload = new Gson().toJson(json);
+                                                        System.out.println(payload);
+                                                        return payload;
+                                                    })
+                                                    .replyTopic("uploadImageReplyTopic")
+                                                    .key("key1")
+                                                    .check()
+                                    )
+                    );
 
     {
-        setUp(scn.injectOpen(atOnceUsers(1))).maxDuration(Duration.ofSeconds(60))
+        setUp(scn2.injectOpen(atOnceUsers(1))).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);
     }
 
