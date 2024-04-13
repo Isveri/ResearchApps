@@ -1,4 +1,5 @@
 spring.application.name: customer-service
+server.port: 8082
 spring.output.ansi.enabled: always
 
 spring:
@@ -35,5 +36,3 @@ management:
       exposure:
         include: "*"
 
-
-server.port: 8082
