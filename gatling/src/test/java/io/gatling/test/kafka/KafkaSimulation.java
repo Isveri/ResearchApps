@@ -54,7 +54,7 @@ public class KafkaSimulation extends Simulation {
         if (customerList.isEmpty()) {
             correct = false;
         }
-        System.out.println("allCustomers: " + customerList);
+        //System.out.println("allCustomers: " + customerList);
         return correct;
     }
 
@@ -64,7 +64,7 @@ public class KafkaSimulation extends Simulation {
         if (customer == null) {
             correct = false;
         }
-        System.out.println("addCustomer: " + customer);
+        //System.out.println("addCustomer: " + customer);
         return correct;
     }
 
@@ -72,15 +72,15 @@ public class KafkaSimulation extends Simulation {
             scenario("Customer CRUD").forever().on(
                     exec(session -> session.set("my_var", counter.getAndIncrement()))
                             .exec(
-                                    kafka("getAllCustomers")
-                                            .requestReply()
-                                            .topic("allCustomersRequestTopic")
-                                            .payload("""
-                                                    { }
-                                                    """)
-                                            .replyTopic("allCustomersReplyTopic")
-                                            .key("key1")
-                                            .check(simpleCheck(this::checkAllCustomers)),
+//                                    kafka("getAllCustomers")
+//                                            .requestReply()
+//                                            .topic("allCustomersRequestTopic")
+//                                            .payload("""
+//                                                    { }
+//                                                    """)
+//                                            .replyTopic("allCustomersReplyTopic")
+//                                            .key("key1")
+//                                            .check(simpleCheck(this::checkAllCustomers)),
                                     kafka("addCustomer")
                                             .requestReply()
                                             .topic("addCustomerRequestTopic")
@@ -88,24 +88,24 @@ public class KafkaSimulation extends Simulation {
                                                     {"name": "newUser","pesel": "newUser${my_var}"}
                                                     """)
                                             .replyTopic("allCustomersReplyTopic")
-                                            .key("key2")
-                                            .check(simpleCheck(this::checkAddCustomer)),
-                                    kafka("updateCustomer")
-                                            .requestReply()
-                                            .topic("updateCustomerRequestTopic")
-                                            .payload("""
-                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
-                                                    """)
-                                            .replyTopic("allCustomersReplyTopic")
-                                            .key("key3")
-                                            .check(simpleCheck(this::checkAddCustomer)),
-                                    kafka("deleteCustomer")
-                                            .requestReply()
-                                            .topic("deleteCustomerRequestTopic")
-                                            .payload("newUser${my_var}")
-                                            .replyTopic("allCustomersReplyTopic")
                                             .key("key4")
                                             .check(simpleCheck(this::checkAddCustomer))
+//                                    kafka("updateCustomer")
+//                                            .requestReply()
+//                                            .topic("updateCustomerRequestTopic")
+//                                            .payload("""
+//                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
+//                                                    """)
+//                                            .replyTopic("allCustomersReplyTopic")
+//                                            .key("key3")
+//                                            .check(simpleCheck(this::checkAddCustomer)),
+//                                    kafka("deleteCustomer")
+//                                            .requestReply()
+//                                            .topic("deleteCustomerRequestTopic")
+//                                            .payload("newUser${my_var}")
+//                                            .replyTopic("allCustomersReplyTopic")
+//                                            .key("key4")
+//                                            .check(simpleCheck(this::checkAddCustomer))
 
                             ));
     ScenarioBuilder scn2 =
@@ -145,8 +145,16 @@ public class KafkaSimulation extends Simulation {
                     );
 
     {
-        setUp(scn2.injectOpen(atOnceUsers(10))).maxDuration(Duration.ofSeconds(60))
+        setUp(scn1.injectOpen(
+                constantUsersPerSec(50).during(Duration.ofMinutes(1))
+                //atOnceUsers(100)
+        )).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);
+//        setUp(scn1.injectOpen(
+//                nothingFor(5),
+//                rampUsers(20).during(50)
+//        )).maxDuration(Duration.ofSeconds(60))
+//                .protocols(kafkaProtocol);
     }
 
 }

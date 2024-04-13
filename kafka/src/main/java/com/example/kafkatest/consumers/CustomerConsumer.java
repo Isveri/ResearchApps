@@ -30,9 +30,18 @@ public class CustomerConsumer {
 
     @KafkaListener(topics = "addCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
     public void handleAddCustomerRequest(Customer customer){
+        List<Customer> reply = customerRepository.findAll();
         Customer temp = customerRepository.save(customer);
         System.out.println("add customer listener: "+customer );
-        producer.addCustomersReply(temp);
+        temp.setName("newName");
+        Customer tempUpdated = customerRepository.save(temp);
+        String pesel = tempUpdated.getPesel();
+        if(customerRepository.existsCustomerByPesel(pesel)){
+            Customer deletedCustomer = customerRepository.findByPesel(pesel).get();
+            customerRepository.deleteByPesel(pesel);
+            producer.deleteCustomersReply(deletedCustomer);
+        }
+        //producer.addCustomersReply(temp);
 
     }
     @KafkaListener(topics = "updateCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")

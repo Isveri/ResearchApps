@@ -98,7 +98,7 @@ public class GrpcSimulation extends Simulation {
                             .check(statusCode().is(Status.Code.OK))
             );
     {
-        setUp(scn1.injectOpen(atOnceUsers(5)))
+        setUp(scn2.injectOpen(atOnceUsers(5)))
                 .protocols(baseGrpcProtocol).maxDuration(Duration.ofSeconds(120));
     }
 

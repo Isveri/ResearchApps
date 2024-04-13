@@ -62,10 +62,10 @@ public class RestSimulation extends Simulation {
                 scn1.injectOpen(
                         //rampUsersPerSec(5).to(10).during(Duration.ofSeconds(120))
                         //rampUsersPerSec(50).to(200).during(Duration.ofSeconds(90))
-                        //constantUsersPerSec(200).during(Duration.ofMinutes(2))
-                        atOnceUsers(5)
+                        constantUsersPerSec(50).during(Duration.ofMinutes(1))
+                        //atOnceUsers(100)
                         )
-        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(120));
+        ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(60));
     }
 
 }

@@ -45,48 +45,48 @@ public class KafkaConfig {
     //topic:topic gatlinga do listenera microserwisu z messagem z danymi do updatu customera
     @Bean
     public NewTopic updateCustomerRequestTopic() {
-        return new NewTopic("updateCustomerRequestTopic", 1, (short) 1);
+        return new NewTopic("updateCustomerRequestTopic", 1, (short) 10);
     }
 
     //topic: topic microserwisu do gatlinga ktory w message ma zaktualizowanego customera
     @Bean
     public NewTopic updateCustomerReplyTopic() {
-        return new NewTopic("updateCustomerReplyTopic", 1, (short) 1);
+        return new NewTopic("updateCustomerReplyTopic", 1, (short) 10);
     }
 
     //topic: topic gatlinga do listenera microserwisu z messagem z danymi do usuniecia customera
     @Bean
     public NewTopic deleteCustomerRequestTopic() {
-        return new NewTopic("deleteCustomerRequestTopic", 1, (short) 1);
+        return new NewTopic("deleteCustomerRequestTopic", 1, (short) 10);
     }
 
     //topic: topic microserwisu do gatlinga ktory w message ma usunietego customera
     @Bean
     public NewTopic deleteCustomerReplyTopic() {
-        return new NewTopic("deleteCustomerReplyTopic", 1, (short) 1);
+        return new NewTopic("deleteCustomerReplyTopic", 1, (short) 10);
     }
 
     //topic: topic gatlinga do listenera microserwisu ze zdjeciem do dodania
     @Bean
     public NewTopic uploadImageRequestTopic() {
-        return new NewTopic("uploadImageRequestTopic", 1, (short) 1);
+        return new NewTopic("uploadImageRequestTopic", 1, (short) 10);
     }
 
     //topic: topic microserwisu do gatlinga ktory z potwierdzeniem dodania zdjecia
     @Bean
     public NewTopic uploadImageReplyTopic() {
-        return new NewTopic("uploadImageReplyTopic", 1, (short) 1);
+        return new NewTopic("uploadImageReplyTopic", 1, (short) 10);
     }
 
     //topic: topic gatlinga do listenera microserwisu z nazwą zdjęcia do pobrania
     @Bean
     public NewTopic dowloadImageRequestTopic() {
-        return new NewTopic("downloadImageRequestTopic", 1, (short) 1);
+        return new NewTopic("downloadImageRequestTopic", 1, (short) 10);
     }
 
     //topic: topic microserwisu do gatlinga ktory z pobieranym zdjeciem
     @Bean
     public NewTopic dowloadImageReplyTopic() {
-        return new NewTopic("downloadImageReplyTopic", 1, (short) 1);
+        return new NewTopic("downloadImageReplyTopic", 1, (short) 10);
     }
 }
