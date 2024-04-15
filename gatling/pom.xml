@@ -41,11 +41,16 @@
             <version>${gatling.version}</version>
             <scope>test</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.gatling</groupId>-->
+<!--            <artifactId>gatling-grpc-java</artifactId>-->
+<!--            <version>${gatling-grpc.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>io.gatling</groupId>
-            <artifactId>gatling-grpc-java</artifactId>
-            <version>${gatling-grpc.version}</version>
-            <scope>test</scope>
+            <groupId>com.github.phisgr</groupId>
+            <artifactId>gatling-grpc</artifactId>
+            <version>0.17.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.amerousful</groupId>
