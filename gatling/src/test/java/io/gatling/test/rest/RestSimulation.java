@@ -19,41 +19,51 @@ public class RestSimulation extends Simulation {
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
-    ScenarioBuilder scn1 = scenario("CRUD consumer")
+   ScenarioBuilder scn1 = scenario("CRUD consumer")
             .forever().on(
-                    exec(session -> session.set("my_var", counter.getAndIncrement())),
-                    http("customerAll").get("/customerAll")
-                            .check(status().is(200))
-                            .check(jsonPath("$").ofList())
-                            .check(jsonPath("$[*].id").findAll().exists())
-                            .check(jsonPath("$[*].pesel").findAll().exists())
-                            .check(jsonPath("$[*].name").findAll().exists())
-                    ,
-                    http("addCustomer").post("/addCustomer")
-                            .body(StringBody("{\"name\": \"newUser\",\"pesel\": \"newUser${my_var}\"}"))
-                            .check(status().is(200))
-                    ,
-                    http("updateCustomer").post("/updateCustomer/newUser${my_var}")
-                        .body(StringBody("{\"name\": \"newUserChanged\",\"pesel\": \"test\"}"))
-                            .check(status().is(200))
-                    ,
+                    exec(session -> session.set("my_var", counter.getAndIncrement()))
+                     .exec(
+                                    http("customerAll").get("/customerAll")
+                                            .check(status().is(200))
+                                            .check(jsonPath("$").ofList())
+                                            .check(jsonPath("$[*].id").findAll().exists())
+                                            .check(jsonPath("$[*].pesel").findAll().exists())
+                                            .check(jsonPath("$[*].name").findAll().exists())
+                            )
 
-                    http("deleteCustomer").delete("/deleteCustomer/newUser${my_var}")
-                            .check(status().is(200))
+                     .exec(
+                             http("addCustomer").post("/addCustomer")
+                                     .body(StringBody("{\"name\": \"newUser\",\"pesel\": \"newUser${my_var}\"}"))
+                                     .check(status().is(200))
+                     )
+                     .exec(
+                             http("updateCustomer").post("/updateCustomer/newUser${my_var}")
+                                     .body(StringBody("{\"name\": \"newUserChanged\",\"pesel\": \"test\"}"))
+                                     .check(status().is(200))
+                     )
+                     .exec(
+                             http("deleteCustomer").delete("/deleteCustomer/newUser${my_var}")
+                                     .check(status().is(200))
+                     )
+
             );
     ScenarioBuilder scn2 = scenario("CRUD image")
             .forever().on(
-                    exec(session -> session.set("my_var", counter.getAndIncrement())),
-                    http("imageUpload").post("/image")
-                            .header("Content-Type", "multipart/form-data")
-                            .bodyPart(RawFileBodyPart("image", "src/test/image/testImage.jpg")
-                                    .contentType("image/jpeg").fileName("testImage${my_var}.jpg"))
-                            .asMultipartForm()
-                            .check(status().is(200))
-                    ,
-                    http("imageDowload").get("/image/testImage${my_var}.jpg")
-                            .check(status().is(200))
-                            .check(bodyBytes().is(RawFileBody("src/test/image/testImage.jpg")))
+                    exec(session -> session.set("my_var", counter.getAndIncrement()))
+                     .exec(
+                             http("imageUpload").post("/image")
+                                     .header("Content-Type", "multipart/form-data")
+                                     .bodyPart(RawFileBodyPart("image", "src/test/image/testImage.jpg")
+                                             .contentType("image/jpeg").fileName("testImage${my_var}.jpg"))
+                                     .asMultipartForm()
+                                     .check(status().is(200))
+                     )
+                      .exec(
+                                     http("imageDowload").get("/image/testImage${my_var}.jpg")
+                                     .check(status().is(200))
+                                     .check(bodyBytes().is(RawFileBody("src/test/image/testImage.jpg")))
+                      )
+
             );
     {
 
@@ -62,7 +72,7 @@ public class RestSimulation extends Simulation {
                 scn2.injectOpen(
                         //rampUsersPerSec(5).to(10).during(Duration.ofSeconds(120))
                         //rampUsersPerSec(50).to(200).during(Duration.ofSeconds(90))
-                        constantUsersPerSec(200).during(Duration.ofMinutes(1))
+                        constantUsersPerSec(30).during(Duration.ofMinutes(1))
                         //atOnceUsers(100)
                         )
         ).protocols(httpProtocol).maxDuration(Duration.ofSeconds(60));

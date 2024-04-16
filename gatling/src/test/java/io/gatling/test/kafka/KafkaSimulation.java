@@ -44,7 +44,7 @@ public class KafkaSimulation extends Simulation {
             .consumerIdenticalDeserializer("org.apache.kafka.common.serialization.JsonDeserializer")
             .addProducerProperty("retries", "3")
             .addConsumerProperty("heartbeat.interval.ms", "3000")
-            .replyTimeout(10)
+            .replyTimeout(4)
             .matchByKey()
             .replyConsumerName("gatling-test-consumer");
 
@@ -64,7 +64,7 @@ public class KafkaSimulation extends Simulation {
         if (customer == null) {
             correct = false;
         }
-        //System.out.println("addCustomer: " + customer);
+        //System.out.println("addCustomer: " + customer.getName()+" "+customer.getPesel());
         return correct;
     }
 
@@ -72,15 +72,17 @@ public class KafkaSimulation extends Simulation {
             scenario("Customer CRUD").forever().on(
                     exec(session -> session.set("my_var", counter.getAndIncrement()))
                             .exec(
-//                                    kafka("getAllCustomers")
-//                                            .requestReply()
-//                                            .topic("allCustomersRequestTopic")
-//                                            .payload("""
-//                                                    { }
-//                                                    """)
-//                                            .replyTopic("allCustomersReplyTopic")
-//                                            .key("key1")
-//                                            .check(simpleCheck(this::checkAllCustomers)),
+                                    kafka("getAllCustomers")
+                                            .requestReply()
+                                            .topic("allCustomersRequestTopic")
+                                            .payload("""
+                                                    { }
+                                                    """)
+                                            .replyTopic("allCustomersReplyTopic")
+                                            .key("key1")
+                                            .check(simpleCheck(this::checkAllCustomers))
+                            )
+                            .exec(
                                     kafka("addCustomer")
                                             .requestReply()
                                             .topic("addCustomerRequestTopic")
@@ -88,26 +90,30 @@ public class KafkaSimulation extends Simulation {
                                                     {"name": "newUser","pesel": "newUser${my_var}"}
                                                     """)
                                             .replyTopic("allCustomersReplyTopic")
+                                            .key("key2")
+                                            .check(simpleCheck(this::checkAddCustomer))
+                            )
+                            .exec(
+                                    kafka("updateCustomer")
+                                            .requestReply()
+                                            .topic("updateCustomerRequestTopic")
+                                            .payload("""
+                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
+                                                    """)
+                                            .replyTopic("allCustomersReplyTopic")
+                                            .key("key3")
+                                            .check(simpleCheck(this::checkAddCustomer))
+                            )
+                            .exec(
+                                    kafka("deleteCustomer")
+                                            .requestReply()
+                                            .topic("deleteCustomerRequestTopic")
+                                            .payload("newUser${my_var}")
+                                            .replyTopic("allCustomersReplyTopic")
                                             .key("key4")
                                             .check(simpleCheck(this::checkAddCustomer))
-//                                    kafka("updateCustomer")
-//                                            .requestReply()
-//                                            .topic("updateCustomerRequestTopic")
-//                                            .payload("""
-//                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
-//                                                    """)
-//                                            .replyTopic("allCustomersReplyTopic")
-//                                            .key("key3")
-//                                            .check(simpleCheck(this::checkAddCustomer)),
-//                                    kafka("deleteCustomer")
-//                                            .requestReply()
-//                                            .topic("deleteCustomerRequestTopic")
-//                                            .payload("newUser${my_var}")
-//                                            .replyTopic("allCustomersReplyTopic")
-//                                            .key("key4")
-//                                            .check(simpleCheck(this::checkAddCustomer))
-
-                            ));
+                            )
+            );
     ScenarioBuilder scn2 =
             scenario("Image upload/dowload").forever().on(
                     exec(session -> session.set("my_var", counter.getAndIncrement()))
@@ -128,12 +134,14 @@ public class KafkaSimulation extends Simulation {
                                                 json.addProperty("type", "image/jpeg");
                                                 json.addProperty("imageData", Base64.getEncoder().encodeToString(imageBytes));
                                                 String payload = new Gson().toJson(json);
-                                                System.out.println(payload);
+                                                //System.out.println(payload);
                                                 return payload;
                                             })
                                             .replyTopic("uploadImageReplyTopic")
                                             .key("key1")
-                                            .check(),
+                                            .check()
+                            )
+                            .exec(
                                     kafka("image download")
                                             .requestReply()
                                             .topic("downloadImageRequestTopic")
@@ -141,13 +149,13 @@ public class KafkaSimulation extends Simulation {
                                             .replyTopic("uploadImageReplyTopic")
                                             .key("key2")
                                             .check()
-                                    )
+                            )
                     );
 
     {
-        setUp(scn1.injectOpen(
-                constantUsersPerSec(50).during(Duration.ofMinutes(1))
-                //atOnceUsers(100)
+        setUp(scn2.injectOpen(
+                constantUsersPerSec(30).during(Duration.ofMinutes(1))
+                //atOnceUsers(2)
         )).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);
 //        setUp(scn1.injectOpen(
