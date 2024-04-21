@@ -20,7 +20,7 @@ public class RestSimulation extends Simulation {
             .contentTypeHeader("application/json");
 
    ScenarioBuilder scn1 = scenario("CRUD consumer")
-            .forever().on(
+           .repeat(100000).on(
                     exec(session -> session.set("my_var", counter.getAndIncrement()))
                      .exec(
                                     http("customerAll").get("/customerAll")
@@ -31,20 +31,20 @@ public class RestSimulation extends Simulation {
                                             .check(jsonPath("$[*].name").findAll().exists())
                             )
 
-                     .exec(
-                             http("addCustomer").post("/addCustomer")
-                                     .body(StringBody("{\"name\": \"newUser\",\"pesel\": \"newUser${my_var}\"}"))
-                                     .check(status().is(200))
-                     )
-                     .exec(
-                             http("updateCustomer").post("/updateCustomer/newUser${my_var}")
-                                     .body(StringBody("{\"name\": \"newUserChanged\",\"pesel\": \"test\"}"))
-                                     .check(status().is(200))
-                     )
-                     .exec(
-                             http("deleteCustomer").delete("/deleteCustomer/newUser${my_var}")
-                                     .check(status().is(200))
-                     )
+//                     .exec(
+//                             http("addCustomer").post("/addCustomer")
+//                                     .body(StringBody("{\"name\": \"newUser\",\"pesel\": \"newUser${my_var}\"}"))
+//                                     .check(status().is(200))
+//                     )
+//                     .exec(
+//                             http("updateCustomer").post("/updateCustomer/newUser${my_var}")
+//                                     .body(StringBody("{\"name\": \"newUserChanged\",\"pesel\": \"test\"}"))
+//                                     .check(status().is(200))
+//                     )
+//                     .exec(
+//                             http("deleteCustomer").delete("/deleteCustomer/newUser${my_var}")
+//                                     .check(status().is(200))
+//                     )
 
             );
     ScenarioBuilder scn2 = scenario("CRUD image")
@@ -69,7 +69,7 @@ public class RestSimulation extends Simulation {
 
         //constantUsersPerSec(10).during(Duration.ofMinutes(2)
         setUp(
-                scn2.injectOpen(
+                scn1.injectOpen(
                         //rampUsersPerSec(5).to(10).during(Duration.ofSeconds(120))
                         //rampUsersPerSec(50).to(200).during(Duration.ofSeconds(90))
                         constantUsersPerSec(30).during(Duration.ofMinutes(1))

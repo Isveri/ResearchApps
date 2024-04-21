@@ -32,6 +32,9 @@ public class ImageConsumer {
                 .imageData(ImageUtils.compressImage(image.getImageData()))
                 .build();
         imageRepository.save(imageToSave);
+        //TODO kod testowy, po sprawdzeniu limitu requestow usunac
+        //imageRepository.deleteById(imageToSave.getId());
+        //
         producer.uploadImageReply(image.getName());
     }
     @KafkaListener(topics = "downloadImageRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")

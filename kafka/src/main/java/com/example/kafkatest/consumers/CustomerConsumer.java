@@ -11,6 +11,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +23,17 @@ public class CustomerConsumer {
     @Autowired
     CustomerProducer producer;
 
-    @KafkaListener(topics = "allCustomersRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
+    ExecutorService executorService = Executors.newFixedThreadPool(30);
+
+    @KafkaListener(topics = "allCustomersRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory",
+            concurrency = "1")
     //@SendTo("allCustomersReplyTopic")
     public void handleAllCustomersRequest() {
+//        executorService.submit(()->{
+//            List<Customer> reply = customerRepository.findAll();
+//            System.out.println("all customers listener");
+//            producer.allCustomersReply(reply);
+//        });
         List<Customer> reply = customerRepository.findAll();
         System.out.println("all customers listener");
         producer.allCustomersReply(reply);
@@ -47,10 +58,14 @@ public class CustomerConsumer {
     @KafkaListener(topics = "updateCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
     public void handleUpdateCustomerRequest(Customer customer){
         System.out.println("customer pesel: "+customer.getPesel());
-        Customer customerToUpdate = customerRepository.findByPesel(customer.getPesel()).get();
-        customerToUpdate.setName(customer.getName());
-        customerRepository.save(customerToUpdate);
-        producer.updateCustomersReply(customerToUpdate);
+        Optional<Customer> cust = customerRepository.findByPesel(customer.getPesel());
+        if (cust.isPresent()){
+            Customer customerToUpdate = cust.get();
+            customerToUpdate.setName(customer.getName());
+            customerRepository.save(customerToUpdate);
+            producer.updateCustomersReply(customerToUpdate);
+        }
+
 
     }
     @KafkaListener(topics = "deleteCustomerRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")

@@ -1,38 +1,5 @@
 package io.gatling.test.grpc;
 
-//import com.github.phisgr.gatling.grpc.protocol.StaticGrpcProtocol;
-//import com.google.protobuf.*;
-////import io.gatling.grpc.check.GrpcCheckScope;
-//import io.gatling.javaapi.core.ScenarioBuilder;
-//import io.gatling.javaapi.core.Simulation;
-//
-////import io.gatling.javaapi.grpc.GrpcProtocolBuilder;
-//import io.grpc.Status;
-//
-//
-//import lombok.val;
-//import pl.piomin.services.grpc.customer.model.CustomerProto;
-//import pl.piomin.services.grpc.customer.model.CustomersServiceGrpc;
-//import pl.piomin.services.grpc.image.model.ImageProto;
-//import pl.piomin.services.grpc.image.model.ImageServiceGrpc;
-//
-//import javax.imageio.ImageIO;
-//import java.awt.image.BufferedImage;
-//import java.io.ByteArrayOutputStream;
-//import java.io.File;
-//import java.io.IOException;
-//import java.time.Duration;
-//import java.util.concurrent.atomic.AtomicInteger;
-//
-//
-////import static com.github.phisgr.gatling.grpc.Predef.grpc;
-//
-//import static com.github.phisgr.gatling.grpc.Predef.managedChannelBuilder;
-//import static com.github.phisgr.gatling.kt.grpc.GrpcDsl.grpc;
-//import static io.gatling.javaapi.core.CoreDsl.*;
-////import static io.gatling.javaapi.grpc.GrpcDsl.*;
-//import static io.gatling.javaapi.http.HttpDsl.*;
-
 
 import com.github.phisgr.gatling.kt.grpc.StaticGrpcProtocol;
 import com.google.protobuf.*;

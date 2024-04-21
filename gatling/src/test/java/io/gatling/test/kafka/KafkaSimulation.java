@@ -48,9 +48,9 @@ public class KafkaSimulation extends Simulation {
             .matchByKey()
             .replyConsumerName("gatling-test-consumer");
 
-    public boolean checkAllCustomers(ConsumerRecord<String, String> record) {
+    public boolean checkAllCustomers(ConsumerRecord<String, ?> record) {
         boolean correct = true;
-        List<Customer> customerList = JsonParser.parseJsonToList(record.value());
+        List<Customer> customerList = JsonParser.parseJsonToList((String) record.value());
         if (customerList.isEmpty()) {
             correct = false;
         }
@@ -58,9 +58,9 @@ public class KafkaSimulation extends Simulation {
         return correct;
     }
 
-    public boolean checkAddCustomer(ConsumerRecord<String, String> record) {
+    public boolean checkAddCustomer(ConsumerRecord<String, ?> record) {
         boolean correct = true;
-        Customer customer = JsonParser.parseJsonToCustomer(record.value());
+        Customer customer = JsonParser.parseJsonToCustomer((String) record.value());
         if (customer == null) {
             correct = false;
         }
@@ -69,8 +69,78 @@ public class KafkaSimulation extends Simulation {
     }
 
     ScenarioBuilder scn1 =
-            scenario("Customer CRUD").forever().on(
+            scenario("Customer CRUD").repeat(100000).on(
                     exec(session -> session.set("my_var", counter.getAndIncrement()))
+//                            .exec(
+//                                    kafka("getAllCustomers send")
+//                                            .send()
+//                                            .topic("allCustomersRequestTopic")
+//                                            .payload("""
+//                                                    { }
+//                                                    """)
+//                                            .key("key1")
+//                            )
+//                            .exec(
+//                                    kafka("getAllCustomers get")
+//                                            .onlyConsume()
+//                                            .readTopic("allCustomersReplyTopic")
+//                                            .payloadForTracking("""
+//                                                                { }
+//                                                                """)
+//                                            .keyForTracking("key1")
+//                                            .check(simpleCheck(this::checkAllCustomers))
+//                            )
+//                            .exec(
+//                                    kafka("addCustomer send")
+//                                            .send()
+//                                            .topic("addCustomerRequestTopic")
+//                                            .payload("""
+//                                                    {"name": "newUser","pesel": "newUser${my_var}"}
+//                                                    """)
+//                                            .key("key2")
+//                            )
+//                            .exec(
+//                                    kafka("addCustomer get")
+//                                            .onlyConsume()
+//                                            .readTopic("allCustomersReplyTopic")
+//                                            .payloadForTracking("")
+//                                            .keyForTracking("key2")
+//                                            .check(simpleCheck(this::checkAddCustomer))
+//                            )
+//                            .exec(
+//                                    kafka("updateCustomer send")
+//                                            .send()
+//                                            .topic("updateCustomerRequestTopic")
+//                                            .payload("""
+//                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
+//                                                    """)
+//                                            .key("key3")
+//                            )
+//                            .exec(
+//                                    kafka("updateCustomer get")
+//                                            .onlyConsume()
+//                                            .readTopic("allCustomersReplyTopic")
+//                                            .payloadForTracking("")
+//                                            .keyForTracking("key3")
+//                                            .check(simpleCheck(this::checkAddCustomer))
+//                            )
+//                            .exec(
+//                                    kafka("deleteCustomer send")
+//                                            .send()
+//                                            .topic("deleteCustomerRequestTopic")
+//                                            .payload("newUser${my_var}")
+//                                            .key("key4")
+//                            )
+//                            .exec(
+//                                    kafka("deleteCustomer get")
+//                                            .onlyConsume()
+//                                            .readTopic("allCustomersReplyTopic")
+//                                            .payloadForTracking("")
+//                                            .keyForTracking("key4")
+//                                            .check(simpleCheck(this::checkAddCustomer))
+//                            )
+
+
                             .exec(
                                     kafka("getAllCustomers")
                                             .requestReply()
@@ -82,37 +152,37 @@ public class KafkaSimulation extends Simulation {
                                             .key("key1")
                                             .check(simpleCheck(this::checkAllCustomers))
                             )
-                            .exec(
-                                    kafka("addCustomer")
-                                            .requestReply()
-                                            .topic("addCustomerRequestTopic")
-                                            .payload("""
-                                                    {"name": "newUser","pesel": "newUser${my_var}"}
-                                                    """)
-                                            .replyTopic("allCustomersReplyTopic")
-                                            .key("key2")
-                                            .check(simpleCheck(this::checkAddCustomer))
-                            )
-                            .exec(
-                                    kafka("updateCustomer")
-                                            .requestReply()
-                                            .topic("updateCustomerRequestTopic")
-                                            .payload("""
-                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
-                                                    """)
-                                            .replyTopic("allCustomersReplyTopic")
-                                            .key("key3")
-                                            .check(simpleCheck(this::checkAddCustomer))
-                            )
-                            .exec(
-                                    kafka("deleteCustomer")
-                                            .requestReply()
-                                            .topic("deleteCustomerRequestTopic")
-                                            .payload("newUser${my_var}")
-                                            .replyTopic("allCustomersReplyTopic")
-                                            .key("key4")
-                                            .check(simpleCheck(this::checkAddCustomer))
-                            )
+//                            .exec(
+//                                    kafka("addCustomer")
+//                                            .requestReply()
+//                                            .topic("addCustomerRequestTopic")
+//                                            .payload("""
+//                                                    {"name": "newUser","pesel": "newUser${my_var}"}
+//                                                    """)
+//                                            .replyTopic("allCustomersReplyTopic")
+//                                            .key("key2")
+//                                            .check(simpleCheck(this::checkAddCustomer))
+//                            )
+//                            .exec(
+//                                    kafka("updateCustomer")
+//                                            .requestReply()
+//                                            .topic("updateCustomerRequestTopic")
+//                                            .payload("""
+//                                                    {"name": "newUserChanged","pesel": "newUser${my_var}"}
+//                                                    """)
+//                                            .replyTopic("allCustomersReplyTopic")
+//                                            .key("key3")
+//                                            .check(simpleCheck(this::checkAddCustomer))
+//                            )
+//                            .exec(
+//                                    kafka("deleteCustomer")
+//                                            .requestReply()
+//                                            .topic("deleteCustomerRequestTopic")
+//                                            .payload("newUser${my_var}")
+//                                            .replyTopic("allCustomersReplyTopic")
+//                                            .key("key4")
+//                                            .check(simpleCheck(this::checkAddCustomer))
+//                            )
             );
     ScenarioBuilder scn2 =
             scenario("Image upload/dowload").forever().on(
@@ -153,9 +223,9 @@ public class KafkaSimulation extends Simulation {
                     );
 
     {
-        setUp(scn2.injectOpen(
+        setUp(scn1.injectOpen(
                 constantUsersPerSec(30).during(Duration.ofMinutes(1))
-                //atOnceUsers(2)
+                //atOnceUsers(200)
         )).maxDuration(Duration.ofSeconds(60))
                 .protocols(kafkaProtocol);
 //        setUp(scn1.injectOpen(
