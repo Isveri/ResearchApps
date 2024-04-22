@@ -43,7 +43,15 @@ public class KafkaSimulation extends Simulation {
             .producerIdenticalSerializer("org.apache.kafka.common.serialization.StringSerializer")
             .consumerIdenticalDeserializer("org.apache.kafka.common.serialization.JsonDeserializer")
             .addProducerProperty("retries", "3")
+            .addProducerProperty("batch.size","32")
+            .addProducerProperty("linger.time","20")
+            .addProducerProperty("compression.type", "snappy")
+            .addProducerProperty("acks","1")
+            .addProducerProperty("max.in.flight.requests.per.connection","10")
+
             .addConsumerProperty("heartbeat.interval.ms", "3000")
+            .addConsumerProperty("fetch.min.bytes","1")
+            .addConsumerProperty("max.poll.records","1000")
             .replyTimeout(4)
             .matchByKey()
             .replyConsumerName("gatling-test-consumer");
