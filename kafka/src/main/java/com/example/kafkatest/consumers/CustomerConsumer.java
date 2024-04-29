@@ -29,14 +29,14 @@ public class CustomerConsumer {
             concurrency = "1")
     //@SendTo("allCustomersReplyTopic")
     public void handleAllCustomersRequest() {
-//        executorService.submit(()->{
-//            List<Customer> reply = customerRepository.findAll();
-//            System.out.println("all customers listener");
-//            producer.allCustomersReply(reply);
-//        });
-        List<Customer> reply = customerRepository.findAll();
-        System.out.println("all customers listener");
-        producer.allCustomersReply(reply);
+        executorService.submit(()->{
+            List<Customer> reply = customerRepository.findAll();
+            System.out.println("all customers listener");
+            producer.allCustomersReply(reply);
+        });
+//        List<Customer> reply = customerRepository.findAll();
+//        System.out.println("all customers listener");
+//        producer.allCustomersReply(reply);
     }
 
     @KafkaListener(topics = "addCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")

@@ -1,13 +1,16 @@
-package pl.piomin.services.rest.customer.model;
+package com.example.websocket.model;
 
-import javax.persistence.*;
+
+
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
-
+import javax.persistence.*;
 
 
 @Data

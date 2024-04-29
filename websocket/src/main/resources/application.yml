@@ -1,0 +1,37 @@
+spring.application.name: websocket-test
+server.port: 8085
+spring.output.ansi.enabled: always
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/database
+    username: user
+    password: password
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    #    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+
+management.endpoint.metrics.enabled: true
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

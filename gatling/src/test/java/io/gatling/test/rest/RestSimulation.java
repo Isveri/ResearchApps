@@ -29,6 +29,7 @@ public class RestSimulation extends Simulation {
                                             .check(jsonPath("$[*].id").findAll().exists())
                                             .check(jsonPath("$[*].pesel").findAll().exists())
                                             .check(jsonPath("$[*].name").findAll().exists())
+//                                            .check()
                             )
 
 //                     .exec(
