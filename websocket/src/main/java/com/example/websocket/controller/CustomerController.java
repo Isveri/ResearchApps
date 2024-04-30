@@ -23,27 +23,40 @@ public class CustomerController {
 
     @MessageMapping("/customerAll")
     @SendToUser("/topic/customerAll")
-    List<Customer> findAll(final Principal principal){
+    List<Customer> findAll(){
+        System.out.println("customerAll");
         return customerRepository.findAll();
     }
 
-    @Transactional
-    @PostMapping("/addCustomer")
-    void addCustomer(@RequestBody Customer customer){
-        customerRepository.save(customer);
+
+    @MessageMapping("/addCustomer")
+    @SendToUser("topic/addCustomer")
+    Customer addCustomer(Customer customer){
+        Customer savedCustomer=customerRepository.save(customer);
+        return savedCustomer;
     }
 
-    @PostMapping("/updateCustomer/{pesel}")
-    void updateCustomer(@PathVariable String pesel, @RequestBody Customer customer){
-        Customer customerTemp = customerRepository.findByPesel(pesel).get();
-        customerTemp.setName(customer.getName());
-        customerRepository.save(customerTemp);
-    }
-
-    @DeleteMapping("/deleteCustomer/{pesel}")
-    void deleteCustomer(@PathVariable String pesel){
-        if(customerRepository.existsCustomerByPesel(pesel)){
-            customerRepository.deleteByPesel(pesel);
+    @MessageMapping("/updateCustomer")
+    @SendToUser("topic/updateCustomer")
+    Customer updateCustomer(Customer customer){
+        Optional<Customer> cust = customerRepository.findByPesel(customer.getPesel());
+        if (cust.isPresent()){
+            Customer customerToUpdate = cust.get();
+            customerToUpdate.setName(customer.getName());
+            Customer updatedCustomer = customerRepository.save(customerToUpdate);
+            return updatedCustomer;
         }
+        return null;
+    }
+
+    @MessageMapping("/deleteCustomer")
+    @SendToUser("topic/deleteCustomer")
+    Customer deleteCustomer(Customer customer){
+        if(customerRepository.existsCustomerByPesel(customer.getPesel())){
+            Customer deletedCustomer = customerRepository.findByPesel(customer.getPesel()).get();
+            customerRepository.deleteByPesel(customer.getPesel());
+            return deletedCustomer;
+        }
+        return null;
     }
 }
