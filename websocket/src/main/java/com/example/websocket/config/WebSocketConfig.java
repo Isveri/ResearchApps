@@ -1,5 +1,6 @@
 package com.example.websocket.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -9,6 +10,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import javax.servlet.http.HttpSession;
@@ -47,5 +49,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         return true;
                     }})
         ;
+    }
+    @Bean
+    public ServletServerContainerFactoryBean createServletServerContainerFactoryBean() {
+        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+        container.setMaxTextMessageBufferSize(32768);
+        container.setMaxBinaryMessageBufferSize(32768);
+        return container;
     }
 }
