@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="GrpcSimulation" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="WebSocketCRUDSimulation" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -11,7 +11,7 @@
           <option name="goals">
             <list>
               <option value="gatling:test" />
-              <option value="-DclassName=io.gatling.test.grpc.GrpcSimulation" />
+              <option value="-DclassName=io.gatling.test.webSocket.WebSocketCRUDSimulation" />
             </list>
           </option>
           <option name="pomFileName" />

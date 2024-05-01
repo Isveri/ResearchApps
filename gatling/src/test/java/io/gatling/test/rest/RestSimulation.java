@@ -11,13 +11,12 @@ import static io.gatling.javaapi.http.HttpDsl.http;
 
 public abstract class RestSimulation extends Simulation implements SimulationConfigurator, CustomRunner {
 
-    {
-        run();
-    }
-
     AtomicInteger counter = new AtomicInteger(0);
     HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8082")
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
+    {
+        run();
+    }
 }

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="KafkaSimulation" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="WebSocketImageSimulation" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -11,7 +11,7 @@
           <option name="goals">
             <list>
               <option value="gatling:test" />
-              <option value="-DclassName=io.gatling.test.kafka.KafkaSimulation" />
+              <option value="-DclassName=io.gatling.test.webSocket.WebSocketImageSimulation" />
             </list>
           </option>
           <option name="pomFileName" />

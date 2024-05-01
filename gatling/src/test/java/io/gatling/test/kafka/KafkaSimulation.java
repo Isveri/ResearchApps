@@ -15,11 +15,6 @@ import static io.github.amerousful.kafka.javaapi.KafkaDsl.KafkaBroker;
 import static io.github.amerousful.kafka.javaapi.KafkaDsl.kafka;
 
 public abstract class KafkaSimulation extends Simulation implements SimulationConfigurator, CustomRunner {
-
-    {
-        run();
-    }
-
     AtomicInteger counter = new AtomicInteger(0);
 
     KafkaProtocolBuilder kafkaProtocol = kafka
@@ -57,5 +52,10 @@ public abstract class KafkaSimulation extends Simulation implements SimulationCo
             correct = false;
         }
         return correct;
+    }
+
+
+    {
+        run();
     }
 }

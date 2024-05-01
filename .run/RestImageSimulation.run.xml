@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RestSimulation" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="RestImageSimulation" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -11,7 +11,7 @@
           <option name="goals">
             <list>
               <option value="gatling:test" />
-              <option value="-DclassName=io.gatling.test.rest.RestSimulation" />
+              <option value="-DclassName=io.gatling.test.rest.RestImageSimulation" />
             </list>
           </option>
           <option name="pomFileName" />
