@@ -13,9 +13,9 @@ services:
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://kafka:9092,CONTROLLER://:9093,EXTERNAL://:29092
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL://localhost:29092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:29092
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
       - KAFKA_CFG_BACKGROUND_THREADS=20
@@ -25,14 +25,26 @@ services:
       - KAFKA_CFG_NUM_NETWORK_THREADS=9
       - KAFKA_CFG_NUM_REPLICA_FETCHERS=3
       - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=5
-      - KAFKA_CFG_ZOOKEEPER_MAX_IN_FLIGHT_REQUESTS=20
-      - KAFKA_CFG_NUM_PARTITIONS=3
+      - KAFKA_CFG_ZOOKEEPER_MAX_IN_FLIGHT_REQUESTS=1
+      - KAFKA_CFG_REPLICA_LAG_TIME_MAX_MS=30000
+#      - KAFKA_CFG_NUM_PARTITIONS=4000
       - KAFKA_CFG_LOG_RETENTION_MS=10000
       - KAFKA_CFG_LOG_CLEANUP_POLICY=delete
 #volumes:
 #  kafka_data:
 #    driver: local
 
+  akhq:
+    image: tchiotludo/akhq:latest
+    ports:
+      - "9090:8080"
+    environment:
+      AKHQ_CONFIGURATION: |
+        akhq:
+          connections:
+            docker-kafka-server:
+              properties:
+                bootstrap.servers: "kafka:9092"
   postgres:
     image: postgres:latest
     restart: always

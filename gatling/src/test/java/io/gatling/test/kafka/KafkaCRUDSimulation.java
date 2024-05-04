@@ -10,7 +10,8 @@ public class KafkaCRUDSimulation extends KafkaSimulation {
 
     @Override
     public void run() {
-        repeat1Constant30000duration60(kafkaProtocol, this);
+        runScenario(kafkaProtocol, this, 1, 3000, 60);
+//        repeat1Constant30000duration60(kafkaProtocol, this);
 //        repeat10Constant3000duration60(kafkaProtocol, this);
 //        repeat100Constant300duration60(kafkaProtocol, this);
     }
@@ -27,7 +28,7 @@ public class KafkaCRUDSimulation extends KafkaSimulation {
                                 { }
                                 """)
                         .replyTopic("allCustomersReplyTopic")
-                        .key("key1")
+                        .key("key-#{my_var}")
                         .check(simpleCheck(this::checkAllCustomers))
                 );
     }

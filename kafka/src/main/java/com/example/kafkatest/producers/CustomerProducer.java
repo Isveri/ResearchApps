@@ -12,17 +12,17 @@ public class CustomerProducer {
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void allCustomersReply(List<Customer> customerList) {
-        kafkaTemplate.send("allCustomersReplyTopic", "key1", customerList);
+    public void allCustomersReply(List<Customer> customerList, String key) {
+        kafkaTemplate.send("allCustomersReplyTopic", key, customerList);
     }
-    public void addCustomersReply(Customer addedCustomer) {
+    public void addCustomersReply(Customer addedCustomer, String key) {
         System.out.println("add customer producer");
-        kafkaTemplate.send("allCustomersReplyTopic","key2", addedCustomer);
+        kafkaTemplate.send("allCustomersReplyTopic", key, addedCustomer);
     }
-    public void updateCustomersReply(Customer updatedCustomer) {
-        kafkaTemplate.send("allCustomersReplyTopic","key3", updatedCustomer);
+    public void updateCustomersReply(Customer updatedCustomer, String key) {
+        kafkaTemplate.send("allCustomersReplyTopic", key, updatedCustomer);
     }
-    public void deleteCustomersReply(Customer deletedCustomer) {
-        kafkaTemplate.send("allCustomersReplyTopic","key4", deletedCustomer);
+    public void deleteCustomersReply(Customer deletedCustomer, String key) {
+        kafkaTemplate.send("allCustomersReplyTopic", key, deletedCustomer);
     }
 }
