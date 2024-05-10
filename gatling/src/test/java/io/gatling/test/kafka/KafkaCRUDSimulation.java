@@ -10,7 +10,8 @@ public class KafkaCRUDSimulation extends KafkaSimulation {
 
     @Override
     public void run() {
-        runScenario(kafkaProtocol, this, 1, 3000, 60);
+        testScenario(kafkaProtocol,this,100,450,60);
+//        runScenario(kafkaProtocol, this, 1, 300, 60);
 //        repeat1Constant30000duration60(kafkaProtocol, this);
 //        repeat10Constant3000duration60(kafkaProtocol, this);
 //        repeat100Constant300duration60(kafkaProtocol, this);
@@ -28,8 +29,37 @@ public class KafkaCRUDSimulation extends KafkaSimulation {
                                 { }
                                 """)
                         .replyTopic("allCustomersReplyTopic")
-                        .key("key-#{my_var}")
+                        .key("key-#{my_var}-1")
                         .check(simpleCheck(this::checkAllCustomers))
-                );
+                )
+                .exec(kafka("addCustomer")
+                        .requestReply()
+                        .topic("addCustomerRequestTopic")
+                        .payload("""
+                                {"name": "newUser","pesel": "newUser${my_var}"}
+                                """)
+                        .replyTopic("allCustomersReplyTopic")
+                        .key("key-#{my_var}-2")
+                        .check(simpleCheck(this::checkAddCustomer))
+                )
+                .exec(kafka("updateCustomer")
+                        .requestReply()
+                        .topic("updateCustomerRequestTopic")
+                        .payload("""
+                                {"name": "newUserChanged","pesel": "newUser${my_var}"}
+                                """)
+                        .replyTopic("allCustomersReplyTopic")
+                        .key("key-#{my_var}-3")
+                        .check(simpleCheck(this::checkAddCustomer))
+                )
+                .exec(kafka("deleteCustomer")
+                        .requestReply()
+                        .topic("deleteCustomerRequestTopic")
+                        .payload("newUser${my_var}")
+                        .replyTopic("allCustomersReplyTopic")
+                        .key("key-#{my_var}-4")
+                        .check(simpleCheck(this::checkAddCustomer))
+                )
+                ;
     }
 }

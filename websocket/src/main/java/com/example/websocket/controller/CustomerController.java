@@ -5,6 +5,7 @@ import com.example.websocket.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +20,17 @@ import java.util.Optional;
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
 
     @MessageMapping("/customerAll")
     @SendToUser("/topic/customerAll")
     List<Customer> findAll(){
-        System.out.println("customerAll");
-        return customerRepository.findAll();
+        String user = simpMessagingTemplate.getUserDestinationPrefix();
+        List<Customer> list = customerRepository.findAll();
+        System.out.println("customerAll - user: "+user);
+        simpMessagingTemplate.convertAndSend("/topic/test","dziala to ?");
+        return list;
     }
 
 

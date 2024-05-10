@@ -15,10 +15,10 @@ public class ImageProducer {
     @Autowired
     private KafkaTemplate<String, byte[]> kafkaImageTemplate;
 
-    public void uploadImageReply(String imageName) {
-        kafkaMessageTemplate.send("uploadImageReplyTopic","key1","Saved image: "+imageName);
+    public void uploadImageReply(String imageName, String key) {
+        kafkaMessageTemplate.send("uploadImageReplyTopic",key,"Saved image: "+imageName);
     }
-    public void dowloadImageReply(byte[] image){
-        kafkaImageTemplate.send("uploadImageReplyTopic","key2", image);
+    public void dowloadImageReply(byte[] image, String key){
+        kafkaImageTemplate.send("uploadImageReplyTopic",key, image);
     }
 }

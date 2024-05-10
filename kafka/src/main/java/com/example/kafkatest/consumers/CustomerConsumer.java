@@ -32,22 +32,23 @@ public class CustomerConsumer {
             concurrency = "1")
     //@SendTo("allCustomersReplyTopic")
     public void handleAllCustomersRequest(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        executorService.submit(()->{
-            List<Customer> reply = customerRepository.findAll();
-            System.out.println("all customers listener");
-            System.out.println("Received message with key: " + key);
-            producer.allCustomersReply(reply, key);
-        });
-//        List<Customer> reply = customerRepository.findAll();
+//        executorService.submit(()->{
+//            List<Customer> reply = customerRepository.findAll();
+//            //System.out.println("all customers listener");
+//            //System.out.println("Received message with key: " + key);
+//            producer.allCustomersReply(reply, key);
+//        });
+        List<Customer> reply = customerRepository.findAll();
 //        System.out.println("all customers listener");
-//        producer.allCustomersReply(reply);
+        producer.allCustomersReply(reply,key);
     }
 
     @KafkaListener(topics = "addCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
     public void handleAddCustomerRequest(Customer customer, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key){
+
         List<Customer> reply = customerRepository.findAll();
         Customer temp = customerRepository.save(customer);
-        System.out.println("add customer listener: "+customer );
+        //System.out.println("add customer listener: "+customer );
         temp.setName("newName");
         Customer tempUpdated = customerRepository.save(temp);
         //String pesel = tempUpdated.getPesel();
@@ -61,7 +62,7 @@ public class CustomerConsumer {
     }
     @KafkaListener(topics = "updateCustomerRequestTopic",containerFactory = "kafkaListenerContainerCustomerFactory")
     public void handleUpdateCustomerRequest(Customer customer, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key){
-        System.out.println("customer pesel: "+customer.getPesel());
+//        System.out.println("customer pesel: "+customer.getPesel());
         Optional<Customer> cust = customerRepository.findByPesel(customer.getPesel());
         if (cust.isPresent()){
             Customer customerToUpdate = cust.get();

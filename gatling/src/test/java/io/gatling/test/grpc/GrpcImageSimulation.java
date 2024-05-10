@@ -19,9 +19,9 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 public class GrpcImageSimulation extends GrpcSimulation {
     @Override
     public void run() {
-        repeat1Constant30000duration60(grpcConf, this);
+//        repeat1Constant30000duration60(grpcConf, this);
 //        repeat10Constant3000duration60(grpcConf, this);
-//        repeat100Constant300duration60(grpcConf, this);
+        repeat100Constant300duration60(grpcConf, this);
     }
 
     @Override

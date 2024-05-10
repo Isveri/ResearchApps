@@ -16,7 +16,7 @@ public class CustomerProducer {
         kafkaTemplate.send("allCustomersReplyTopic", key, customerList);
     }
     public void addCustomersReply(Customer addedCustomer, String key) {
-        System.out.println("add customer producer");
+//        System.out.println("add customer producer");
         kafkaTemplate.send("allCustomersReplyTopic", key, addedCustomer);
     }
     public void updateCustomersReply(Customer updatedCustomer, String key) {

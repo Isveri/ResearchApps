@@ -16,9 +16,11 @@ public class KafkaImageSimulation extends KafkaSimulation {
 
     @Override
     public void run() {
-        repeat1Constant30000duration60(kafkaProtocol, this);
+//        testScenario(kafkaProtocol, this, 1, 1, 10);
+//        runScenario(kafkaProtocol, this, 1, 300, 60);
+//        repeat1Constant30000duration60(kafkaProtocol, this);
 //        repeat10Constant3000duration60(kafkaProtocol, this);
-//        repeat100Constant300duration60(kafkaProtocol, this);
+        repeat100Constant300duration60(kafkaProtocol, this);
     }
 
     @Override
@@ -26,35 +28,33 @@ public class KafkaImageSimulation extends KafkaSimulation {
         return
                 scenario("Image upload/dowload").
                         exec(session -> session.set("my_var", counter.getAndIncrement()))
-                        .exec(
-                                kafka("image upload")
-                                        .requestReply()
-                                        .topic("uploadImageRequestTopic")
-                                        .payload(session -> {
-                                            byte[] imageBytes;
-                                            try {
-                                                imageBytes = Files.readAllBytes(Paths.get("src/test/image/testImage.jpg"));
-                                            } catch (IOException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                            JsonObject json = new JsonObject();
-                                            json.addProperty("name", "testImage" + session.get("my_var") + ".jpg");
-                                            json.addProperty("type", "image/jpeg");
-                                            json.addProperty("imageData", Base64.getEncoder().encodeToString(imageBytes));
-                                            return new Gson().toJson(json);
-                                        })
-                                        .replyTopic("uploadImageReplyTopic")
-                                        .key("key1")
-                                        .check()
+                        .exec(kafka("image upload")
+                                .requestReply()
+                                .topic("uploadImageRequestTopic")
+                                .payload(session -> {
+                                    byte[] imageBytes;
+                                    try {
+                                        imageBytes = Files.readAllBytes(Paths.get("src/test/image/testImage.jpg"));
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    JsonObject json = new JsonObject();
+                                    json.addProperty("name", "testImage" + session.get("my_var") + ".jpg");
+                                    json.addProperty("type", "image/jpeg");
+                                    json.addProperty("imageData", Base64.getEncoder().encodeToString(imageBytes));
+                                    return new Gson().toJson(json);
+                                })
+                                .replyTopic("uploadImageReplyTopic")
+                                .key("key-#{my_var}-1")
+                                .check()
                         )
-                        .exec(
-                                kafka("image download")
-                                        .requestReply()
-                                        .topic("downloadImageRequestTopic")
-                                        .payload("testImage${my_var}.jpg")
-                                        .replyTopic("uploadImageReplyTopic")
-                                        .key("key2")
-                                        .check()
+                        .exec(kafka("image download")
+                                .requestReply()
+                                .topic("downloadImageRequestTopic")
+                                .payload("testImage${my_var}.jpg")
+                                .replyTopic("uploadImageReplyTopic")
+                                .key("key-#{my_var}-2")
+                                .check()
                         );
     }
 }

@@ -8,9 +8,11 @@ import static io.gatling.javaapi.http.HttpDsl.ws;
 public class WebSocketCRUDSimulation extends WebSocketSimulation {
     @Override
     public void run() {
-        repeat1Constant30000duration60(wsHttpProtocol, this);
+//        repeat1Constant30000duration60(wsHttpProtocol, this);
 //        repeat10Constant3000duration60(wsHttpProtocol, this);
 //        repeat100Constant300duration60(wsHttpProtocol, this);
+       // runScenario(wsHttpProtocol,this,1,1,5);
+        testScenario(wsHttpProtocol,this,1,1,20);
     }
 
     @Override
@@ -22,6 +24,14 @@ public class WebSocketCRUDSimulation extends WebSocketSimulation {
                         ws("Open websocket").wsName("Connection-${randomid}-${my_var}")
                                 .connect("/ws"))
 
+                .exec(
+                        ws("test response").wsName("Connection-${randomid}-${my_var}")
+                                .sendText("SUBSCRIBE\n" +
+                                        "id:sub-999\n" +
+                                        "destination:/topic/test\n" +
+                                        "\n" +
+                                        "\u0000")
+                )
                 .exec(
                         ws("Subscribe customerAll").wsName("Connection-${randomid}-${my_var}")
                                 .sendText("SUBSCRIBE\n" +
