@@ -19,6 +19,22 @@ public interface SimulationConfigurator {
                 )).maxDuration(Duration.ofSeconds(duration))
                 .protocols(protocol);
     }
+    default void stressScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int maxUsers, int duration) {
+        var scenario = createScenario();
+        scenario.repeat(repeat);
+        simulation.setUp(scenario.injectOpen(
+                        stressPeakUsers(maxUsers).during(Duration.ofSeconds(duration))
+                )).maxDuration(Duration.ofSeconds(duration))
+                .protocols(protocol);
+    }
+    default void rampScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int maxUsers, int duration) {
+        var scenario = createScenario();
+        scenario.repeat(repeat);
+        simulation.setUp(scenario.injectOpen(
+                        rampUsersPerSec(100).to(maxUsers).during(Duration.ofSeconds(duration))
+                )).maxDuration(Duration.ofSeconds(duration))
+                .protocols(protocol);
+    }
     default void testScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int users, int duration){
         var scenario = createScenario();
         scenario.repeat(repeat);
@@ -41,6 +57,15 @@ public interface SimulationConfigurator {
 
     default void repeat100Constant300duration60(ProtocolBuilder protocol, Simulation simulation) {
         runScenario(protocol, simulation, 100, 300, 60);
+    }
+    default void steadyLoad5R300U60T(ProtocolBuilder protocol, Simulation simulation){
+        runScenario(protocol,simulation,5,300,60);
+    }
+    default void stressLoad1R1KU60T(ProtocolBuilder protocol, Simulation simulation){
+        stressScenario(protocol,simulation,1,10000,60);
+    }
+    default void rampLoad(ProtocolBuilder protocol, Simulation simulation){
+        rampScenario(protocol,simulation,1,600,60);
     }
 
     ScenarioBuilder createScenario();

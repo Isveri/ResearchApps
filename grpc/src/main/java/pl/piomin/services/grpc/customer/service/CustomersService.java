@@ -15,6 +15,7 @@ import pl.piomin.services.grpc.customer.repository.CustomerRepository;
 import pl.piomin.services.grpc.customer.repository.CustomerRepositoryLocal;
 
 import java.util.List;
+import java.util.Optional;
 
 @GrpcService
 @RequiredArgsConstructor
@@ -41,13 +42,17 @@ public class CustomersService extends CustomersServiceGrpc.CustomersServiceImplB
     }
     @Override
     public void updateCustomer(CustomerProto.Customer request, StreamObserver<CustomerProto.Customer> responseObserver){
-        Customer customerTemp = customerRepository.findByPesel(request.getPesel()).get();
-        customerTemp.setName(request.getName());
-        customerRepository.save(customerTemp);
+        Optional<Customer> customerTemp = customerRepository.findByPesel(request.getPesel());
+        if(customerTemp.isPresent()){
+            Customer customer = customerTemp.get();
+            customer.setName(request.getName());
+            customerRepository.save(customer);
 
-        CustomerProto.Customer c = CustomerAdapter.toProto(customerTemp);
-        responseObserver.onNext(c);
-        responseObserver.onCompleted();
+            CustomerProto.Customer c = CustomerAdapter.toProto(customer);
+            responseObserver.onNext(c);
+            responseObserver.onCompleted();
+        }
+
     }
     @Override
     public void deleteCustomer(StringValue request,  StreamObserver<CustomerProto.Customer> responseObserver){

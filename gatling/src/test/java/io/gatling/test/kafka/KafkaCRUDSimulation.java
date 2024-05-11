@@ -10,7 +10,9 @@ public class KafkaCRUDSimulation extends KafkaSimulation {
 
     @Override
     public void run() {
-        testScenario(kafkaProtocol,this,100,450,60);
+//        steadyLoad5R300U60T(kafkaProtocol,this);
+        rampLoad(kafkaProtocol,this);
+//        testScenario(kafkaProtocol,this,100,450,60);
 //        runScenario(kafkaProtocol, this, 1, 300, 60);
 //        repeat1Constant30000duration60(kafkaProtocol, this);
 //        repeat10Constant3000duration60(kafkaProtocol, this);

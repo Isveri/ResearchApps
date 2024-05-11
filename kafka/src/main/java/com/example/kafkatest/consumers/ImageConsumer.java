@@ -42,10 +42,12 @@ public class ImageConsumer {
     @KafkaListener(topics = "downloadImageRequestTopic",containerFactory = "kafkaListenerContainerMessageFactory")
     public void handleDowloadImageRequest(String imageName, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         Optional<Image> dbImage = imageRepository.findByName(imageName);
-        imageRepository.deleteById(dbImage.get().getId());
-        var imageReturn= dbImage.map(image -> {
-            return ImageUtils.decompressImage(image.getImageData());
-        }).orElse(null);
-        producer.dowloadImageReply(imageReturn,key);
+        if(dbImage.isPresent()){
+            imageRepository.deleteById(dbImage.get().getId());
+            var imageReturn= dbImage.map(image -> {
+                return ImageUtils.decompressImage(image.getImageData());
+            }).orElse(null);
+            producer.dowloadImageReply(imageReturn,key);
+        }
     }
 }

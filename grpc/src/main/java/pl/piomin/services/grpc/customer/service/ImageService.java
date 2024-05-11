@@ -42,13 +42,15 @@ public class ImageService extends ImageServiceGrpc.ImageServiceImplBase {
     public void downloadImage(ImageProto.DownloadImageRequest imageNameRequest,
                               StreamObserver<ImageProto.DownloadImageResponse> responseObserver) {
         Optional<Image> dbImage = imageRepository.findByName(imageNameRequest.getImageName());
-        imageRepository.deleteById(dbImage.get().getId());
-        var imageReturn= dbImage.map(image -> {
-            return ImageUtils.decompressImage(image.getImageData());
-        }).orElse(null);
-        responseObserver.onNext(ImageProto.DownloadImageResponse.newBuilder().setImageData(
-                ByteString.copyFrom(imageReturn)
-        ).build());
+        if(dbImage.isPresent()){
+            imageRepository.deleteById(dbImage.get().getId());
+            var imageReturn= dbImage.map(image -> {
+                return ImageUtils.decompressImage(image.getImageData());
+            }).orElse(null);
+            responseObserver.onNext(ImageProto.DownloadImageResponse.newBuilder().setImageData(
+                    ByteString.copyFrom(imageReturn)
+            ).build());
+        }
         responseObserver.onCompleted();
     }
 }

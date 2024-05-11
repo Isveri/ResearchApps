@@ -16,11 +16,13 @@ public class KafkaImageSimulation extends KafkaSimulation {
 
     @Override
     public void run() {
+        steadyLoad5R300U60T(kafkaProtocol,this);
+//        rampLoad(kafkaProtocol,this);
 //        testScenario(kafkaProtocol, this, 1, 1, 10);
 //        runScenario(kafkaProtocol, this, 1, 300, 60);
 //        repeat1Constant30000duration60(kafkaProtocol, this);
 //        repeat10Constant3000duration60(kafkaProtocol, this);
-        repeat100Constant300duration60(kafkaProtocol, this);
+//        repeat100Constant300duration60(kafkaProtocol, this);
     }
 
     @Override

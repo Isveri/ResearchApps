@@ -14,7 +14,9 @@ public abstract class RestSimulation extends Simulation implements SimulationCon
     AtomicInteger counter = new AtomicInteger(0);
     HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8082")
             .acceptHeader("application/json")
-            .contentTypeHeader("application/json");
+            .contentTypeHeader("application/json")
+
+            ;
 
     {
         run();

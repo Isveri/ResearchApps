@@ -43,9 +43,13 @@ public class CustomerController {
 
     @PostMapping("/updateCustomer/{pesel}")
     void updateCustomer(@PathVariable String pesel, @RequestBody Customer customer){
-        Customer customerTemp = customerRepository.findByPesel(pesel).get();
-        customerTemp.setName(customer.getName());
-        customerRepository.save(customerTemp);
+        Optional<Customer> customerTemp = customerRepository.findByPesel(pesel);
+        if(customerTemp.isPresent()){
+            Customer cust = customerTemp.get();
+            cust.setName(customer.getName());
+            customerRepository.save(cust);
+        }
+
     }
 
     @DeleteMapping("/deleteCustomer/{pesel}")
