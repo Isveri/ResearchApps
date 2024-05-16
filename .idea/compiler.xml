@@ -10,18 +10,21 @@
         <module name="customer-grpc" />
         <module name="customer-rest" />
         <module name="gatling-load-tester" />
-        <module name="websocket-test" />
-        <module name="customer-kafka" />
+        <module name="rest-product-service" />
+        <module name="rest-auth-service" />
+        <module name="rest-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="account-service-grpc" target="19" />
+      <module name="customer-kafka" target="17" />
       <module name="customer-service" target="19" />
       <module name="customer-service-grpc" target="17" />
       <module name="discovery-service" target="19" />
       <module name="gatling-grpc-demo-maven-java" target="17" />
       <module name="kafka-test" target="17" />
       <module name="rabbitMQtest" target="17" />
+      <module name="websocket-test" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -35,6 +38,9 @@
       <module name="discovery-service" options="-parameters" />
       <module name="kafka-test" options="-parameters" />
       <module name="rabbitMQtest" options="-parameters" />
+      <module name="rest-auth-service" options="-parameters" />
+      <module name="rest-core" options="-parameters" />
+      <module name="rest-product-service" options="-parameters" />
       <module name="websocket-test" options="-parameters" />
     </option>
   </component>

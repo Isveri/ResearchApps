@@ -8,10 +8,11 @@
         <option value="$PROJECT_DIR$/grpc/account-service-grpc/pom.xml" />
         <option value="$PROJECT_DIR$/grpc/customer-service-grpc/pom.xml" />
         <option value="$PROJECT_DIR$/rest/pom.xml" />
-        <option value="$PROJECT_DIR$/kafka/pom.xml" />
         <option value="$PROJECT_DIR$/gatling/pom.xml" />
         <option value="$PROJECT_DIR$/grpc/pom.xml" />
-        <option value="$PROJECT_DIR$/websocket/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/star/rest-core/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/star/rest-auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/star/rest-product-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
