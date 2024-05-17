@@ -7,11 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="customer-grpc" />
-        <module name="customer-rest" />
+        <module name="rest-core (1)" />
+        <module name="restLinear-product-service" />
         <module name="gatling-load-tester" />
         <module name="rest-product-service" />
         <module name="rest-auth-service" />
+        <module name="customer-grpc" />
+        <module name="customer-rest" />
+        <module name="restLinear-payment-service" />
         <module name="rest-core" />
       </profile>
     </annotationProcessing>
@@ -40,7 +43,10 @@
       <module name="rabbitMQtest" options="-parameters" />
       <module name="rest-auth-service" options="-parameters" />
       <module name="rest-core" options="-parameters" />
+      <module name="rest-core (1)" options="-parameters" />
       <module name="rest-product-service" options="-parameters" />
+      <module name="restLinear-payment-service" options="-parameters" />
+      <module name="restLinear-product-service" options="-parameters" />
       <module name="websocket-test" options="-parameters" />
     </option>
   </component>

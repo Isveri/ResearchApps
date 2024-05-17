@@ -17,7 +17,7 @@
     </parent>
 
     <groupId>pl.piomin</groupId>
-    <artifactId>rest-core</artifactId>
+    <artifactId>restStar-core</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>

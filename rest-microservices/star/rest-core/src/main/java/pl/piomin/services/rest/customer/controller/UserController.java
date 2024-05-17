@@ -1,10 +1,11 @@
 package pl.piomin.services.rest.customer.controller;
 
 
+import feign.Response;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.piomin.services.rest.customer.model.User;
 import pl.piomin.services.rest.customer.service.AuthServiceClient;
 
@@ -15,10 +16,12 @@ public class UserController {
     private final AuthServiceClient client;
 
     @PostMapping("/userLogin")
-    void loginUser(@RequestBody User user) {
-        //TODO przekazanie usera do authService w celu weryfikacji
-
+    ResponseEntity<?> loginUser(@RequestBody User user) {
         System.out.println("core login user");
-        System.out.println("correct"+client.validateUser(user));
+        if(!client.validateUser(user)){
+            return new ResponseEntity<>("authorization failed", HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>("ok",HttpStatus.OK);
+
     }
 }

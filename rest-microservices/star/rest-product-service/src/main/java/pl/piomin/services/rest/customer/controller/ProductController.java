@@ -7,32 +7,42 @@ import pl.piomin.services.rest.customer.model.Product;
 import pl.piomin.services.rest.customer.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductRepository repository;
 
-    @GetMapping("/customerAll")
+    @GetMapping("/productAll")
     List<Product> findAll(){
         return repository.findAll();
     }
 
     @Transactional
     @PostMapping("/addProduct")
-    void addProduct(@RequestBody Product product){
-        repository.save(product);
+    Product addProduct(@RequestBody Product product){
+        return repository.save(product);
     }
 
-    @PostMapping("/updateCustomer")
-    void updateProduct(@RequestBody Product product){
-        //TODO do ustalenia co bedzie updatowane
-    }
-
-    @DeleteMapping("/deleteCustomer/{name}")
-    void deleteProduct(@PathVariable String name){
-        if(repository.existsProductByName(name)){
-            repository.deleteByName(name);
+    @PostMapping("/updateProduct")
+    Product updateProduct(@RequestBody Product product){
+        Optional<Product> productTemp = repository.findByName(product.getName());
+        if(productTemp.isPresent()){
+            Product prd = productTemp.get();
+            prd.setQuantity(product.getQuantity());
+            return repository.save(prd);
         }
+        return null;
+    }
+
+    @DeleteMapping("/deleteProduct/{name}")
+    Product deleteProduct(@PathVariable String name){
+        if(repository.existsProductByName(name)){
+            Product temp = repository.findByName(name).get();
+            repository.deleteByName(name);
+            return temp;
+        }
+        return null;
     }
 }

@@ -17,7 +17,7 @@
     </parent>
 
     <groupId>pl.piomin</groupId>
-    <artifactId>rest-auth-service</artifactId>
+    <artifactId>restStar-auth-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
