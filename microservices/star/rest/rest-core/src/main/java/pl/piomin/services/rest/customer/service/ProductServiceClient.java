@@ -8,7 +8,7 @@ import pl.piomin.services.rest.customer.model.User;
 
 import java.util.List;
 
-@FeignClient(value = "ProductService", url = "http://localhost:8084")
+@FeignClient(value = "ProductService", url = "http://localhost:8087")
 public interface ProductServiceClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/productAll")

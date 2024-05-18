@@ -7,24 +7,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="restLinear-product-service" />
-        <module name="rest-auth-service" />
-        <module name="rest-core" />
-        <module name="restStar-auth-service" />
-        <module name="restStar-product-service" />
         <module name="rest-core (1)" />
+        <module name="restLinear-product-service" />
         <module name="restLinear-core" />
         <module name="gatling-load-tester" />
         <module name="rest-product-service" />
+        <module name="rest-auth-service" />
         <module name="customer-grpc" />
-        <module name="customer-rest" />
         <module name="restLinear-payment-service" />
         <module name="restStar-core" />
+        <module name="rest-core" />
+        <module name="restStar-auth-service" />
+        <module name="restStar-product-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="account-service-grpc" target="19" />
       <module name="customer-kafka" target="17" />
+      <module name="customer-rest" target="19" />
       <module name="customer-service" target="19" />
       <module name="customer-service-grpc" target="17" />
       <module name="discovery-service" target="19" />

@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.piomin.services.rest.customer.service.PaymentServiceClient;
 
 @RestController
-
 @RequiredArgsConstructor
 public class PdfController {
 
     private final PaymentServiceClient client;
-
 
     @GetMapping("/pdf/{prodName}")
     public ResponseEntity<?> getProductPdf(@PathVariable String prodName) {

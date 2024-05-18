@@ -21,7 +21,7 @@ public class ProductController {
 
     @Transactional
     @PostMapping("/addProduct")
-    Product addProduct(@RequestBody Product product){
+    public Product addProduct(@RequestBody Product product){
         return repository.save(product);
     }
 

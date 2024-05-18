@@ -1,4 +1,4 @@
-package io.gatling.test.grpc;
+package io.gatling.test.star.grpc;
 
 import com.google.protobuf.ByteString;
 import io.gatling.javaapi.core.ScenarioBuilder;

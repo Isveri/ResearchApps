@@ -1,4 +1,4 @@
-package io.gatling.test.rest;
+package io.gatling.test.star.rest;
 
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
@@ -12,11 +12,9 @@ import static io.gatling.javaapi.http.HttpDsl.http;
 public abstract class RestSimulation extends Simulation implements SimulationConfigurator, CustomRunner {
 
     AtomicInteger counter = new AtomicInteger(0);
-    HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8082")
+    HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8085")
             .acceptHeader("application/json")
-            .contentTypeHeader("application/json")
-
-            ;
+            .contentTypeHeader("application/json");
 
     {
         run();

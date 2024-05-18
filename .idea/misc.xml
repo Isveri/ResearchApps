@@ -16,12 +16,19 @@
         <option value="$PROJECT_DIR$/rest-microservices/linear/rest-core/pom.xml" />
         <option value="$PROJECT_DIR$/rest-microservices/linear/rest-product-service/pom.xml" />
         <option value="$PROJECT_DIR$/rest-microservices/linear/rest-payment-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/rest/rest-auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/rest/rest-core/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/rest/rest-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/rest/rest-payment-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/rest/rest-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/rest/rest-core/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/grpc/account-service-grpc/pom.xml" />
         <option value="$PROJECT_DIR$/grpc/discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rest/pom.xml" />
       </set>
     </option>
   </component>

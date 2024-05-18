@@ -1,4 +1,4 @@
-package io.gatling.test.grpc;
+package io.gatling.test.linear.grpc;
 
 import com.google.protobuf.Empty;
 import com.google.protobuf.StringValue;

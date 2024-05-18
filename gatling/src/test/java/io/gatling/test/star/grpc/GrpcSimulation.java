@@ -1,4 +1,4 @@
-package io.gatling.test.grpc;
+package io.gatling.test.star.grpc;
 
 
 import com.github.phisgr.gatling.kt.grpc.StaticGrpcProtocol;
@@ -14,7 +14,7 @@ import static com.github.phisgr.gatling.kt.grpc.GrpcDsl.grpc;
 public abstract class GrpcSimulation extends Simulation implements SimulationConfigurator, CustomRunner {
 
     AtomicInteger counter = new AtomicInteger(0);
-    StaticGrpcProtocol grpcConf = grpc(ManagedChannelBuilder.forAddress("localhost", 9094).usePlaintext());
+    StaticGrpcProtocol grpcConf = grpc(ManagedChannelBuilder.forAddress("localhost", 8091).usePlaintext());
 
     {
         run();

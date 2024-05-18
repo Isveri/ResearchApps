@@ -1,4 +1,4 @@
-package io.gatling.test.rest;
+package io.gatling.test.star.rest;
 
 import io.gatling.javaapi.core.ScenarioBuilder;
 

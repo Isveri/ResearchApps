@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pl.piomin.services.rest.customer.model.Product;
 
-@FeignClient(value = "PaymentService", url = "http://localhost:8083")
+@FeignClient(value = "PaymentService", url = "http://localhost:8084")
 public interface PaymentServiceClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/productPayment", consumes = "application/json")

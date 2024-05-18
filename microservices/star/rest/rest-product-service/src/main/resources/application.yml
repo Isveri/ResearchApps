@@ -1,5 +1,5 @@
 spring.application.name: restStar-product-service
-server.port: 8084
+server.port: 8087
 spring.output.ansi.enabled: always
 
 spring:
@@ -25,14 +25,14 @@ spring:
 #      hibernate:
 #        SQL : DEBUG
 
-#management.endpoint.metrics.enabled: true
-#management:
-#  metrics:
-#    export:
-#      prometheus:
-#        enabled: true
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"
+management.endpoint.metrics.enabled: true
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 

@@ -23,7 +23,7 @@ public class ProductController {
 
     @Transactional
     @PostMapping("/addProduct")
-    Product addProduct(@RequestBody Product product){
+    public Product addProduct(@RequestBody Product product){
         if(client.productPayment(product)){
             return repository.save(product);
         }
@@ -42,11 +42,11 @@ public class ProductController {
     }
 
     @DeleteMapping("/deleteProduct/{name}")
-    Double deleteProduct(@PathVariable String name){
+    Product deleteProduct(@PathVariable String name){
         Double amount=client.productReturn(name);
         if(amount==123.0){
             repository.deleteByName(name);
         }
-        return amount;
+        return null;
     }
 }

@@ -14,7 +14,7 @@ public class BootData implements CommandLineRunner {
     private final UserRepository userRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         userRepository.save(new User(1L,"login","haslo"));
         System.out.println("___add initial user___");
     }
