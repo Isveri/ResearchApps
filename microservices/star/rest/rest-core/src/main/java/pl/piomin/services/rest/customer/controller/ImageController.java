@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.piomin.services.rest.customer.service.AuthServiceClient;
 import pl.piomin.services.rest.customer.service.ImageService;
 
 import java.io.IOException;
@@ -18,18 +19,25 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 public class ImageController {
 
     private final ImageService imageService;
+    private final AuthServiceClient authServiceClient;
 
     @PostMapping
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
-        String uploadImage = imageService.uploadImage(file);
+        String uploadImage = null;
+        if(authServiceClient.validateUser()){
+            uploadImage = imageService.uploadImage(file);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
     }
 
     @GetMapping("/{fileName}")
     public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
-        byte[] imageData = imageService.downloadImage(fileName);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf(IMAGE_PNG_VALUE))
-                .body(imageData);
+        if(authServiceClient.validateUser()) {
+            byte[] imageData = imageService.downloadImage(fileName);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .contentType(MediaType.valueOf(IMAGE_PNG_VALUE))
+                    .body(imageData);
+        }
+        return null;
     }
 }

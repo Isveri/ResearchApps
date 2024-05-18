@@ -9,5 +9,5 @@ import pl.piomin.services.rest.customer.model.User;
 public interface AuthServiceClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/userLogin", consumes = "application/json")
-    boolean validateUser(User user);
+    boolean validateUser();
 }

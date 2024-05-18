@@ -16,9 +16,9 @@ public class UserController {
     private final AuthServiceClient client;
 
     @PostMapping("/userLogin")
-    ResponseEntity<?> loginUser(@RequestBody User user) {
+    ResponseEntity<?> loginUser() {
         System.out.println("core login user");
-        if(!client.validateUser(user)){
+        if(!client.validateUser()){
             return new ResponseEntity<>("authorization failed", HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>("ok",HttpStatus.OK);
