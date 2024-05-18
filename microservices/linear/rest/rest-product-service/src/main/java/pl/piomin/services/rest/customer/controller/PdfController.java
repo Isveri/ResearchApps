@@ -2,9 +2,8 @@ package pl.piomin.services.rest.customer.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.service.PaymentServiceClient;
 
 @RestController
@@ -17,4 +16,7 @@ public class PdfController {
     public ResponseEntity<?> getProductPdf(@PathVariable String prodName) {
         return client.getProductPdf(prodName);
     }
+
+    @PostMapping
+    public ResponseEntity<?> uploadPdf(@RequestParam("pdf") MultipartFile file){return client.uploadPdf(file);}
 }

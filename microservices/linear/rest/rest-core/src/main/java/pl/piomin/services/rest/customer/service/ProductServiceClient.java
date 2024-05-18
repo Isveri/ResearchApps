@@ -3,6 +3,7 @@ package pl.piomin.services.rest.customer.service;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.model.Product;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public interface ProductServiceClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/pdf/{prodName}")
     ResponseEntity<?> getProductPdf(@PathVariable String prodName);
+
+    @PostMapping
+    ResponseEntity<?> uploadPdf(@RequestParam("pdf") MultipartFile file);
 }
+

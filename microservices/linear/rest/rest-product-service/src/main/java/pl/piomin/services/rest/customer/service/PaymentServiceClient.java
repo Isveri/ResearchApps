@@ -2,10 +2,8 @@ package pl.piomin.services.rest.customer.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.model.Product;
 
 @FeignClient(value = "PaymentService", url = "http://localhost:8084")
@@ -19,4 +17,7 @@ public interface PaymentServiceClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/pdf/{prodName}")
     ResponseEntity<?> getProductPdf(@PathVariable String prodName);
+
+    @PostMapping
+    ResponseEntity<?> uploadPdf(@RequestParam("pdf") MultipartFile file);
 }
