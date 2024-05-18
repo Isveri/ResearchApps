@@ -17,6 +17,6 @@ public class PdfController {
         return client.getProductPdf(prodName);
     }
 
-    @PostMapping
+    @PostMapping("/pdf")
     public ResponseEntity<?> uploadPdf(@RequestParam("pdf") MultipartFile file){return client.uploadPdf(file);}
 }

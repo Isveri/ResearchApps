@@ -1,42 +1,33 @@
 package pl.piomin.services.rest.customer.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.service.AuthServiceClient;
-import pl.piomin.services.rest.customer.service.ImageService;
+import pl.piomin.services.rest.customer.service.ProductServiceClient;
 
-import java.io.IOException;
-
-import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @RestController
 @RequestMapping("/image")
 @RequiredArgsConstructor
 public class ImageController {
 
-    private final ImageService imageService;
     private final AuthServiceClient authServiceClient;
+    private final ProductServiceClient productServiceClient;
 
     @PostMapping
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
-        String uploadImage = null;
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) {
         if(authServiceClient.validateUser()){
-            uploadImage = imageService.uploadImage(file);
+            return productServiceClient.uploadImage(file);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
+        return null;
     }
 
     @GetMapping("/{fileName}")
     public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
         if(authServiceClient.validateUser()) {
-            byte[] imageData = imageService.downloadImage(fileName);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .contentType(MediaType.valueOf(IMAGE_PNG_VALUE))
-                    .body(imageData);
+           return productServiceClient.downloadImage(fileName);
         }
         return null;
     }

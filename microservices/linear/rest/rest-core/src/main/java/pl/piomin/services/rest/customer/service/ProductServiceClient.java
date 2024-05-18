@@ -26,7 +26,7 @@ public interface ProductServiceClient {
     @RequestMapping(method = RequestMethod.GET, value = "/pdf/{prodName}")
     ResponseEntity<?> getProductPdf(@PathVariable String prodName);
 
-    @PostMapping
+    @PostMapping("/pdf")
     ResponseEntity<?> uploadPdf(@RequestParam("pdf") MultipartFile file);
 }
 
