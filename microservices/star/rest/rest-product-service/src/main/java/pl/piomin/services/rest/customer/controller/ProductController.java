@@ -30,7 +30,10 @@ public class ProductController {
     @Transactional
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product) {
-        return repository.save(product);
+        if (repository.existsProductByName(product.getName())) {
+            return repository.save(product);
+        }
+        return null;
     }
 
     @PostMapping("/updateProduct")
@@ -44,8 +47,9 @@ public class ProductController {
         return null;
     }
 
+    @Transactional
     @DeleteMapping("/deleteProduct/{name}")
-    Product deleteProduct(@PathVariable String name) {
+    public Product deleteProduct(@PathVariable String name) {
         if (repository.existsProductByName(name)) {
             Product temp = repository.findByName(name).get();
             repository.deleteByName(name);

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.service.AuthServiceClient;
 import pl.piomin.services.rest.customer.service.ProductServiceClient;
+import pl.piomin.services.rest.customer.service.ProductServiceImageClient;
 
 
 @RestController
@@ -14,20 +15,20 @@ import pl.piomin.services.rest.customer.service.ProductServiceClient;
 public class ImageController {
 
     private final AuthServiceClient authServiceClient;
-    private final ProductServiceClient productServiceClient;
+    private final ProductServiceImageClient productServiceImageClient;
 
     @PostMapping
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) {
-        if(authServiceClient.validateUser()){
-            return productServiceClient.uploadImage(file);
+    public String uploadImage(@RequestParam("image") MultipartFile file) {
+        if (authServiceClient.validateUser()) {
+            return productServiceImageClient.uploadImage(file);
         }
         return null;
     }
 
     @GetMapping("/{fileName}")
-    public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
-        if(authServiceClient.validateUser()) {
-           return productServiceClient.downloadImage(fileName);
+    public ResponseEntity<byte[]> downloadImage(@PathVariable String fileName) {
+        if (authServiceClient.validateUser()) {
+            return productServiceImageClient.downloadImage(fileName);
         }
         return null;
     }

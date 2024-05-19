@@ -15,23 +15,23 @@ public class ProductController {
     private final ProductServiceClient client;
 
     @GetMapping("/productAll")
-    List<Product> findAll(){
+    List<Product> findAll() {
         return client.findAll();
     }
 
     @Transactional
     @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product){
+    public Product addProduct(@RequestBody Product product) {
         return client.addProduct(product);
     }
 
     @PostMapping("/updateProduct")
-    Product updateProduct(@RequestBody Product product){
+    Product updateProduct(@RequestBody Product product) {
         return client.updateProduct(product);
     }
 
     @DeleteMapping("/deleteProduct/{name}")
-    Product deleteProduct(@PathVariable String name){
+    Product deleteProduct(@PathVariable String name) {
         return client.deleteProduct(name);
     }
 }

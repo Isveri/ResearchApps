@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="StarRestImageSimulation" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="StarRestImageSimulation" type="MavenRunConfiguration" factoryName="Maven" folderName="rest">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />

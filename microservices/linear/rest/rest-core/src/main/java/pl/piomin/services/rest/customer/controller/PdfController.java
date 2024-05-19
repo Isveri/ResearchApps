@@ -14,11 +14,12 @@ public class PdfController {
 
 
     @GetMapping("/pdf/{prodName}")
-    public ResponseEntity<?> getProductPdf(@PathVariable String prodName) {
+    public ResponseEntity<byte[]> getProductPdf(@PathVariable String prodName) {
         return client.getProductPdf(prodName);
     }
-    @PostMapping
-    public ResponseEntity<?> uploadPdf(@RequestParam("pdf") MultipartFile file) {
+
+    @PostMapping("/pdf")
+    public ResponseEntity<String> uploadPdf(@RequestParam("pdf") MultipartFile file) {
         return client.uploadPdf(file);
     }
 }

@@ -18,7 +18,7 @@ public class PdfController {
     private final ImageService imageService;
 
     @GetMapping("/pdf/{prodName}")
-    public ResponseEntity<?> getProductPdf(@PathVariable String prodName) {
+    public ResponseEntity<byte[]> getProductPdf(@PathVariable String prodName) {
         byte[] imageData = imageService.downloadImage(prodName);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf(IMAGE_PNG_VALUE))
@@ -26,7 +26,7 @@ public class PdfController {
     }
 
     @PostMapping("/pdf")
-    public ResponseEntity<?> uploadPdf(@RequestParam("pdf") MultipartFile file) throws IOException {
+    public ResponseEntity<String> uploadPdf(@RequestParam("pdf") MultipartFile file) throws IOException {
         String uploadImage = imageService.uploadImage(file);
         return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
     }
