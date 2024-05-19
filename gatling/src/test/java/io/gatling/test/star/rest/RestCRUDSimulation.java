@@ -24,11 +24,6 @@ public class RestCRUDSimulation extends RestSimulation {
         return scenario("Scenario 1 - auth and product")
                 .exec(session -> session.set("my_var", counter.getAndIncrement()))
                 .exec(
-                        http("loginUser").post("/userLogin")
-                                .body(StringBody("{\"login\": \"login\",\"password\": \"haslo\"}"))
-                                .check(status().is(200))
-                )
-                .exec(
                         http("productAll").get("/productAll")
                                 .check(status().is(200))
                                 .check(jsonPath("$").ofList())

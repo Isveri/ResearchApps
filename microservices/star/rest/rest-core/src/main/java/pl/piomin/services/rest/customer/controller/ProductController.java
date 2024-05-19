@@ -9,6 +9,7 @@ import pl.piomin.services.rest.customer.model.Product;
 import pl.piomin.services.rest.customer.service.AuthServiceClient;
 import pl.piomin.services.rest.customer.service.ProductServiceClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class ProductController {
         if(authClient.validateUser()) {
             return client.findAll();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Transactional

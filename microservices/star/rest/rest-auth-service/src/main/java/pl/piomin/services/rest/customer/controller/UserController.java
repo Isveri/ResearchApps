@@ -16,6 +16,6 @@ public class UserController {
     @PostMapping("/userLogin")
     boolean loginUser(){
         System.out.println("auth service login user");
-        return repository.existsByLoginAndPassword("login", "password");
+        return repository.existsByLoginAndPassword("login", "haslo");
     }
 }
