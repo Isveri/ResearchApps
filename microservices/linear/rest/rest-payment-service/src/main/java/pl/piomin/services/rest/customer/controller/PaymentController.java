@@ -15,15 +15,15 @@ public class PaymentController {
 
     @Transactional
     @PostMapping("/productPayment")
-    public Boolean addProduct(@RequestBody Product product){
+    public Boolean addProduct(@RequestBody Product product) {
         return !repository.existsProductByName(product.getName());
     }
 
     @PostMapping("/productReturn/{prodName}")
-    Double deleteProduct(@PathVariable String prodName){
-        Double amount=0.0;
-        if(repository.existsProductByName(prodName)){
-            amount=123.0;
+    Double deleteProduct(@PathVariable String prodName) {
+        Double amount = 0.0;
+        if (repository.existsProductByName(prodName)) {
+            amount = 123.0;
         }
         return amount;
     }

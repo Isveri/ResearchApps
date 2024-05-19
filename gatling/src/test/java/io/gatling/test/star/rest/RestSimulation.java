@@ -15,6 +15,7 @@ public abstract class RestSimulation extends Simulation implements SimulationCon
     HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8085")
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
+
     {
         run();
     }

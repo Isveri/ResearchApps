@@ -10,8 +10,9 @@ public class RestCRUDSimulation extends RestSimulation {
 
     @Override
     public void run() {
-        steadyLoad5R300U60T(httpProtocol,this);
+//        steadyLoad5R300U60T(httpProtocol,this);
 //        rampLoad(httpProtocol,this);
+        runScenario(httpProtocol, this, 5, 100, 30);
 //        stressLoad1R1KU60T(httpProtocol,this);
 //        testScenario(httpProtocol,this,1,2,6);
 //        repeat1Constant30000duration60(httpProtocol, this);

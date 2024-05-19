@@ -26,9 +26,9 @@ public class ImageService {
                 .type(imageFile.getContentType())
                 .imageData(ImageUtils.compressImage(imageFile.getBytes()))
                 .build();
-        if(!imageRepository.existsByName(imageToSave.getName())) {
+        if (!imageRepository.existsByName(imageToSave.getName())) {
             imageRepository.save(imageToSave);
-            if(imageRepository.existsByName(imageToSave.getName())) {
+            if (imageRepository.existsByName(imageToSave.getName())) {
                 return "file uploaded successfully : " + imageFile.getOriginalFilename();
             }
         }
@@ -44,7 +44,7 @@ public class ImageService {
                 return ImageUtils.decompressImage(image.getImageData());
             } catch (DataFormatException | IOException exception) {
                 throw new ContextedRuntimeException("Error downloading an image", exception)
-                        .addContextValue("Image ID",  image.getId())
+                        .addContextValue("Image ID", image.getId())
                         .addContextValue("Image name", imageName);
             }
         }).orElse(null);

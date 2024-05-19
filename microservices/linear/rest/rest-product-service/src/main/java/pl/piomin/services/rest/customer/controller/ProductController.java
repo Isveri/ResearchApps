@@ -17,23 +17,23 @@ public class ProductController {
     private final PaymentServiceClient client;
 
     @GetMapping("/productAll")
-    List<Product> findAll(){
+    List<Product> findAll() {
         return repository.findAll();
     }
 
     @Transactional
     @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product){
-        if(client.productPayment(product)){
+    public Product addProduct(@RequestBody Product product) {
+        if (client.productPayment(product)) {
             return repository.save(product);
         }
         return null;
     }
 
     @PostMapping("/updateProduct")
-    Product updateProduct(@RequestBody Product product){
+    Product updateProduct(@RequestBody Product product) {
         Optional<Product> productTemp = repository.findByName(product.getName());
-        if(productTemp.isPresent()){
+        if (productTemp.isPresent()) {
             Product prd = productTemp.get();
             prd.setQuantity(product.getQuantity());
             return repository.save(prd);
@@ -42,9 +42,9 @@ public class ProductController {
     }
 
     @DeleteMapping("/deleteProduct/{name}")
-    Product deleteProduct(@PathVariable String name){
-        Double amount=client.productReturn(name);
-        if(amount==123.0){
+    Product deleteProduct(@PathVariable String name) {
+        Double amount = client.productReturn(name);
+        if (amount == 123.0) {
             repository.deleteByName(name);
         }
         return null;

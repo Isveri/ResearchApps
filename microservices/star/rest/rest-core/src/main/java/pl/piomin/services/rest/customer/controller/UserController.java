@@ -18,10 +18,10 @@ public class UserController {
     @PostMapping("/userLogin")
     ResponseEntity<?> loginUser() {
         System.out.println("core login user");
-        if(!client.validateUser()){
+        if (!client.validateUser()) {
             return new ResponseEntity<>("authorization failed", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>("ok",HttpStatus.OK);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
 
     }
 }

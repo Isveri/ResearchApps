@@ -20,8 +20,8 @@ public class ProductController {
     private final AuthServiceClient authClient;
 
     @GetMapping("/productAll")
-    List<Product> findAll(){
-        if(authClient.validateUser()) {
+    List<Product> findAll() {
+        if (authClient.validateUser()) {
             return client.findAll();
         }
         return new ArrayList<>();
@@ -29,24 +29,24 @@ public class ProductController {
 
     @Transactional
     @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product){
-        if(authClient.validateUser()) {
+    public Product addProduct(@RequestBody Product product) {
+        if (authClient.validateUser()) {
             return client.addProduct(product);
         }
         return null;
     }
 
     @PostMapping("/updateProduct")
-    Product updateProduct(@RequestBody Product product){
-        if(authClient.validateUser()) {
+    Product updateProduct(@RequestBody Product product) {
+        if (authClient.validateUser()) {
             return client.updateProduct(product);
         }
         return null;
     }
 
     @DeleteMapping("/deleteProduct/{name}")
-    Product deleteProduct(@PathVariable String name){
-        if(authClient.validateUser()) {
+    Product deleteProduct(@PathVariable String name) {
+        if (authClient.validateUser()) {
             return client.deleteProduct(name);
         }
         return null;

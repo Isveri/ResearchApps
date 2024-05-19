@@ -10,7 +10,7 @@ public class RestImageSimulation extends RestSimulation {
     public void run() {
 //        steadyLoad5R300U60T(httpProtocol,this);
 //        rampLoad(httpProtocol,this);
-        runScenario(httpProtocol, this, 2, 30, 10);
+        runScenario(httpProtocol, this, 5, 100, 30);
 //        repeat1Constant30000duration60(httpProtocol, this);
 //        repeat10Constant3000duration60(httpProtocol, this);
 //      repeat100Constant300duration60(httpProtocol, this);

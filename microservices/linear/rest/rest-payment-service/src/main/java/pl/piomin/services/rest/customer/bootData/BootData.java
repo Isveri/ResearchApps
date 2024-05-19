@@ -37,15 +37,15 @@ public class BootData implements CommandLineRunner {
                 .name("testImage.jpg")
                 .type("image/jpeg")
                 .imageData(ImageUtils.compressImage(
-                                Files.readAllBytes(ResourceUtils.getFile("classpath:testImage.jpg").toPath()))
+                        Files.readAllBytes(ResourceUtils.getFile("classpath:testImage.jpg").toPath()))
                 )
                 .build();
         imageRepository.save(imageToSave);
     }
-    public static byte[] getByteArray(File file)throws IOException
-    {
+
+    public static byte[] getByteArray(File file) throws IOException {
         FileInputStream fl = new FileInputStream(file);
-        byte[] arr = new byte[(int)file.length()];
+        byte[] arr = new byte[(int) file.length()];
         fl.read(arr);
         fl.close();
         return arr;

@@ -30,7 +30,7 @@ public class ProductController {
     @Transactional
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product) {
-        if(repository.existsProductByName(product.getName())) {
+        if (repository.existsProductByName(product.getName())) {
             return repository.save(product);
         }
         return null;
