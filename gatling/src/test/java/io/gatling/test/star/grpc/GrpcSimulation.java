@@ -14,7 +14,7 @@ import static com.github.phisgr.gatling.kt.grpc.GrpcDsl.grpc;
 public abstract class GrpcSimulation extends Simulation implements SimulationConfigurator, CustomRunner {
 
     AtomicInteger counter = new AtomicInteger(0);
-    StaticGrpcProtocol grpcConf = grpc(ManagedChannelBuilder.forAddress("localhost", 8091).usePlaintext());
+    StaticGrpcProtocol grpcConf = grpc(ManagedChannelBuilder.forAddress("localhost", 9061).usePlaintext());
 
     {
         run();

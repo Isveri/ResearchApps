@@ -1,5 +1,6 @@
 spring.application.name: grpcStar-auth-service
 server.port: 8092
+grpc.server.port: 9062
 spring.output.ansi.enabled: always
 
 spring:
@@ -22,8 +23,7 @@ spring:
 #logging:
 #  level:
 #    org:
-#      hibernate:
-#        SQL : DEBUG
+#      DEBUG
 
 management.endpoint.metrics.enabled: true
 management:

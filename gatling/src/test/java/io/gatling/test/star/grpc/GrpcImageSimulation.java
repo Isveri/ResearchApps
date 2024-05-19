@@ -19,8 +19,9 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 public class GrpcImageSimulation extends GrpcSimulation {
     @Override
     public void run() {
+        runScenario(grpcConf,this,1,1,6);
 //        steadyLoad5R300U60T(grpcConf,this);
-        rampLoad(grpcConf,this);
+//        rampLoad(grpcConf,this);
 //        repeat1Constant30000duration60(grpcConf, this);
 //        repeat10Constant3000duration60(grpcConf, this);
 //        repeat100Constant300duration60(grpcConf, this);
@@ -53,7 +54,6 @@ public class GrpcImageSimulation extends GrpcSimulation {
                                             .build();
                                 })
                                 .check(statusCode().is(Status.Code.OK)))
-
                 .exec(
                         grpc("imageDowload")
                                 .rpc(ImageServiceGrpc.getDownloadImageMethod())
@@ -63,6 +63,7 @@ public class GrpcImageSimulation extends GrpcSimulation {
                                                 .build()
                                 )
                                 .check(statusCode().is(Status.Code.OK))
-                );
+                )
+        ;
     }
 }

@@ -1,6 +1,8 @@
 spring.application.name: grpcStar-core
 server.port: 8091
+grpc.server.port: 9061
 spring.output.ansi.enabled: always
+
 
 spring:
   datasource:
@@ -35,4 +37,11 @@ management:
     web:
       exposure:
         include: "*"
-
+grpc:
+  client:
+    auth-service:
+      address: 'localhost:9062'
+      negotiation-type: plaintext
+    product-service:
+      address: 'localhost:9063'
+      negotiation-type: plaintext

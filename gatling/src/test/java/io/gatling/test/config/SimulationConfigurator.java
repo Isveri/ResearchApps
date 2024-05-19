@@ -61,6 +61,9 @@ public interface SimulationConfigurator {
     default void steadyLoad5R300U60T(ProtocolBuilder protocol, Simulation simulation){
         runScenario(protocol,simulation,5,300,60);
     }
+    default void steadyLoad3R100U60T(ProtocolBuilder protocol, Simulation simulation){
+        runScenario(protocol,simulation,3,100,60);
+    }
     default void stressLoad1R1KU60T(ProtocolBuilder protocol, Simulation simulation){
         stressScenario(protocol,simulation,1,10000,60);
     }
