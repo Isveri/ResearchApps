@@ -17,6 +17,12 @@
     <file url="file://$PROJECT_DIR$/microservices/linear/rest/rest-payment-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/linear/rest/rest-product-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/linear/rest/rest-product-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/star/grpc/grpc-auth-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/star/grpc/grpc-auth-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/star/grpc/grpc-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/star/grpc/grpc-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/star/grpc/grpc-product-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/star/grpc/grpc-product-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/star/rest/rest-auth-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/star/rest/rest-auth-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/star/rest/rest-core/src/main/java" charset="UTF-8" />
