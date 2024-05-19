@@ -1,6 +1,7 @@
 package pl.piomin.services.rest.customer.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,4 @@ public interface ProductServiceClient {
     @RequestMapping(method = RequestMethod.DELETE, value = "/deleteProduct/{name}")
     Product deleteProduct(@PathVariable String name);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/image/{prodName}")
-    ResponseEntity<?> downloadImage(@PathVariable String prodName);
-
-    @PostMapping("/image")
-    ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file);
 }

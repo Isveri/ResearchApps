@@ -2,6 +2,7 @@ package pl.piomin.services.rest.customer.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.model.Image;
 import pl.piomin.services.rest.customer.repository.ImageRepository;
@@ -18,16 +19,23 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
+    @Transactional
     public String uploadImage(MultipartFile imageFile) throws IOException {
         var imageToSave = Image.builder()
                 .name(imageFile.getOriginalFilename())
                 .type(imageFile.getContentType())
                 .imageData(ImageUtils.compressImage(imageFile.getBytes()))
                 .build();
-        imageRepository.save(imageToSave);
-        return "file uploaded successfully : " + imageFile.getOriginalFilename();
+        if(!imageRepository.existsByName(imageToSave.getName())) {
+            imageRepository.save(imageToSave);
+            if(imageRepository.existsByName(imageToSave.getName())) {
+                return "file uploaded successfully : " + imageFile.getOriginalFilename();
+            }
+        }
+        return "file upload failed";
     }
 
+    @Transactional
     public byte[] downloadImage(String imageName) {
         Optional<Image> dbImage = imageRepository.findByName(imageName);
         imageRepository.deleteById(dbImage.get().getId());
