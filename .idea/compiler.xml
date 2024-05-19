@@ -8,9 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="restLinear-product-service" />
+        <module name="grpcLinear-product-service" />
         <module name="grpcStar-product-service" />
         <module name="grpcStar-auth-service" />
         <module name="rest-auth-service" />
+        <module name="grpcLinear-core" />
         <module name="rest-core" />
         <module name="restStar-auth-service" />
         <module name="restStar-product-service" />
@@ -50,6 +52,8 @@
       <module name="customer-service" options="-parameters" />
       <module name="customer-service-grpc" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+      <module name="grpcLinear-core" options="-parameters" />
+      <module name="grpcLinear-product-service" options="-parameters" />
       <module name="grpcStar-auth-service" options="-parameters" />
       <module name="grpcStar-core" options="-parameters" />
       <module name="grpcStar-product-service" options="-parameters" />
