@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="StarGrpcImageSimulation" type="MavenRunConfiguration" factoryName="Maven" folderName="grpc">
+  <configuration default="false" name="LinearGrpcCRUDSimulation" type="MavenRunConfiguration" factoryName="Maven" folderName="grpc">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -12,7 +12,7 @@
           <option name="goals">
             <list>
               <option value="gatling:test" />
-              <option value="-DclassName=io.gatling.test.star.grpc.GrpcImageSimulation" />
+              <option value="-DclassName=io.gatling.test.linear.grpc.GrpcCRUDSimulation" />
             </list>
           </option>
           <option name="multimoduleDir" />

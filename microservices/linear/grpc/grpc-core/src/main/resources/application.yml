@@ -39,9 +39,6 @@ management:
         include: "*"
 grpc:
   client:
-    auth-service:
-      address: 'localhost:9062'
-      negotiation-type: plaintext
     product-service:
-      address: 'localhost:9063'
+      address: 'localhost:9069'
       negotiation-type: plaintext

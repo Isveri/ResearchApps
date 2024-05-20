@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="StarRestImageSimulation" type="MavenRunConfiguration" factoryName="Maven" folderName="rest">
+  <configuration default="false" name="LinearRestImageSimulation" type="MavenRunConfiguration" factoryName="Maven" folderName="rest">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -12,7 +12,7 @@
           <option name="goals">
             <list>
               <option value="gatling:test" />
-              <option value="-DclassName=io.gatling.test.star.rest.RestImageSimulation" />
+              <option value="-DclassName=io.gatling.test.linear.rest.RestImageSimulation" />
             </list>
           </option>
           <option name="multimoduleDir" />

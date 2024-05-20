@@ -10,6 +10,7 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import pl.piomin.services.grpc.customer.adapter.ProductAdapter;
+import pl.piomin.services.grpc.customer.client.PaymentClient;
 import pl.piomin.services.grpc.customer.model.Product;
 import pl.piomin.services.grpc.customer.repository.ProductRepository;
 import pl.piomin.services.grpc.product.model.ProductProto;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     private final ProductRepository repository;
+    private final PaymentClient client;
 
 
     @Override
@@ -36,10 +38,22 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     @Override
     public void addProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
-        var customerDTO=repository.save(new Product(null,request.getName(), (long) request.getQuantity()));
-        ProductProto.Product c = ProductAdapter.toProto(customerDTO);
-        responseObserver.onNext(c);
-        responseObserver.onCompleted();
+        if(client.authorizeAddProduct(request.getName())){
+            var customerDTO=repository.save(new Product(null,request.getName(), (long) request.getQuantity()));
+            ProductProto.Product c = ProductAdapter.toProto(customerDTO);
+            responseObserver.onNext(c);
+            responseObserver.onCompleted();
+        }else{
+            com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
+                    .setCode(Code.ALREADY_EXISTS_VALUE)
+                    .setMessage("Product name already exists")
+                    .addDetails(Any.pack(ErrorInfo.newBuilder()
+                            .setReason("Invalid product data")
+                            .build()))
+                    .build();
+            responseObserver.onError(StatusProto.toStatusRuntimeException(status));
+        }
+
     }
     @Override
     public void updateProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver){
@@ -65,7 +79,7 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
     }
     @Override
     public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver){
-        if(repository.existsProductByName(request.getValue())){
+        if(client.authorizeAddProduct(request.getValue())){
             String name = request.getValue();
             Product deletedProduct = repository.findByName(name).get();
             repository.deleteByName(name);
@@ -75,9 +89,9 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
         }else{
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.NOT_FOUND_VALUE)
-                    .setMessage("Product no found")
+                    .setMessage("Product name not exists")
                     .addDetails(Any.pack(ErrorInfo.newBuilder()
-                            .setReason("Product name not present")
+                            .setReason("Invalid product data")
                             .build()))
                     .build();
             responseObserver.onError(StatusProto.toStatusRuntimeException(status));

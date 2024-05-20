@@ -7,24 +7,24 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.piomin.services.grpc.customer.service.PdfService;
-import pl.piomin.services.grpc.customer.service.ProductService;
+import pl.piomin.services.grpc.customer.service.PaymentService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.cert.CertificateException;
 
 @SpringBootApplication
-public class GrpcLinearProductApplication {
+public class GrpcLinearPaymentApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GrpcLinearProductApplication.class, args);
+        SpringApplication.run(GrpcLinearPaymentApplication.class, args);
     }
 
     @Bean
-    public Server grpcServer(ProductService productService, PdfService pdfService) throws IOException, CertificateException {
+    public Server grpcServer(PaymentService paymentService, PdfService pdfService) throws IOException, CertificateException {
         SelfSignedCertificate ssc = new SelfSignedCertificate("localhost");
-        Server server = ServerBuilder.forPort(9099)
-                .addService(productService)
+        Server server = ServerBuilder.forPort(9090)
+                .addService(paymentService)
                 .addService(pdfService)
                 .useTransportSecurity(
                         new FileInputStream(ssc.certificate()),

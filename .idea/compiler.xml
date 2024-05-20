@@ -13,6 +13,7 @@
         <module name="grpcStar-auth-service" />
         <module name="rest-auth-service" />
         <module name="grpcLinear-core" />
+        <module name="grpcLinear-payment-service" />
         <module name="rest-core" />
         <module name="restStar-auth-service" />
         <module name="restStar-product-service" />
@@ -53,6 +54,7 @@
       <module name="customer-service-grpc" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="grpcLinear-core" options="-parameters" />
+      <module name="grpcLinear-payment-service" options="-parameters" />
       <module name="grpcLinear-product-service" options="-parameters" />
       <module name="grpcStar-auth-service" options="-parameters" />
       <module name="grpcStar-core" options="-parameters" />

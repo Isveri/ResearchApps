@@ -1,6 +1,6 @@
-spring.application.name: grpcLinear-product-service
-server.port: 8089
-grpc.server.port: 9069
+spring.application.name: grpcLinear-payment-service
+server.port: 8090
+grpc.server.port: 9060
 spring.output.ansi.enabled: always
 
 spring:
@@ -37,8 +37,3 @@ management:
       exposure:
         include: "*"
 
-grpc:
-  client:
-    payment-service:
-      address: 'localhost:9060'
-      negotiation-type: plaintext

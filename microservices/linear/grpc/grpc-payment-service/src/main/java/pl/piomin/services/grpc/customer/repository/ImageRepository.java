@@ -12,4 +12,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void deleteAllByName(String name);
+
+    boolean existsByName(String name);
 }
