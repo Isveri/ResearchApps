@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package model;
+
+option java_package = "pl.piomin.services.grpc.pdf.model";
+option java_outer_classname = "PdfProto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+message PdfData {
+  string name = 1;
+  string type = 2;
+  bytes data = 3;
+}
+
+service PdfService {
+  rpc UploadPdf(PdfData) returns (UploadPdfResponse);
+  rpc DownloadPdf(DownloadPdfRequest) returns (DownloadPdfResponse);
+}
+
+message UploadPdfResponse {
+  string message = 1;
+}
+
+message DownloadPdfRequest {
+  string imageName = 1;
+}
+
+message DownloadPdfResponse {
+  bytes imageData = 1;
+}

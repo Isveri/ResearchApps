@@ -17,7 +17,8 @@ public class GrpcCRUDSimulation extends GrpcSimulation {
 
     @Override
     public void run() {
-        runScenario(grpcConf,this,1,1,6);
+//        runScenario(grpcConf,this,1,1,6);
+        steadyLoad3R100U60T(grpcConf,this);
 //        steadyLoad5R300U60T(grpcConf,this);
 //        rampLoad(grpcConf,this);
 //        testScenario(grpcConf,this,100,450,60);
