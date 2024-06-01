@@ -418,103 +418,67 @@
       "type": "stat"
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s",
+          "links": [],
           "unitScale": true
         },
         "overrides": []
       },
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
-        "w": 6,
+        "w": 12,
         "x": 0,
         "y": 4
       },
-      "id": 154,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
+      "hiddenSeries": false,
+      "id": 156,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
       },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
       "pluginVersion": "10.3.3",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
-          "expr": "sum(rate(response_time_timer_seconds_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))/sum(rate(response_time_timer_seconds_count{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))",
+          "expr": "system_cpu_usage{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
-          "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "HTTP - AVG",
-          "range": true,
+          "legendFormat": "System CPU Usage",
           "refId": "A"
         },
         {
@@ -522,136 +486,42 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
-          "expr": "max(response_time_timer_seconds_max{application=\"$application\", instance=\"$instance\", status!~\"5..\"})",
+          "expr": "process_cpu_usage{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
-          "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "HTTP - MAX",
-          "range": true,
+          "legendFormat": "Process CPU Usage",
           "refId": "B"
         }
       ],
-      "title": "Default service to service response time",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "CPU Usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
       },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s",
-          "unitScale": true
-        },
-        "overrides": []
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
       },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 4
-      },
-      "id": 155,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.3.3",
-      "targets": [
+      "yaxes": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(response_time_timer2_seconds_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))/sum(rate(response_time_timer2_seconds_count{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 1,
-          "legendFormat": "HTTP - AVG",
-          "range": true,
-          "refId": "A"
+          "format": "short",
+          "logBase": 1,
+          "show": true
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "max(response_time_timer2_seconds_max{application=\"$application\", instance=\"$instance\", status!~\"5..\"})",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 1,
-          "legendFormat": "HTTP - MAX",
-          "range": true,
-          "refId": "B"
+          "format": "short",
+          "logBase": 1,
+          "show": true
         }
       ],
-      "title": "Auth Service for Star",
-      "type": "timeseries"
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -789,6 +659,242 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 11
+      },
+      "id": 154,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(response_time_timer_seconds_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))/sum(rate(response_time_timer_seconds_count{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "HTTP - AVG",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "max(response_time_timer_seconds_max{application=\"$application\", instance=\"$instance\", status!~\"5..\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "HTTP - MAX",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Default service to service response time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 6,
+        "y": 11
+      },
+      "id": 155,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(response_time_timer2_seconds_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))/sum(rate(response_time_timer2_seconds_count{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "HTTP - AVG",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "max(response_time_timer2_seconds_max{application=\"$application\", instance=\"$instance\", status!~\"5..\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "HTTP - MAX",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Auth Service for Star",
+      "type": "timeseries"
+    },
+    {
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
@@ -798,7 +904,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 18
       },
       "id": 140,
       "panels": [
@@ -823,7 +929,7 @@
             "h": 7,
             "w": 6,
             "x": 0,
-            "y": 12
+            "y": 20
           },
           "hiddenSeries": false,
           "id": 111,
@@ -920,7 +1026,7 @@
             "h": 7,
             "w": 6,
             "x": 6,
-            "y": 12
+            "y": 20
           },
           "hiddenSeries": false,
           "id": 112,
@@ -1014,7 +1120,7 @@
             "h": 7,
             "w": 6,
             "x": 12,
-            "y": 12
+            "y": 20
           },
           "hiddenSeries": false,
           "id": 113,
@@ -1122,7 +1228,7 @@
             "h": 7,
             "w": 6,
             "x": 18,
-            "y": 12
+            "y": 20
           },
           "hiddenSeries": false,
           "id": 119,
@@ -1280,7 +1386,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 19
       },
       "id": 141,
       "panels": [
@@ -1311,7 +1417,7 @@
             "h": 7,
             "w": 6,
             "x": 0,
-            "y": 13
+            "y": 21
           },
           "hiddenSeries": false,
           "id": 24,
@@ -1444,7 +1550,7 @@
             "h": 7,
             "w": 6,
             "x": 6,
-            "y": 13
+            "y": 21
           },
           "hiddenSeries": false,
           "id": 25,
@@ -1578,7 +1684,7 @@
             "h": 7,
             "w": 6,
             "x": 18,
-            "y": 13
+            "y": 21
           },
           "hiddenSeries": false,
           "id": 86,
@@ -1718,7 +1824,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 20
       },
       "id": 142,
       "panels": [
@@ -1749,7 +1855,7 @@
             "h": 7,
             "w": 6,
             "x": 0,
-            "y": 14
+            "y": 22
           },
           "hiddenSeries": false,
           "id": 106,
@@ -1886,7 +1992,7 @@
             "h": 7,
             "w": 6,
             "x": 6,
-            "y": 14
+            "y": 22
           },
           "hiddenSeries": false,
           "id": 93,
@@ -2008,7 +2114,7 @@
             "h": 7,
             "w": 6,
             "x": 12,
-            "y": 14
+            "y": 22
           },
           "hiddenSeries": false,
           "id": 32,
@@ -2157,7 +2263,7 @@
             "h": 7,
             "w": 6,
             "x": 18,
-            "y": 14
+            "y": 22
           },
           "hiddenSeries": false,
           "id": 124,
@@ -2253,7 +2359,7 @@
             "h": 7,
             "w": 6,
             "x": 0,
-            "y": 21
+            "y": 29
           },
           "hiddenSeries": false,
           "id": 138,
@@ -2361,7 +2467,7 @@
             "h": 7,
             "w": 12,
             "x": 6,
-            "y": 21
+            "y": 29
           },
           "height": "",
           "hiddenSeries": false,
@@ -2486,7 +2592,7 @@
             "h": 7,
             "w": 6,
             "x": 18,
-            "y": 21
+            "y": 29
           },
           "hiddenSeries": false,
           "id": 61,
@@ -2607,7 +2713,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 21
       },
       "id": 143,
       "panels": [
@@ -2638,7 +2744,7 @@
             "h": 7,
             "w": 8,
             "x": 0,
-            "y": 15
+            "y": 23
           },
           "hiddenSeries": false,
           "id": 3,
@@ -2780,7 +2886,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 22
       },
       "id": 144,
       "panels": [
@@ -2811,7 +2917,7 @@
             "h": 7,
             "w": 8,
             "x": 0,
-            "y": 16
+            "y": 24
           },
           "hiddenSeries": false,
           "id": 78,
@@ -2952,7 +3058,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 23
       },
       "id": 145,
       "panels": [
@@ -2977,7 +3083,7 @@
             "h": 7,
             "w": 8,
             "x": 0,
-            "y": 17
+            "y": 25
           },
           "hiddenSeries": false,
           "id": 98,
@@ -3073,7 +3179,7 @@
             "h": 7,
             "w": 8,
             "x": 8,
-            "y": 17
+            "y": 25
           },
           "hiddenSeries": false,
           "id": 101,
@@ -3183,7 +3289,7 @@
             "h": 7,
             "w": 8,
             "x": 16,
-            "y": 17
+            "y": 25
           },
           "hiddenSeries": false,
           "id": 99,
@@ -3292,7 +3398,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 24
       },
       "id": 146,
       "panels": [
@@ -3323,7 +3429,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 18
+            "y": 26
           },
           "hiddenSeries": false,
           "id": 37,
@@ -3432,7 +3538,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 18
+            "y": 26
           },
           "hiddenSeries": false,
           "id": 38,
@@ -3539,7 +3645,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 25
       },
       "id": 147,
       "panels": [
@@ -3564,7 +3670,7 @@
             "h": 7,
             "w": 8,
             "x": 0,
-            "y": 19
+            "y": 27
           },
           "hiddenSeries": false,
           "id": 131,
@@ -3688,7 +3794,7 @@
       "type": "row"
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
@@ -3870,8 +3976,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "JVM (Micrometer)",
+  "title": "JVM (Micrometer) (MAIN DASHBOARD)",
   "uid": "ceb7d9c5-bc63-49bd-8c98-fff8749f2fae",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
