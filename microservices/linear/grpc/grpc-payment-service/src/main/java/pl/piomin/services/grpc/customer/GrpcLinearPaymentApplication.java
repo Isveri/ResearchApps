@@ -23,7 +23,7 @@ public class GrpcLinearPaymentApplication {
     @Bean
     public Server grpcServer(PaymentService paymentService, PdfService pdfService) throws IOException, CertificateException {
         SelfSignedCertificate ssc = new SelfSignedCertificate("localhost");
-        Server server = ServerBuilder.forPort(9090)
+        Server server = ServerBuilder.forPort(19090)
                 .addService(paymentService)
                 .addService(pdfService)
                 .useTransportSecurity(

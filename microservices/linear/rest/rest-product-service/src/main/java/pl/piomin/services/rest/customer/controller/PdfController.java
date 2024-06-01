@@ -1,5 +1,7 @@
 package pl.piomin.services.rest.customer.controller;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +13,17 @@ import pl.piomin.services.rest.customer.service.PaymentServiceClient;
 public class PdfController {
 
     private final PaymentServiceClient client;
+    private final MeterRegistry meterRegistry;
 
     @GetMapping("/pdf/{prodName}")
     public ResponseEntity<byte[]> getProductPdf(@PathVariable String prodName) {
-        return client.getProductPdf(prodName);
+        Timer timer = meterRegistry.timer("response.time.timer");
+        return timer.record(() -> client.getProductPdf(prodName));
     }
 
     @PostMapping("/pdf")
     public ResponseEntity<String> uploadPdf(@RequestParam("pdf") MultipartFile file) {
-        return client.uploadPdf(file);
+        Timer timer = meterRegistry.timer("response.time.timer");
+        return timer.record(() -> client.uploadPdf(file));
     }
 }

@@ -7,6 +7,8 @@ import com.google.rpc.Code;
 import com.google.rpc.ErrorInfo;
 import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import pl.piomin.services.grpc.customer.adapter.ProductAdapter;
@@ -25,25 +27,28 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     private final ProductRepository repository;
     private final PaymentClient client;
+    private final MeterRegistry meterRegistry;
 
 
     @Override
     public void findAll(Empty request, StreamObserver<ProductProto.Products> responseObserver) {
-        var customerDTOList=repository.findAll();
+        var customerDTOList = repository.findAll();
         List<ProductProto.Product> customerList = ProductAdapter.toProtoList(customerDTOList);
         ProductProto.Products c = ProductProto.Products.newBuilder().addAllProducts(customerList).build();
-        responseObserver.onNext(c);
+        Timer timer = meterRegistry.timer("response.time.timer");
+        responseObserver.onNext(timer.record(() -> c));
         responseObserver.onCompleted();
     }
 
     @Override
     public void addProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
-        if(client.authorizeAddProduct(request.getName())){
-            var customerDTO=repository.save(new Product(null,request.getName(), (long) request.getQuantity()));
+        if (client.authorizeAddProduct(request.getName())) {
+            var customerDTO = repository.save(new Product(null, request.getName(), (long) request.getQuantity()));
             ProductProto.Product c = ProductAdapter.toProto(customerDTO);
-            responseObserver.onNext(c);
+            Timer timer = meterRegistry.timer("response.time.timer");
+            responseObserver.onNext(timer.record(() -> c));
             responseObserver.onCompleted();
-        }else{
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.ALREADY_EXISTS_VALUE)
                     .setMessage("Product name already exists")
@@ -55,16 +60,18 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
         }
 
     }
+
     @Override
-    public void updateProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver){
+    public void updateProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
         Optional<Product> productTemp = repository.findByName(request.getName());
         if (productTemp.isPresent()) {
             Product prd = productTemp.get();
             prd.setQuantity((long) request.getQuantity());
             ProductProto.Product c = ProductAdapter.toProto(repository.save(prd));
-            responseObserver.onNext(c);
+            Timer timer = meterRegistry.timer("response.time.timer");
+            responseObserver.onNext(timer.record(() -> c));
             responseObserver.onCompleted();
-        }else {
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.NOT_FOUND_VALUE)
                     .setMessage("Product no found")
@@ -77,16 +84,18 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
 
     }
+
     @Override
-    public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver){
-        if(client.authorizeAddProduct(request.getValue())){
-            String name = request.getValue();
-            Product deletedProduct = repository.findByName(name).get();
+    public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver) {
+        String name = request.getValue();
+        Optional<Product> productToDelete = repository.findByName(name);
+        if (client.authorizeAddProduct(request.getValue()) && productToDelete.isPresent()) {
             repository.deleteByName(name);
-            ProductProto.Product c = ProductAdapter.toProto(deletedProduct);
-            responseObserver.onNext(c);
+            ProductProto.Product c = ProductAdapter.toProto(productToDelete.get());
+            Timer timer = meterRegistry.timer("response.time.timer");
+            responseObserver.onNext(timer.record(() -> c));
             responseObserver.onCompleted();
-        }else{
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.NOT_FOUND_VALUE)
                     .setMessage("Product name not exists")

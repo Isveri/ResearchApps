@@ -1,5 +1,7 @@
 package pl.piomin.services.rest.customer.controller;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductServiceClient client;
+    private final MeterRegistry meterRegistry;
 
     @GetMapping("/productAll")
     List<Product> findAll() {
@@ -22,16 +25,19 @@ public class ProductController {
     @Transactional
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product) {
-        return client.addProduct(product);
+        Timer timer = meterRegistry.timer("response.time.timer");
+        return timer.record(() -> client.addProduct(product));
     }
 
     @PostMapping("/updateProduct")
     Product updateProduct(@RequestBody Product product) {
-        return client.updateProduct(product);
+        Timer timer = meterRegistry.timer("response.time.timer");
+        return timer.record(() -> client.updateProduct(product));
     }
 
     @DeleteMapping("/deleteProduct/{name}")
     Product deleteProduct(@PathVariable String name) {
-        return client.deleteProduct(name);
+        Timer timer = meterRegistry.timer("response.time.timer");
+        return timer.record(() -> client.deleteProduct(name));
     }
 }

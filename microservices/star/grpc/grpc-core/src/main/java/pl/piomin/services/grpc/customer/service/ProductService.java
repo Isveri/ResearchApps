@@ -7,6 +7,8 @@ import com.google.rpc.Code;
 import com.google.rpc.ErrorInfo;
 import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import pl.piomin.services.grpc.customer.client.AuthClient;
@@ -22,14 +24,16 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     private final AuthClient authClient;
     private final ProductClient productClient;
-
+    private final MeterRegistry meterRegistry;
 
     @Override
     public void findAll(Empty request, StreamObserver<ProductProto.Products> responseObserver) {
-        if(authClient.loginUser()){
-            responseObserver.onNext(productClient.findAll());
+        Timer timer = meterRegistry.timer("response.time.timer");
+        Timer timer2 = meterRegistry.timer("response.time.timer2");
+        if (Boolean.TRUE.equals(timer2.record(authClient::loginUser))) {
+            responseObserver.onNext(timer.record(productClient::findAll));
             responseObserver.onCompleted();
-        }else {
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.PERMISSION_DENIED_VALUE)
                     .setMessage("Permission denied")
@@ -44,10 +48,12 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     @Override
     public void addProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
-        if(authClient.loginUser()){
-            responseObserver.onNext(productClient.addProduct(request));
+        Timer timer = meterRegistry.timer("response.time.timer");
+        Timer timer2 = meterRegistry.timer("response.time.timer2");
+        if (Boolean.TRUE.equals(timer2.record(authClient::loginUser))) {
+            responseObserver.onNext(timer.record(() -> productClient.addProduct(request)));
             responseObserver.onCompleted();
-        }else {
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.PERMISSION_DENIED_VALUE)
                     .setMessage("Permission denied")
@@ -59,12 +65,15 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
         }
 
     }
+
     @Override
-    public void updateProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver){
-        if(authClient.loginUser()){
-            responseObserver.onNext(productClient.updateProduct(request));
+    public void updateProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
+        Timer timer = meterRegistry.timer("response.time.timer");
+        Timer timer2 = meterRegistry.timer("response.time.timer2");
+        if (Boolean.TRUE.equals(timer2.record(authClient::loginUser))) {
+            responseObserver.onNext(timer.record(() -> productClient.updateProduct(request)));
             responseObserver.onCompleted();
-        }else {
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.PERMISSION_DENIED_VALUE)
                     .setMessage("Permission denied")
@@ -76,12 +85,15 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
         }
 
     }
+
     @Override
-    public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver){
-        if(authClient.loginUser()){
-            responseObserver.onNext(productClient.deleteProduct(request));
+    public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver) {
+        Timer timer = meterRegistry.timer("response.time.timer");
+        Timer timer2 = meterRegistry.timer("response.time.timer2");
+        if (Boolean.TRUE.equals(timer2.record(authClient::loginUser))) {
+            responseObserver.onNext(timer.record(() -> productClient.deleteProduct(request)));
             responseObserver.onCompleted();
-        }else {
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.PERMISSION_DENIED_VALUE)
                     .setMessage("Permission denied")

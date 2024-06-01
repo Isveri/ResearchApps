@@ -1,5 +1,7 @@
 package pl.piomin.services.rest.customer.controller;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class ProductController {
     private final ProductRepository repository;
     private final PaymentServiceClient client;
+    private final MeterRegistry meterRegistry;
 
     @GetMapping("/productAll")
     List<Product> findAll() {
@@ -24,7 +27,8 @@ public class ProductController {
     @Transactional
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product) {
-        if (client.productPayment(product)) {
+        Timer timer = meterRegistry.timer("response.time.timer");
+        if (Boolean.TRUE.equals(timer.record(() -> client.productPayment(product)))) {
             return repository.save(product);
         }
         return null;
@@ -43,8 +47,9 @@ public class ProductController {
 
     @DeleteMapping("/deleteProduct/{name}")
     Product deleteProduct(@PathVariable String name) {
-        Double amount = client.productReturn(name);
-        if (amount == 123.0) {
+        Timer timer = meterRegistry.timer("response.time.timer");
+        Double amount = timer.record(() -> client.productReturn(name));
+        if (Double.valueOf(123.0).equals(amount)) {
             repository.deleteByName(name);
         }
         return null;

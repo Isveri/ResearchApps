@@ -11,7 +11,7 @@ public class RestCRUDSimulation extends RestSimulation {
     @Override
     public void run() {
 //        runScenario(httpProtocol, this, 10, 300, 60);
-//        runScenario(httpProtocol, this, 5, 300, 60);
+//        runScenario(httpProtocol, this, 5, 150, 60);
         rampScenario(httpProtocol, this, 1, 1200, 60);
     }
 
