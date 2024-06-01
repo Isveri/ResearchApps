@@ -22,13 +22,13 @@
         <module name="grpcStar-core" />
         <module name="gatling-load-tester" />
         <module name="rest-product-service" />
-        <module name="customer-grpc" />
         <module name="restLinear-payment-service" />
         <module name="restStar-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="account-service-grpc" target="19" />
+      <module name="customer-grpc" target="17" />
       <module name="customer-kafka" target="17" />
       <module name="customer-rest" target="19" />
       <module name="customer-service" target="19" />

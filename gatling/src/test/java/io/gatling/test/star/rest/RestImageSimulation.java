@@ -8,12 +8,9 @@ import static io.gatling.javaapi.http.HttpDsl.*;
 public class RestImageSimulation extends RestSimulation {
     @Override
     public void run() {
-//        steadyLoad5R300U60T(httpProtocol,this);
-//        rampLoad(httpProtocol,this);
-        runScenario(httpProtocol, this, 5, 100, 30);
-//        repeat1Constant30000duration60(httpProtocol, this);
-//        repeat10Constant3000duration60(httpProtocol, this);
-//      repeat100Constant300duration60(httpProtocol, this);
+//        runScenario(httpProtocol, this, 10, 300, 60);
+//        runScenario(httpProtocol, this, 5, 300, 60);
+        rampScenario(httpProtocol, this, 1, 1200, 60);
     }
 
     @Override

@@ -34,6 +34,7 @@
       <set>
         <option value="$PROJECT_DIR$/grpc/account-service-grpc/pom.xml" />
         <option value="$PROJECT_DIR$/grpc/discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/grpc/pom.xml" />
         <option value="$PROJECT_DIR$/rest/pom.xml" />
       </set>
     </option>
