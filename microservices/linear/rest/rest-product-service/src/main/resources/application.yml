@@ -36,3 +36,5 @@ management:
       exposure:
         include: "*"
 
+payment_service:
+  url: http://localhost:8084

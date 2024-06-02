@@ -36,3 +36,6 @@ management:
       exposure:
         include: "*"
 
+product_service:
+    url: http://localhost:8083
+

@@ -3,9 +3,12 @@ package pl.piomin.services.rest.customer.bootData;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.model.Image;
 import pl.piomin.services.rest.customer.repository.ImageRepository;
@@ -25,6 +28,7 @@ import java.nio.file.Paths;
 public class BootData implements CommandLineRunner {
 
     private final ImageRepository imageRepository;
+    private final ResourceLoader resourceLoader;
 
     @Override
     public void run(String... args) throws Exception {
@@ -33,12 +37,16 @@ public class BootData implements CommandLineRunner {
     }
 
     public void uploadImage() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:testImage.jpg");
+        InputStream inputStream = resource.getInputStream();
+
+        byte[] imageData = StreamUtils.copyToByteArray(inputStream);
+
+        byte[] compressedImageData = ImageUtils.compressImage(imageData);
         var imageToSave = Image.builder()
                 .name("testImage.jpg")
                 .type("image/jpeg")
-                .imageData(ImageUtils.compressImage(
-                        Files.readAllBytes(ResourceUtils.getFile("classpath:testImage.jpg").toPath()))
-                )
+                .imageData(compressedImageData)
                 .build();
         imageRepository.save(imageToSave);
     }

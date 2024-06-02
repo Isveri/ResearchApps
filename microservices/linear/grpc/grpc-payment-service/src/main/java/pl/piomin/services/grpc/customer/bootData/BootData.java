@@ -2,9 +2,12 @@ package pl.piomin.services.grpc.customer.bootData;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StreamUtils;
 import pl.piomin.services.grpc.customer.model.Image;
 import pl.piomin.services.grpc.customer.repository.ImageRepository;
 import pl.piomin.services.grpc.customer.utils.ImageUtils;
@@ -13,6 +16,7 @@ import pl.piomin.services.grpc.customer.utils.ImageUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +27,7 @@ import java.util.List;
 public class BootData implements CommandLineRunner {
 
     private final ImageRepository imageRepository;
-
+    private final ResourceLoader resourceLoader;
     @Override
     public void run(String... args) throws Exception {
         uploadImage();
@@ -31,12 +35,16 @@ public class BootData implements CommandLineRunner {
     }
 
     public void uploadImage() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:testImage.jpg");
+        InputStream inputStream = resource.getInputStream();
+
+        byte[] imageData = StreamUtils.copyToByteArray(inputStream);
+
+        byte[] compressedImageData = ImageUtils.compressImage(imageData);
         var imageToSave = Image.builder()
                 .name("testImage.jpg")
                 .type("image/jpeg")
-                .imageData(ImageUtils.compressImage(
-                        Files.readAllBytes(ResourceUtils.getFile("classpath:testImage.jpg").toPath()))
-                )
+                .imageData(compressedImageData)
                 .build();
         imageRepository.save(imageToSave);
     }

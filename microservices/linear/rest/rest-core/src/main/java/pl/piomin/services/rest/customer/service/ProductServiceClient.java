@@ -10,7 +10,7 @@ import pl.piomin.services.rest.customer.model.Product;
 
 import java.util.List;
 
-@FeignClient(value = "ProductService", url = "http://localhost:8083", configuration = FeignSupportConfig.class)
+@FeignClient(value = "ProductService", url = "${product_service.url}", configuration = FeignSupportConfig.class)
 public interface ProductServiceClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/productAll")

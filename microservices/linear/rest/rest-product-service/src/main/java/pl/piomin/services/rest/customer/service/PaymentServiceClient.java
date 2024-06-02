@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.config.FeignSupportConfig;
 import pl.piomin.services.rest.customer.model.Product;
 
-@FeignClient(value = "PaymentService", url = "http://localhost:8084", configuration = FeignSupportConfig.class)
+@FeignClient(value = "PaymentService", url = "${payment_service.url}", configuration = FeignSupportConfig.class)
 public interface PaymentServiceClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/productPayment", consumes = "application/json")

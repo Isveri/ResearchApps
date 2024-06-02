@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    network_mode: bridge
+  core:
+    image: linear-rest-core
+    container_name: linear-rest-core
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - PRODUCT_SERVICE_URL=host.docker.internal:8083
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: "4096M"
+        reservations:
+          cpus: "4"
+          memory: "2048M"
+    network_mode: bridge
+  product:
+    image: linear-rest-product
+    container_name: linear-rest-product
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - PAYMENT_SERVICE_URL=host.docker.internal:8084
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: "4096M"
+        reservations:
+          cpus: "4"
+          memory: "2048M"
+    network_mode: bridge
+  payment:
+    image: linear-rest-payment
+    container_name: linear-rest-payment
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "8084:8084"
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: "4096M"
+        reservations:
+          cpus: "4"
+          memory: "2048M"
+    network_mode: bridge
