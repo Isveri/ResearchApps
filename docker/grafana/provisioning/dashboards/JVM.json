@@ -750,7 +750,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(rate(response_time_timer_seconds_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))/sum(rate(response_time_timer_seconds_count{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))",
+          "expr": "sum(rate(response_time_timer_seconds_sum{application=\"$application\", instance=\"$instance\"}[1m]))/sum(rate(response_time_timer_seconds_count{application=\"$application\", instance=\"$instance\"}[1m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -764,7 +764,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(response_time_timer_seconds_max{application=\"$application\", instance=\"$instance\", status!~\"5..\"})",
+          "expr": "max(response_time_timer_seconds_max{application=\"$application\", instance=\"$instance\"})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -868,7 +868,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(rate(response_time_timer2_seconds_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))/sum(rate(response_time_timer2_seconds_count{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[10s]))",
+          "expr": "sum(rate(response_time_timer2_seconds_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[1m]))/sum(rate(response_time_timer2_seconds_count{application=\"$application\", instance=\"$instance\"}[1m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -882,7 +882,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(response_time_timer2_seconds_max{application=\"$application\", instance=\"$instance\", status!~\"5..\"})",
+          "expr": "max(response_time_timer2_seconds_max{application=\"$application\", instance=\"$instance\"})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -3831,8 +3831,8 @@
         "allFormat": "glob",
         "current": {
           "selected": false,
-          "text": "host.docker.internal:8085",
-          "value": "host.docker.internal:8085"
+          "text": "host.docker.internal:8082",
+          "value": "host.docker.internal:8082"
         },
         "datasource": {
           "type": "prometheus",
@@ -3946,7 +3946,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -3978,6 +3978,6 @@
   "timezone": "browser",
   "title": "JVM (Micrometer) (MAIN DASHBOARD)",
   "uid": "ceb7d9c5-bc63-49bd-8c98-fff8749f2fae",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }
