@@ -1,12 +1,17 @@
 #!/bin/bash
 
 # Liczba powtórzeń pętli
-LOOP_COUNT=2
+LOOP_COUNT=1
+current_dir=$(pwd)
 
 # Funkcja uruchamiająca aplikację Spring za pomocą Maven
 start_spring_app() {
   local app_path=$1
-  (cd "$app_path" && mvn spring-boot:run & echo $! >> /tmp/maven_app_pids)
+  cd "$app_path" || exit
+
+  mvn spring-boot:run & echo $! >> /tmp/maven_app_pids
+
+  cd "$current_dir" || exit
 }
 
 # Funkcja zatrzymująca procesy Maven
@@ -60,38 +65,42 @@ for i in $(seq 1 $LOOP_COUNT); do
     start_spring_app ".\microservices\star\rest-auth-service"
   else
     echo "Bledy parametr: $1. Skrypt przerwany"
-    exit 1
-  fi
-
-  # Krok 3: Poczekanie 40 sekund aż aplikacje się uruchomią
-  sleep 40
-
-  if ! is_spring_app_running "$(cat /tmp/maven_app_pids)"; then
-    echo "Aplikacje Spring nie zostały uruchomione poprawnie. Przerywanie skryptu."
     docker-compose down
     stop_maven_processes
     exit 1
   fi
 
+  # Krok 3: Poczekanie 40 sekund aż aplikacje się uruchomią
+  sleep 20
+
+#  if ! is_spring_app_running "$(cat /tmp/maven_app_pids)"; then
+#    echo "Aplikacje Spring nie zostały uruchomione poprawnie. Przerywanie skryptu."
+#    docker-compose down
+#    stop_maven_processes
+#    exit 1
+#  fi
+
   # Krok 4: Uruchomienie testu Gatlinga za pomocą Maven
-  if [ "$S2" == "LinearRestCrud" ]; then
+  if [ "$2" == "LinearRestCrud" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.linear.rest.RestCRUDSimulation')
-  elif [ "$S2" == "LinearRestImage" ]; then
+  elif [ "$2" == "LinearRestImage" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.linear.rest.RestImageSimulation')
-  elif [ "$S2" == "LinearGrpcCrud" ]; then
+  elif [ "$2" == "LinearGrpcCrud" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.linear.grpc.GrpcCRUDSimulation')
-  elif [ "$S2" == "LinearGrpcImage" ]; then
+  elif [ "$2" == "LinearGrpcImage" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.linear.grpc.GrpcImageSimulation')
-  elif [ "$S2" == "StarRestCrud" ]; then
+  elif [ "$2" == "StarRestCrud" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.star.rest.RestCRUDSimulation')
-  elif [ "$S2" == "StarRestImage" ]; then
+  elif [ "$2" == "StarRestImage" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.star.rest.RestImageSimulation')
-  elif [ "$S2" == "StarGrpcCrud" ]; then
+  elif [ "$2" == "StarGrpcCrud" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.star.grpc.GrpcCRUDSimulation')
-  elif [ "$S2" == "StarGrpcImage" ]; then
+  elif [ "$2" == "StarGrpcImage" ]; then
     (cd ".\gatling" && mvn gatling:test '-DclassName=io.gatling.test.star.grpc.GrpcImageSimulation')
   else
     echo "Nie wspierany test case"
+    docker-compose down
+    stop_maven_processes
     exit 1;
   fi
 
@@ -101,7 +110,6 @@ for i in $(seq 1 $LOOP_COUNT); do
   # Krok 6: Usunięcie kontenera z bazą danych i wyłączenie aplikacji
   docker-compose down
   stop_maven_processes
-
   sleep 5
 
   echo "Zakończono iterację $i."
