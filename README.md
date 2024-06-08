@@ -14,7 +14,7 @@ Opcje wykonanie testow za pomoca skryptu
 ```
 # 4. gRPC Linear Image
 ```bash
-   ./start-tests.sh GrpcLinear LinearGrpcCrud
+   ./start-tests.sh GrpcLinear LinearGrpcImage
 ```
 # 5. Rest Star CRUD
 ```bash
