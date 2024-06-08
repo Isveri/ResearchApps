@@ -52,17 +52,17 @@ for i in $(seq 1 $LOOP_COUNT); do
     start_spring_app ".\microservices\linear\rest\rest-product-service"
     start_spring_app ".\microservices\linear\rest\rest-payment-service"
   elif [ "$1" == "GrpcLinear" ]; then
-    start_spring_app ".\microservices\linear\grpc\rest-core"
-    start_spring_app ".\microservices\linear\grpc\rest-product-service"
-    start_spring_app ".\microservices\linear\grpc\rest-payment-service"
+    start_spring_app ".\microservices\linear\grpc\grpc-core"
+    start_spring_app ".\microservices\linear\grpc\grpc-product-service"
+    start_spring_app ".\microservices\linear\grpc\grpc-payment-service"
   elif [ "$1" == "RestStar" ]; then
     start_spring_app ".\microservices\star\rest-core"
     start_spring_app ".\microservices\star\rest-product-service"
     start_spring_app ".\microservices\star\rest-auth-service"
   elif [ "$1" == "GrpcStar" ]; then
-    start_spring_app ".\microservices\star\rest-core"
-    start_spring_app ".\microservices\star\rest-product-service"
-    start_spring_app ".\microservices\star\rest-auth-service"
+    start_spring_app ".\microservices\star\grpc-core"
+    start_spring_app ".\microservices\star\grpc-product-service"
+    start_spring_app ".\microservices\star\grpc-auth-service"
   else
     echo "Bledy parametr: $1. Skrypt przerwany"
     docker-compose down
