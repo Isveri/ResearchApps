@@ -118,6 +118,7 @@
                             <includeImports>true</includeImports>
                             <includeStdTypes>true</includeStdTypes>
                             <includeMavenTypes>direct</includeMavenTypes>
+                            <optimizeCodegen>false</optimizeCodegen>
                             <outputDirectory>src/main/generated</outputDirectory>
                             <inputDirectories>
                                 <include>src/main/proto</include>

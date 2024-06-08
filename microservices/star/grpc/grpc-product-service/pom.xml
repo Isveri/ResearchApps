@@ -116,6 +116,7 @@
                             <addProtoSources>all</addProtoSources>
                             <includeImports>true</includeImports>
                             <includeStdTypes>true</includeStdTypes>
+                            <optimizeCodegen>false</optimizeCodegen>
                             <includeMavenTypes>direct</includeMavenTypes>
                             <outputDirectory>src/main/generated</outputDirectory>
                             <inputDirectories>
