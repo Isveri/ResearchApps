@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Liczba powtórzeń pętli
-LOOP_COUNT=1
+LOOP_COUNT=3
 current_dir=$(pwd)
 
 # Funkcja uruchamiająca aplikację Spring za pomocą Maven
@@ -44,7 +44,7 @@ for i in $(seq 1 $LOOP_COUNT); do
     exit 1
   fi
 
-  sleep 5
+  sleep 3
 
   # Krok 2: Uruchomienie 3 aplikacji Spring za pomocą Maven
   if [ "$1" == "RestLinear" ]; then
@@ -70,8 +70,8 @@ for i in $(seq 1 $LOOP_COUNT); do
     exit 1
   fi
 
-  # Krok 3: Poczekanie 40 sekund aż aplikacje się uruchomią
-  sleep 20
+  # Krok 3: Poczekanie 20 sekund aż aplikacje się uruchomią
+  sleep 15
 
 #  if ! is_spring_app_running "$(cat /tmp/maven_app_pids)"; then
 #    echo "Aplikacje Spring nie zostały uruchomione poprawnie. Przerywanie skryptu."
@@ -104,8 +104,7 @@ for i in $(seq 1 $LOOP_COUNT); do
     exit 1;
   fi
 
-  # Krok 5: Czekanie 2 minuty
-  sleep 120
+  sleep 5
 
   # Krok 6: Usunięcie kontenera z bazą danych i wyłączenie aplikacji
   docker-compose down
@@ -113,6 +112,8 @@ for i in $(seq 1 $LOOP_COUNT); do
   sleep 5
 
   echo "Zakończono iterację $i."
+  echo "Oczekiwanie na restart"
+  sleep 50
 done
 
 echo "Testy zakończone"
