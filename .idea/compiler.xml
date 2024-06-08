@@ -48,7 +48,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="account-service-grpc" options="-parameters" />
       <module name="customer-grpc" options="-parameters" />
-      <module name="customer-kafka" options="-parameters" />
+      <module name="customer-kafka" options="" />
       <module name="customer-rest" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="customer-service-grpc" options="-parameters" />
