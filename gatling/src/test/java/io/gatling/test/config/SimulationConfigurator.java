@@ -6,16 +6,28 @@ import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
+import static io.gatling.javaapi.http.HttpDsl.http;
+import static io.gatling.javaapi.http.HttpDsl.status;
 
 public interface SimulationConfigurator {
 
+    AtomicInteger counter = new AtomicInteger(0);
     default void runScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int consUsers, int duration) {
         var scenario = createScenario();
         scenario.repeat(repeat);
         simulation.setUp(scenario.injectOpen(
                         constantUsersPerSec(consUsers).during(Duration.ofSeconds(duration))
+                )).maxDuration(Duration.ofSeconds(duration))
+                .protocols(protocol);
+    }
+    default void concurrentScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int consUsers, int duration) {
+        var scenario = createScenario();
+        scenario.repeat(repeat);
+        simulation.setUp(scenario.injectClosed(
+                        constantConcurrentUsers(consUsers).during(Duration.ofSeconds(duration))
                 )).maxDuration(Duration.ofSeconds(duration))
                 .protocols(protocol);
     }
