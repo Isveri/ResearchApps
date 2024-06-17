@@ -47,6 +47,22 @@ public interface SimulationConfigurator {
                 )).maxDuration(Duration.ofSeconds(duration))
                 .protocols(protocol);
     }
+    default void rampCRUDScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int maxUsers, int duration) {
+        var scenario = createScenario();
+        scenario.repeat(repeat);
+        simulation.setUp(scenario.injectOpen(
+                        rampUsersPerSec(100).to(maxUsers).during(Duration.ofSeconds(duration))
+                )).maxDuration(Duration.ofSeconds(duration))
+                .protocols(protocol);
+    }
+    default void rampImageScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int maxUsers, int duration) {
+        var scenario = createScenario();
+        scenario.repeat(repeat);
+        simulation.setUp(scenario.injectClosed(
+                        rampConcurrentUsers(20).to(maxUsers).during(Duration.ofSeconds(duration))
+                )).maxDuration(Duration.ofSeconds(duration))
+                .protocols(protocol);
+    }
     default void testScenario(ProtocolBuilder protocol, Simulation simulation, int repeat, int users, int duration){
         var scenario = createScenario();
         scenario.repeat(repeat);

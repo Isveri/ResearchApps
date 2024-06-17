@@ -19,9 +19,9 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 public class GrpcImageSimulation extends GrpcSimulation {
     @Override
     public void run() {
-//        rampScenario(grpcConf, this, 1, 1200, 60);
+        rampImageScenario(grpcConf, this, 1, 300, 60);
 //        concurrentScenario(grpcConf,this,1,50,60);
-        concurrentScenario(grpcConf,this,2,100,60);
+//        concurrentScenario(grpcConf,this,2,100,60);
     }
 
     @Override
