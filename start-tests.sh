@@ -71,7 +71,7 @@ for i in $(seq 1 $LOOP_COUNT); do
   fi
 
   # Krok 3: Poczekanie 20 sekund aż aplikacje się uruchomią
-  sleep 15
+  sleep 16
 
 #  if ! is_spring_app_running "$(cat /tmp/maven_app_pids)"; then
 #    echo "Aplikacje Spring nie zostały uruchomione poprawnie. Przerywanie skryptu."
@@ -107,7 +107,7 @@ for i in $(seq 1 $LOOP_COUNT); do
   sleep 5
 
   # Krok 6: Usunięcie kontenera z bazą danych i wyłączenie aplikacji
-  docker-compose down
+  docker-compose down -v
   stop_maven_processes
   sleep 5
 
