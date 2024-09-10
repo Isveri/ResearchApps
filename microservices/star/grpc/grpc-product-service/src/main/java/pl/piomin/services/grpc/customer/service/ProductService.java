@@ -27,7 +27,7 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     @Override
     public void findAll(Empty request, StreamObserver<ProductProto.Products> responseObserver) {
-        var customerDTOList=repository.findAll();
+        var customerDTOList = repository.findAll();
         List<ProductProto.Product> customerList = ProductAdapter.toProtoList(customerDTOList);
         ProductProto.Products c = ProductProto.Products.newBuilder().addAllProducts(customerList).build();
         responseObserver.onNext(c);
@@ -36,13 +36,14 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     @Override
     public void addProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
-        var customerDTO=repository.save(new Product(null,request.getName(), (long) request.getQuantity()));
+        var customerDTO = repository.save(new Product(null, request.getName(), (long) request.getQuantity()));
         ProductProto.Product c = ProductAdapter.toProto(customerDTO);
         responseObserver.onNext(c);
         responseObserver.onCompleted();
     }
+
     @Override
-    public void updateProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver){
+    public void updateProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
         Optional<Product> productTemp = repository.findByName(request.getName());
         if (productTemp.isPresent()) {
             Product prd = productTemp.get();
@@ -50,7 +51,7 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
             ProductProto.Product c = ProductAdapter.toProto(repository.save(prd));
             responseObserver.onNext(c);
             responseObserver.onCompleted();
-        }else {
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.NOT_FOUND_VALUE)
                     .setMessage("Product no found")
@@ -63,16 +64,17 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
 
     }
+
     @Override
-    public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver){
-        if(repository.existsProductByName(request.getValue())){
+    public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver) {
+        if (repository.existsProductByName(request.getValue())) {
             String name = request.getValue();
             Product deletedProduct = repository.findByName(name).get();
             repository.deleteByName(name);
             ProductProto.Product c = ProductAdapter.toProto(deletedProduct);
             responseObserver.onNext(c);
             responseObserver.onCompleted();
-        }else{
+        } else {
             com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
                     .setCode(Code.NOT_FOUND_VALUE)
                     .setMessage("Product no found")

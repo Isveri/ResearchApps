@@ -1,7 +1,6 @@
 package pl.piomin.services.grpc.customer.service;
 
 import com.google.protobuf.Any;
-import com.google.protobuf.ByteString;
 import com.google.rpc.Code;
 import com.google.rpc.ErrorInfo;
 import io.grpc.protobuf.StatusProto;
@@ -14,8 +13,6 @@ import pl.piomin.services.grpc.customer.client.AuthClient;
 import pl.piomin.services.grpc.customer.client.ProductClient;
 import pl.piomin.services.grpc.image.model.ImageProto;
 import pl.piomin.services.grpc.image.model.ImageServiceGrpc;
-
-import java.util.Optional;
 
 @GrpcService
 @RequiredArgsConstructor

@@ -1,34 +1,49 @@
-Opcje wykonanie testow za pomoca skryptu
+# Dostępne opcje uruchomienia testów:
 
-# 1. Rest Linear CRUD
+### 1. Rest Linear CRUD
+
 ```bash
    ./start-tests.sh RestLinear LinearRestCrud
 ```
-# 2. Rest Linear Image
+
+### 2. Rest Linear Image
+
 ```bash
    ./start-tests.sh RestLinear LinearRestImage
 ```
-# 3. gRPC Linear CRUD
+
+### 3. gRPC Linear CRUD
+
 ```bash
    ./start-tests.sh GrpcLinear LinearGrpcCrud
 ```
-# 4. gRPC Linear Image
+
+### 4. gRPC Linear Image
+
 ```bash
    ./start-tests.sh GrpcLinear LinearGrpcImage
 ```
-# 5. Rest Star CRUD
+
+### 5. Rest Star CRUD
+
 ```bash
    ./start-tests.sh RestStar StarRestCrud
 ```
-# 6. Rest Star Image
+
+### 6. Rest Star Image
+
 ```bash
    ./start-tests.sh RestStar StarRestImage
 ```
-# 7. gRPC Star CRUD
+
+### 7. gRPC Star CRUD
+
 ```bash
    ./start-tests.sh GrpcStar StarGrpcCrud
 ```
-# 8. gRPC Star Image
+
+### 8. gRPC Star Image
+
 ```bash
    ./start-tests.sh GrpcStar StarGrpcImage
 ```

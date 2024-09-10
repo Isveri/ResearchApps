@@ -12,10 +12,11 @@ import pl.piomin.services.grpc.user.model.UserServiceGrpc;
 @Service
 public class AuthClient {
     private static final Logger LOG = LoggerFactory.getLogger(AuthClient.class);
+
     @GrpcClient("auth-service")
     UserServiceGrpc.UserServiceBlockingStub stub;
 
-    public Boolean loginUser(){
+    public Boolean loginUser() {
         try {
             return stub.loginUser(Empty.newBuilder().build()).getValue();
         } catch (final StatusRuntimeException e) {

@@ -8,10 +8,8 @@ import pl.piomin.services.grpc.customer.model.Image;
 import java.util.Optional;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
+
     Optional<Image> findByName(String name);
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void deleteAllByName(String name);
-
-    boolean existsByName(String name);
+    boolean existsByName(String name); // TODO z jakiegos powodu to nie jest wykorzystane tutaj a jest w REST
 }

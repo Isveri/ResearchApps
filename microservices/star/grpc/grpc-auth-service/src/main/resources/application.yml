@@ -16,14 +16,8 @@ spring:
           lob:
             non_contextual_creation: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-#    show-sql: true
     hibernate:
       ddl-auto: update
-
-#logging:
-#  level:
-#    org:
-#      DEBUG
 
 management.endpoint.metrics.enabled: true
 management:

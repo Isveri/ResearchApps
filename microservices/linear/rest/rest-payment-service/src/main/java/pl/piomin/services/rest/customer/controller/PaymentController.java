@@ -2,11 +2,12 @@ package pl.piomin.services.rest.customer.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import pl.piomin.services.rest.customer.model.Product;
 import pl.piomin.services.rest.customer.repository.ProductRepository;
-
-import java.nio.DoubleBuffer;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class PaymentController {
 
     @PostMapping("/productReturn/{prodName}")
     Double deleteProduct(@PathVariable String prodName) {
-        Double amount = 0.0;
+        var amount = 0.0;
         if (repository.existsProductByName(prodName)) {
             amount = 123.0;
         }

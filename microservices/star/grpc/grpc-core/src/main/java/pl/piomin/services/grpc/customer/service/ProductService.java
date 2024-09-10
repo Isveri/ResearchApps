@@ -16,8 +16,6 @@ import pl.piomin.services.grpc.customer.client.ProductClient;
 import pl.piomin.services.grpc.product.model.ProductProto;
 import pl.piomin.services.grpc.product.model.ProductServiceGrpc;
 
-import java.util.List;
-
 @GrpcService
 @RequiredArgsConstructor
 public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {

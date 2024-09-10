@@ -7,11 +7,8 @@ import pl.piomin.services.grpc.customer.model.Product;
 
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product,Long> {
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void deleteByName(String name);
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
     @Transactional
     boolean existsProductByName(String name);
-
-    Optional<Product> findByName(String name);
 }

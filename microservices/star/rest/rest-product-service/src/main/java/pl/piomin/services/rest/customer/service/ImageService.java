@@ -1,13 +1,13 @@
 package pl.piomin.services.rest.customer.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.exception.ContextedRuntimeException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import pl.piomin.services.rest.customer.model.Image;
 import pl.piomin.services.rest.customer.repository.ImageRepository;
 import pl.piomin.services.rest.customer.utils.ImageUtils;
-import org.apache.commons.lang3.exception.ContextedRuntimeException;
 
 import java.io.IOException;
 import java.util.Optional;

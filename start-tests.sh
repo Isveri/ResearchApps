@@ -24,15 +24,6 @@ stop_maven_processes() {
   fi
 }
 
-is_spring_app_running() {
-  local pid=$1
-  if ps -p "$pid" > /dev/null; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 # Główna pętla
 for i in $(seq 1 $LOOP_COUNT); do
   echo "Rozpoczynanie iteracji $i..."
@@ -73,12 +64,6 @@ for i in $(seq 1 $LOOP_COUNT); do
   # Krok 3: Poczekanie 20 sekund aż aplikacje się uruchomią
   sleep 16
 
-#  if ! is_spring_app_running "$(cat /tmp/maven_app_pids)"; then
-#    echo "Aplikacje Spring nie zostały uruchomione poprawnie. Przerywanie skryptu."
-#    docker-compose down
-#    stop_maven_processes
-#    exit 1
-#  fi
 
   # Krok 4: Uruchomienie testu Gatlinga za pomocą Maven
   if [ "$2" == "LinearRestCrud" ]; then

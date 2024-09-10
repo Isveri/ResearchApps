@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import pl.piomin.services.grpc.payment.model.PaymentServiceGrpc;
 import pl.piomin.services.grpc.pdf.model.PdfProto;
 import pl.piomin.services.grpc.pdf.model.PdfServiceGrpc;
-import pl.piomin.services.grpc.product.model.ProductProto;
 
 
 @Service
@@ -23,7 +22,7 @@ public class PaymentClient {
     @GrpcClient("payment-service")
     PdfServiceGrpc.PdfServiceBlockingStub pdfStub;
 
-    public Boolean authorizeAddProduct(String productName){
+    public Boolean authorizeAddProduct(String productName) {
         try {
             return paymentStub.addProduct(StringValue.of(productName)).getValue();
         } catch (final StatusRuntimeException e) {
@@ -31,7 +30,8 @@ public class PaymentClient {
             return null;
         }
     }
-    public Double authorizeDeleteProduct(String productName){
+
+    public Double authorizeDeleteProduct(String productName) {
         try {
             return paymentStub.deleteProduct(StringValue.of(productName)).getValue();
         } catch (final StatusRuntimeException e) {
@@ -39,7 +39,8 @@ public class PaymentClient {
             return null;
         }
     }
-    public PdfProto.UploadPdfResponse uploadPdf(PdfProto.PdfData pdf){
+
+    public PdfProto.UploadPdfResponse uploadPdf(PdfProto.PdfData pdf) {
         try {
             return pdfStub.uploadPdf(pdf);
         } catch (final StatusRuntimeException e) {
@@ -47,7 +48,8 @@ public class PaymentClient {
             return null;
         }
     }
-    public PdfProto.DownloadPdfResponse downloadPdf(PdfProto.DownloadPdfRequest name){
+
+    public PdfProto.DownloadPdfResponse downloadPdf(PdfProto.DownloadPdfRequest name) {
         try {
             return pdfStub.downloadPdf(name);
         } catch (final StatusRuntimeException e) {

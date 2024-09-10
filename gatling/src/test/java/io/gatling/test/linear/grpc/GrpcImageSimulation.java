@@ -3,8 +3,6 @@ package io.gatling.test.linear.grpc;
 import com.google.protobuf.ByteString;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.grpc.Status;
-import pl.piomin.services.grpc.image.model.ImageProto;
-import pl.piomin.services.grpc.image.model.ImageServiceGrpc;
 import pl.piomin.services.grpc.pdf.model.PdfProto;
 import pl.piomin.services.grpc.pdf.model.PdfServiceGrpc;
 
@@ -21,9 +19,9 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 public class GrpcImageSimulation extends GrpcSimulation {
     @Override
     public void run() {
-//        rampScenario(grpcConf, this, 1, 1200, 60);
-//        concurrentScenario(grpcConf,this,1,50,60);
-        concurrentScenario(grpcConf,this,2,100,60);
+//        rampScenario(grpcConf, this, 1, 100, 60,2);
+        concurrentScenario(grpcConf, this, 1, 50, 60);
+//        concurrentScenario(grpcConf,this,2,100,60);
 
     }
 

@@ -58,7 +58,6 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
                     .build();
             responseObserver.onError(StatusProto.toStatusRuntimeException(status));
         }
-
     }
 
     @Override
@@ -81,15 +80,13 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
                     .build();
             responseObserver.onError(StatusProto.toStatusRuntimeException(status));
         }
-
-
     }
 
     @Override
     public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver) {
         String name = request.getValue();
         Optional<Product> productToDelete = repository.findByName(name);
-        if (client.authorizeAddProduct(request.getValue()) && productToDelete.isPresent()) {
+        if (client.authorizeAddProduct(request.getValue()) && productToDelete.isPresent()) { // TODO z jakiegos powodu tu jest authorizeAddProduct a nie delete
             repository.deleteByName(name);
             ProductProto.Product c = ProductAdapter.toProto(productToDelete.get());
             Timer timer = meterRegistry.timer("response.time.timer");

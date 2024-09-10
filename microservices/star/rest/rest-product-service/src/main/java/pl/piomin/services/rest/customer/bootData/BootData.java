@@ -17,7 +17,7 @@ public class BootData implements CommandLineRunner {
     private final ProductRepository repository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         List<Product> products = new ArrayList<>();
         products.add(new Product(1L, "Drabina", 1L));
         products.add(new Product(2L, "Siekiera", 1L));

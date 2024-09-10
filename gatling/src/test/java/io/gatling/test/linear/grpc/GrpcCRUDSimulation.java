@@ -7,7 +7,6 @@ import io.grpc.Status;
 import pl.piomin.services.grpc.product.model.ProductProto;
 import pl.piomin.services.grpc.product.model.ProductServiceGrpc;
 
-
 import static com.github.phisgr.gatling.kt.grpc.GrpcDsl.grpc;
 import static com.github.phisgr.gatling.kt.grpc.GrpcDsl.statusCode;
 import static io.gatling.javaapi.core.CoreDsl.scenario;
@@ -16,9 +15,9 @@ public class GrpcCRUDSimulation extends GrpcSimulation {
 
     @Override
     public void run() {
-//        rampScenario(grpcConf, this, 1, 1200, 60);
-//        runScenario(grpcConf,this,10,300,60);
-        runScenario(grpcConf,this,5,150,60);
+//        rampScenario(grpcConf, this, 1, 1200, 60,100);
+        runScenario(grpcConf, this, 10, 300, 60);
+//        runScenario(grpcConf,this,5,150,60);
     }
 
     @Override
@@ -36,7 +35,7 @@ public class GrpcCRUDSimulation extends GrpcSimulation {
                         grpc("addProduct")
                                 .rpc(ProductServiceGrpc.getAddProductMethod())
                                 .payload(session -> ProductProto.Product.newBuilder()
-                                        .setName("newProduct"+ session.get("my_var"))
+                                        .setName("newProduct" + session.get("my_var"))
                                         .setQuantity(1)
                                         .build()
                                 )
@@ -46,7 +45,7 @@ public class GrpcCRUDSimulation extends GrpcSimulation {
                         grpc("updateProduct")
                                 .rpc(ProductServiceGrpc.getUpdateProductMethod())
                                 .payload(session -> ProductProto.Product.newBuilder()
-                                        .setName("newProduct"+ session.get("my_var"))
+                                        .setName("newProduct" + session.get("my_var"))
                                         .setQuantity(2)
                                         .build()
                                 )
@@ -55,7 +54,7 @@ public class GrpcCRUDSimulation extends GrpcSimulation {
                 .exec(
                         grpc("deleteProduct")
                                 .rpc(ProductServiceGrpc.getDeleteProductMethod())
-                                .payload(session -> StringValue.newBuilder().setValue("newProduct"+ session.get("my_var")).build())
+                                .payload(session -> StringValue.newBuilder().setValue("newProduct" + session.get("my_var")).build())
                                 .check(statusCode().is(Status.Code.OK)));
     }
 }

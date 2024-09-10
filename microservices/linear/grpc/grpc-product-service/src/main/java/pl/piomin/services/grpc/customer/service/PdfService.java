@@ -17,16 +17,17 @@ public class PdfService extends PdfServiceGrpc.PdfServiceImplBase {
     private final MeterRegistry meterRegistry;
 
     @Override
-    public void uploadPdf(PdfProto.PdfData pdfData, StreamObserver<PdfProto.UploadPdfResponse> responseObserver){
+    public void uploadPdf(PdfProto.PdfData pdfData, StreamObserver<PdfProto.UploadPdfResponse> responseObserver) {
         Timer timer = meterRegistry.timer("response.time.timer");
         responseObserver.onNext(timer.record(() -> paymentClient.uploadPdf(pdfData)));
-            responseObserver.onCompleted();
+        responseObserver.onCompleted();
     }
+
     @Override
     public void downloadPdf(PdfProto.DownloadPdfRequest pdfNameRequest,
-                              StreamObserver<PdfProto.DownloadPdfResponse> responseObserver) {
+                            StreamObserver<PdfProto.DownloadPdfResponse> responseObserver) {
         Timer timer = meterRegistry.timer("response.time.timer");
         responseObserver.onNext(timer.record(() -> paymentClient.downloadPdf(pdfNameRequest)));
-            responseObserver.onCompleted();
+        responseObserver.onCompleted();
     }
 }

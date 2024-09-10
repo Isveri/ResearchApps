@@ -1,14 +1,13 @@
 package pl.piomin.services.rest.customer.controller;
 
 
-import feign.Response;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import pl.piomin.services.rest.customer.model.User;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pl.piomin.services.rest.customer.service.AuthServiceClient;
 
 @RestController

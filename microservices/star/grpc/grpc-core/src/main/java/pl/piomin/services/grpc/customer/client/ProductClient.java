@@ -15,13 +15,14 @@ import pl.piomin.services.grpc.product.model.ProductServiceGrpc;
 @Service
 public class ProductClient {
     private static final Logger LOG = LoggerFactory.getLogger(ProductClient.class);
+
     @GrpcClient("product-service")
     ProductServiceGrpc.ProductServiceBlockingStub prodStub;
 
     @GrpcClient("product-service")
     ImageServiceGrpc.ImageServiceBlockingStub imageStub;
 
-    public ProductProto.Products findAll(){
+    public ProductProto.Products findAll() {
         try {
             return prodStub.findAll(Empty.newBuilder().build());
         } catch (final StatusRuntimeException e) {
@@ -29,7 +30,8 @@ public class ProductClient {
             return null;
         }
     }
-    public ProductProto.Product addProduct(ProductProto.Product product){
+
+    public ProductProto.Product addProduct(ProductProto.Product product) {
         try {
             return prodStub.addProduct(product);
         } catch (final StatusRuntimeException e) {
@@ -37,7 +39,8 @@ public class ProductClient {
             return null;
         }
     }
-    public ProductProto.Product updateProduct(ProductProto.Product product){
+
+    public ProductProto.Product updateProduct(ProductProto.Product product) {
         try {
             return prodStub.updateProduct(product);
         } catch (final StatusRuntimeException e) {
@@ -45,7 +48,8 @@ public class ProductClient {
             return null;
         }
     }
-    public ProductProto.Product deleteProduct(StringValue name){
+
+    public ProductProto.Product deleteProduct(StringValue name) {
         try {
             return prodStub.deleteProduct(name);
         } catch (final StatusRuntimeException e) {
@@ -53,7 +57,8 @@ public class ProductClient {
             return null;
         }
     }
-    public ImageProto.UploadImageResponse uploadImage(ImageProto.ImageData image){
+
+    public ImageProto.UploadImageResponse uploadImage(ImageProto.ImageData image) {
         try {
             return imageStub.uploadImage(image);
         } catch (final StatusRuntimeException e) {
@@ -61,7 +66,8 @@ public class ProductClient {
             return null;
         }
     }
-    public ImageProto.DownloadImageResponse downloadImage(ImageProto.DownloadImageRequest name){
+
+    public ImageProto.DownloadImageResponse downloadImage(ImageProto.DownloadImageRequest name) {
         try {
             return imageStub.downloadImage(name);
         } catch (final StatusRuntimeException e) {

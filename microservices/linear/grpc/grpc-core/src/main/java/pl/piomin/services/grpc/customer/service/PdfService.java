@@ -1,9 +1,5 @@
 package pl.piomin.services.grpc.customer.service;
 
-import com.google.protobuf.Any;
-import com.google.rpc.Code;
-import com.google.rpc.ErrorInfo;
-import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
@@ -19,17 +15,19 @@ public class PdfService extends PdfServiceGrpc.PdfServiceImplBase {
 
     private final ProductClient productClient;
     private final MeterRegistry meterRegistry;
+
     @Override
-    public void uploadPdf(PdfProto.PdfData pdfData, StreamObserver<PdfProto.UploadPdfResponse> responseObserver){
+    public void uploadPdf(PdfProto.PdfData pdfData, StreamObserver<PdfProto.UploadPdfResponse> responseObserver) {
         Timer timer = meterRegistry.timer("response.time.timer");
         responseObserver.onNext(timer.record(() -> productClient.uploadImage(pdfData)));
-            responseObserver.onCompleted();
+        responseObserver.onCompleted();
     }
+
     @Override
     public void downloadPdf(PdfProto.DownloadPdfRequest pdfNameRequest,
-                              StreamObserver<PdfProto.DownloadPdfResponse> responseObserver) {
+                            StreamObserver<PdfProto.DownloadPdfResponse> responseObserver) {
         Timer timer = meterRegistry.timer("response.time.timer");
         responseObserver.onNext(timer.record(() -> productClient.downloadImage(pdfNameRequest)));
-            responseObserver.onCompleted();
+        responseObserver.onCompleted();
     }
 }
