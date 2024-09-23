@@ -86,7 +86,7 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
     public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver) {
         String name = request.getValue();
         Optional<Product> productToDelete = repository.findByName(name);
-        if (Double.valueOf(123.0).equals(client.authorizeDeleteProduct(request.getValue()))) {
+        if (Double.valueOf(0.0).equals(client.authorizeDeleteProduct(name)) && productToDelete.isPresent()) {
             repository.deleteByName(name);
             ProductProto.Product c = ProductAdapter.toProto(productToDelete.get());
             Timer timer = meterRegistry.timer("response.time.timer");
