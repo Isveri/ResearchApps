@@ -5,6 +5,7 @@ import com.google.protobuf.Empty;
 import com.google.protobuf.StringValue;
 import com.google.rpc.Code;
 import com.google.rpc.ErrorInfo;
+import com.google.rpc.Status;
 import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -20,6 +21,7 @@ import pl.piomin.services.grpc.product.model.ProductServiceGrpc;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @GrpcService
 @RequiredArgsConstructor
@@ -35,21 +37,22 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
         var customerDTOList = repository.findAll();
         List<ProductProto.Product> customerList = ProductAdapter.toProtoList(customerDTOList);
         ProductProto.Products c = ProductProto.Products.newBuilder().addAllProducts(customerList).build();
-        Timer timer = meterRegistry.timer("response.time.timer");
-        responseObserver.onNext(timer.record(() -> c));
+        responseObserver.onNext(c);
         responseObserver.onCompleted();
     }
 
     @Override
     public void addProduct(ProductProto.Product request, StreamObserver<ProductProto.Product> responseObserver) {
-        if (client.authorizeAddProduct(request.getName())) {
+        Timer timer = meterRegistry.timer("response.time.timer");
+        var auth = new AtomicReference<>(false);
+        timer.record(() -> auth.set(client.authorizeAddProduct(request.getName())));
+        if (auth.get()) {
             var customerDTO = repository.save(new Product(null, request.getName(), (long) request.getQuantity()));
             ProductProto.Product c = ProductAdapter.toProto(customerDTO);
-            Timer timer = meterRegistry.timer("response.time.timer");
-            responseObserver.onNext(timer.record(() -> c));
+            responseObserver.onNext(c);
             responseObserver.onCompleted();
         } else {
-            com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
+            Status status = Status.newBuilder()
                     .setCode(Code.ALREADY_EXISTS_VALUE)
                     .setMessage("Product name already exists")
                     .addDetails(Any.pack(ErrorInfo.newBuilder()
@@ -67,11 +70,10 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
             Product prd = productTemp.get();
             prd.setQuantity((long) request.getQuantity());
             ProductProto.Product c = ProductAdapter.toProto(repository.save(prd));
-            Timer timer = meterRegistry.timer("response.time.timer");
-            responseObserver.onNext(timer.record(() -> c));
+            responseObserver.onNext(c);
             responseObserver.onCompleted();
         } else {
-            com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
+            Status status = Status.newBuilder()
                     .setCode(Code.NOT_FOUND_VALUE)
                     .setMessage("Product no found")
                     .addDetails(Any.pack(ErrorInfo.newBuilder()
@@ -86,14 +88,16 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
     public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver) {
         String name = request.getValue();
         Optional<Product> productToDelete = repository.findByName(name);
-        if (Double.valueOf(0.0).equals(client.authorizeDeleteProduct(name)) && productToDelete.isPresent()) {
+        AtomicReference<Double> value = new AtomicReference<>(1.0);
+        Timer timer = meterRegistry.timer("response.time.timer");
+        timer.record(() -> value.set(client.authorizeDeleteProduct(name)));
+        if (Double.valueOf(0.0).equals(value.get()) && productToDelete.isPresent()) {
             repository.deleteByName(name);
             ProductProto.Product c = ProductAdapter.toProto(productToDelete.get());
-            Timer timer = meterRegistry.timer("response.time.timer");
-            responseObserver.onNext(timer.record(() -> c));
+            responseObserver.onNext(c);
             responseObserver.onCompleted();
         } else {
-            com.google.rpc.Status status = com.google.rpc.Status.newBuilder()
+            Status status = Status.newBuilder()
                     .setCode(Code.NOT_FOUND_VALUE)
                     .setMessage("Product name not exists")
                     .addDetails(Any.pack(ErrorInfo.newBuilder()
