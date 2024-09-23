@@ -26,9 +26,7 @@ public class ImageService {
                 .build();
         if (!imageRepository.existsByName(imageToSave.getName())) {
             imageRepository.save(imageToSave);
-            if (imageRepository.existsByName(imageToSave.getName())) {
-                return "file uploaded successfully : " + imageFile.getOriginalFilename();
-            }
+            return "file uploaded successfully : " + imageFile.getOriginalFilename();
         }
         return "file upload failed";
     }

@@ -86,7 +86,7 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
     public void deleteProduct(StringValue request, StreamObserver<ProductProto.Product> responseObserver) {
         String name = request.getValue();
         Optional<Product> productToDelete = repository.findByName(name);
-        if (client.authorizeAddProduct(request.getValue()) && productToDelete.isPresent()) { // TODO z jakiegos powodu tu jest authorizeAddProduct a nie delete
+        if (Double.valueOf(123.0).equals(client.authorizeDeleteProduct(request.getValue()))) {
             repository.deleteByName(name);
             ProductProto.Product c = ProductAdapter.toProto(productToDelete.get());
             Timer timer = meterRegistry.timer("response.time.timer");

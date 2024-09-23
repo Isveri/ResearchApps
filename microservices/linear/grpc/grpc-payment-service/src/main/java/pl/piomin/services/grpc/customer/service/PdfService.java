@@ -22,9 +22,9 @@ public class PdfService extends PdfServiceGrpc.PdfServiceImplBase {
 
     @Override
     public void uploadPdf(PdfProto.PdfData pdfData, StreamObserver<PdfProto.UploadPdfResponse> responseObserver) {
-        Image pfdToSave;
+        Image pdfToSave;
         try {
-            pfdToSave = Image.builder()
+            pdfToSave = Image.builder()
                     .name(pdfData.getName())
                     .type(pdfData.getType())
                     .imageData(ImageUtils.compressImage(pdfData.getData().toByteArray()))
@@ -32,8 +32,11 @@ public class PdfService extends PdfServiceGrpc.PdfServiceImplBase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        imageRepository.save(pfdToSave);
-        String c = "file uploaded successfully : " + pdfData.getName();
+        String c = "file upload failed";
+        if (!imageRepository.existsByName(pdfToSave.getName())) {
+            imageRepository.save(pdfToSave);
+            c = "file uploaded successfully : " + pdfToSave.getName();
+        }
         responseObserver.onNext(PdfProto.UploadPdfResponse.newBuilder().setMessage(c).build());
         responseObserver.onCompleted();
     }

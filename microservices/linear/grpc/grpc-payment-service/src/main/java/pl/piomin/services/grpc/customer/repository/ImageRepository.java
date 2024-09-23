@@ -11,5 +11,5 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Optional<Image> findByName(String name);
 
-    boolean existsByName(String name); // TODO z jakiegos powodu to nie jest wykorzystane tutaj a jest w REST
+    boolean existsByName(String name);
 }

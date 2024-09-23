@@ -32,8 +32,11 @@ public class ImageService extends ImageServiceGrpc.ImageServiceImplBase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        imageRepository.save(imageToSave);
-        String c = "file uploaded successfully : " + imageData.getName();
+        String c = "file upload failed";
+        if (!imageRepository.existsByName(imageData.getName())) {
+            imageRepository.save(imageToSave);
+            c = "file uploaded successfully : " + imageData.getName();
+        }
         responseObserver.onNext(ImageProto.UploadImageResponse.newBuilder().setMessage(c).build());
         responseObserver.onCompleted();
     }

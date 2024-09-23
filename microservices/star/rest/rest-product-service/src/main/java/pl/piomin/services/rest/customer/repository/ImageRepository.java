@@ -9,6 +9,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Optional<Image> findByName(String name);
 
-    boolean existsByName(String name);  // TODO nie ma tego w odpowiadajacym serwisi dla gRPC
+    boolean existsByName(String name);
 }
 
