@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package model;
+
+option java_package = "pl.piomin.services.grpc.payment.model";
+option java_outer_classname = "PaymentProto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+
+service PaymentService {
+  rpc addProduct(google.protobuf.StringValue) returns (google.protobuf.BoolValue);
+  rpc deleteProduct(google.protobuf.StringValue) returns (google.protobuf.DoubleValue);
+}

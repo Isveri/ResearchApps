@@ -1,0 +1,47 @@
+spring.application.name: grpcStar-core
+server.port: 8091
+grpc.server.port: 9061
+spring.output.ansi.enabled: always
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/database
+    username: user
+    password: password
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+#    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL : DEBUG
+
+management.endpoint.metrics.enabled: true
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+grpc:
+  client:
+    auth-service:
+      address: 'localhost:9062'
+      negotiation-type: plaintext
+    product-service:
+      address: 'localhost:9063'
+      negotiation-type: plaintext

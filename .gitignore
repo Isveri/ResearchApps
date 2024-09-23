@@ -3,3 +3,8 @@
 *.iws
 *.iml
 *.ipr
+/docker/grafana/alerting/1/__default__.tmpl
+/docker/grafana/data/alerting/1/__default__.tmpl
+/docker/grafana/grafana.db
+/docker/grafana/data/grafana.db
+/gatling/java_pid12088.hprof

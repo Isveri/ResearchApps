@@ -7,31 +7,71 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="customer-grpc" />
-        <module name="customer-rest" />
+        <module name="restLinear-product-service" />
+        <module name="grpcLinear-product-service" />
+        <module name="grpcStar-product-service" />
+        <module name="grpcStar-auth-service" />
+        <module name="rest-auth-service" />
+        <module name="grpcLinear-core" />
+        <module name="grpcLinear-payment-service" />
+        <module name="rest-core" />
+        <module name="restStar-auth-service" />
+        <module name="restStar-product-service" />
+        <module name="rest-core (1)" />
+        <module name="restLinear-core" />
+        <module name="grpcStar-core" />
         <module name="gatling-load-tester" />
-        <module name="customer-kafka" />
+        <module name="rest-product-service" />
+        <module name="restLinear-payment-service" />
+        <module name="restStar-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="account-service-grpc" target="19" />
+      <module name="customer-grpc" target="17" />
+      <module name="customer-kafka" target="17" />
+      <module name="customer-rest" target="19" />
       <module name="customer-service" target="19" />
       <module name="customer-service-grpc" target="17" />
       <module name="discovery-service" target="19" />
       <module name="gatling-grpc-demo-maven-java" target="17" />
       <module name="kafka-test" target="17" />
+      <module name="rabbitMQtest" target="17" />
+      <module name="rest-auth-service" target="19" />
+      <module name="rest-core" target="19" />
+      <module name="rest-core (1)" target="19" />
+      <module name="rest-product-service" target="19" />
+      <module name="websocket-test" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="account-service-grpc" options="-parameters" />
       <module name="customer-grpc" options="-parameters" />
-      <module name="customer-kafka" options="-parameters" />
+      <module name="customer-kafka" options="" />
       <module name="customer-rest" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="customer-service-grpc" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+      <module name="grpcLinear-core" options="-parameters" />
+      <module name="grpcLinear-payment-service" options="-parameters" />
+      <module name="grpcLinear-product-service" options="-parameters" />
+      <module name="grpcStar-auth-service" options="-parameters" />
+      <module name="grpcStar-core" options="-parameters" />
+      <module name="grpcStar-product-service" options="-parameters" />
       <module name="kafka-test" options="-parameters" />
+      <module name="rabbitMQtest" options="-parameters" />
+      <module name="rest-auth-service" options="-parameters" />
+      <module name="rest-core" options="-parameters" />
+      <module name="rest-core (1)" options="-parameters" />
+      <module name="rest-product-service" options="-parameters" />
+      <module name="restLinear-core" options="-parameters" />
+      <module name="restLinear-payment-service" options="-parameters" />
+      <module name="restLinear-product-service" options="-parameters" />
+      <module name="restStar-auth-service" options="-parameters" />
+      <module name="restStar-core" options="-parameters" />
+      <module name="restStar-product-service" options="-parameters" />
+      <module name="websocket-test" options="-parameters" />
     </option>
   </component>
 </project>

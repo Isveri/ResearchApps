@@ -8,19 +8,38 @@
         <option value="$PROJECT_DIR$/grpc/account-service-grpc/pom.xml" />
         <option value="$PROJECT_DIR$/grpc/customer-service-grpc/pom.xml" />
         <option value="$PROJECT_DIR$/rest/pom.xml" />
-        <option value="$PROJECT_DIR$/kafka/pom.xml" />
         <option value="$PROJECT_DIR$/gatling/pom.xml" />
         <option value="$PROJECT_DIR$/grpc/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/star/rest-core/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/star/rest-auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/star/rest-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/linear/rest-core/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/linear/rest-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/rest-microservices/linear/rest-payment-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/rest/rest-auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/rest/rest-core/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/rest/rest-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/rest/rest-payment-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/rest/rest-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/rest/rest-core/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/grpc/grpc-core/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/grpc/grpc-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/star/grpc/grpc-auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/grpc/grpc-core/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/grpc/grpc-product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/linear/grpc/grpc-payment-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/grpc/account-service-grpc/pom.xml" />
         <option value="$PROJECT_DIR$/grpc/discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/grpc/pom.xml" />
+        <option value="$PROJECT_DIR$/rest/pom.xml" />
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" project-jdk-name="21" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

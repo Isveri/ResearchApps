@@ -1,0 +1,93 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+# - "first_rules.yml"
+# - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ "host.docker.internal:9090" ]
+
+  - job_name: "rest-linear-core"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8082" ]
+  - job_name: "rest-linear-product"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8083" ]
+  - job_name: "rest-linear-payment"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8084" ]
+
+  - job_name: "rest-star-core"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8085" ]
+  - job_name: "rest-star-auth"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8086" ]
+  - job_name: "rest-star-product"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8087" ]
+
+  - job_name: "grpc-linear-core"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8088" ]
+  - job_name: "grpc-linear-product"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8089" ]
+  - job_name: "grpc-linear-payment"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8090" ]
+
+  - job_name: "grpc-star-core"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8091" ]
+  - job_name: "grpc-star-auth"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8092" ]
+  - job_name: "grpc-star-product"
+    scrape_interval: 5s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ "host.docker.internal:8093" ]

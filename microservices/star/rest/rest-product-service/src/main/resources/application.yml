@@ -1,0 +1,31 @@
+spring.application.name: restStar-product-service
+server.port: 8087
+spring.output.ansi.enabled: always
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/database
+    username: user
+    password: password
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+management.endpoint.metrics.enabled: true
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public
 class Customer {
-    private  Long id;
+    private Long id;
     private String pesel;
     private String name;
 }
